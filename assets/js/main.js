@@ -51,7 +51,42 @@ const sr = ScrollReveal({
 //     reset: true
 });
 
-sr.reveal('.home__data, .about__img, .skills__subtitle, .skills__text',{}); 
-sr.reveal('.home__img, .about__subtitle, .about__text, .skills__img',{delay: 400}); 
+sr.reveal('.home__data, .about__img, .skills__subtitle, .skills__text, .cv__text',{}); 
+sr.reveal('.home__img, .about__subtitle, .about__text, .skills__img, .cv__actions',{delay: 400}); 
 sr.reveal('.home__social-icon',{ interval: 200}); 
 sr.reveal('.skills__data, .work__img, .contact__input',{interval: 200}); 
+sr.reveal('.section',{opacity: 0, distance: '20px', interval: 120}); 
+
+/*===== HOME NAME TYPE/ERASE =====*/
+const typedName = document.querySelector('.home__title-typed')
+if (typedName) {
+    const fullText = typedName.dataset.text || typedName.textContent.trim()
+    let index = fullText.length
+    let direction = -1
+    const speed = 80
+    const pause = 1200
+
+    const tick = () => {
+        if (direction === -1) {
+            if (index > 0) {
+                index -= 1
+                typedName.textContent = fullText.slice(0, index)
+                setTimeout(tick, speed)
+            } else {
+                direction = 1
+                setTimeout(tick, pause)
+            }
+        } else {
+            if (index < fullText.length) {
+                index += 1
+                typedName.textContent = fullText.slice(0, index)
+                setTimeout(tick, speed)
+            } else {
+                direction = -1
+                setTimeout(tick, pause)
+            }
+        }
+    }
+
+    setTimeout(tick, pause)
+}
