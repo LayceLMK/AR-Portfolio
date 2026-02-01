@@ -559,6 +559,40 @@ img {
 .experience__media img {
   border-radius: 0.5rem;
   display: block;
+  width: 100%;
+}
+.experience__media-link {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+.experience__media-link img {
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+.experience__media-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 15, 25, 0.55);
+  color: #fff;
+  font-weight: var(--font-semi);
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.experience__media-link:hover img,
+.experience__media-link:focus-visible img {
+  filter: brightness(0.7);
+  transform: scale(1.03);
+}
+.experience__media-link:hover .experience__media-overlay,
+.experience__media-link:focus-visible .experience__media-overlay {
+  opacity: 1;
+  transform: translateY(0);
 }
 .experience__actions {
   text-align: center;
@@ -761,6 +795,107 @@ img {
   font-size: var(--normal-font-size);
   cursor: pointer;
   margin-left: auto;
+}
+.contact__container {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  justify-items: stretch;
+}
+.contact__card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 0.85rem;
+  background: #f7f9ff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 25px rgba(30, 63, 120, 0.08);
+  height: 100%;
+  width: 100%;
+  min-width: 0;
+}
+.contact__icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  background: rgba(30, 99, 255, 0.1);
+  color: #1e63ff;
+  font-size: 1.4rem;
+}
+.contact__title {
+  font-size: 1rem;
+  margin-bottom: 0.35rem;
+}
+.contact__details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.contact__link {
+  color: var(--second-color);
+  font-weight: var(--font-semi);
+  word-break: break-word;
+}
+.contact__link:hover {
+  color: var(--first-color);
+}
+
+/* ===== PDF MODAL ===== */
+.pdf-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.pdf-modal.is-open {
+  display: flex;
+}
+.pdf-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(9, 14, 22, 0.7);
+}
+.pdf-modal__dialog {
+  position: relative;
+  width: min(1100px, 94vw);
+  height: min(82vh, 900px);
+  background: linear-gradient(135deg, rgba(14, 36, 49, 0.06), rgba(32, 119, 255, 0.08));
+  border-radius: 1.1rem;
+  overflow: hidden;
+  border: 1px solid rgba(14, 36, 49, 0.12);
+  box-shadow: 0 30px 70px rgba(14, 36, 49, 0.28);
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+.pdf-modal__close {
+  justify-self: end;
+  margin: 0.65rem 0.75rem 0.35rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: none;
+  background: #e8f0ff;
+  color: var(--second-color);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+.pdf-modal__close:hover {
+  background: #dfe9ff;
+}
+.pdf-modal__frame {
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
 /* ===== FOOTER =====*/

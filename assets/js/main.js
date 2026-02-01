@@ -42,6 +42,47 @@ const scrollActive = () =>{
 }
 window.addEventListener('scroll', scrollActive)
 
+/*===== PDF MODAL =====*/
+const pdfModal = document.getElementById('pdf-modal')
+const pdfFrame = pdfModal ? pdfModal.querySelector('.pdf-modal__frame') : null
+
+const openPdfModal = (href) => {
+    if (!pdfModal || !pdfFrame) return
+    pdfFrame.src = href
+    pdfModal.classList.add('is-open')
+    pdfModal.setAttribute('aria-hidden', 'false')
+    document.body.style.overflow = 'hidden'
+}
+
+const closePdfModal = () => {
+    if (!pdfModal || !pdfFrame) return
+    pdfModal.classList.remove('is-open')
+    pdfModal.setAttribute('aria-hidden', 'true')
+    pdfFrame.src = ''
+    document.body.style.overflow = ''
+}
+
+const pdfLinks = document.querySelectorAll('a[href$=".pdf"]')
+pdfLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+        event.preventDefault()
+        openPdfModal(link.getAttribute('href'))
+    })
+})
+
+if (pdfModal) {
+    pdfModal.addEventListener('click', (event) => {
+        if (event.target.matches('[data-close]')) {
+            closePdfModal()
+        }
+    })
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            closePdfModal()
+        }
+    })
+}
+
 /*===== SCROLL REVEAL ANIMATION =====*/
 const sr = ScrollReveal({
     origin: 'top',
