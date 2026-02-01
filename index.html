@@ -212,8 +212,7 @@
                         <p class="about__text">Ce portfolio est une vitrine de mon parcours, de mes comp&eacute;tences et des projets concrets qui structurent mon expertise.</p>           
 
                         <div class="about__actions">
-                            <a href="assets/pdf/CV.pdf" class="button" download>T&eacute;l&eacute;chargez mon CV</a>
-                            <a href="assets/pdf/CV.pdf" class="button button--outline" target="_blank" rel="noopener">Voir mon CV</a>
+                                                        <a href="assets/pdf/CV_Rohan_ALAMELOU.pdf" class="button button--outline" target="_blank" rel="noopener">Voir mon CV</a>
                         </div>
 
                     </div>                                   
@@ -436,7 +435,7 @@
                 <h2 class="section-title">Projets réalisés</h2>
 
                 <div class="experience__container bd-grid">
-                    <div class="experience__item" id="exp-moodle">
+                    <div class="experience__item experience__item--left" id="exp-moodle">
                         <div class="experience__content">
                             <h3 class="experience__title">Mise en place de services Moodle & Samba</h3>
                             <p class="experience__text">Ce projet, réalisé dès la première année, constitue une étape fondatrice de mon parcours. Il a consolidé mes compétences en réseaux et en administration système, tout en démontrant ma capacité à concevoir et déployer une infrastructure complète, structurée et opérationnelle.<br><br>Il repose sur la conception d’une architecture multi-VLAN entre un site principal et une succursale : mise en œuvre de trunks, de sous-interfaces 802.1Q, d’un plan d’adressage cohérent, du routage inter-VLAN et de routes statiques inter-sites. Chaque VLAN dispose de son pool DHCP dédié, garantissant une gestion efficace des adresses IP.<br><br>Le projet intègre également une dimension système et services, avec le déploiement de Moodle et Samba sur un serveur Linux dédié. Cette approche globale illustre ma capacité à relier infrastructure réseau, services applicatifs et besoins utilisateurs, dans une logique proche des environnements professionnels.</p>
@@ -472,7 +471,7 @@
                         </div>
                     </div>
 
-                    <div class="experience__item" id="exp-pfsense">
+                    <div class="experience__item experience__item--right" id="exp-pfsense">
                         <div class="experience__content">
                             <h3 class="experience__title">SAE 2.01 : Construction d'un réseau d'entreprise</h3>
                             <p class="experience__text">Ce projet, l’un des plus structurants de ma première année, m’a permis de concevoir et déployer une infrastructure réseau complète, de la phase de conception jusqu’à la mise en production. Il a joué un rôle clé dans la consolidation de mes compétences et la validation de mon socle technique.</p>
@@ -506,7 +505,7 @@
                         </div>
                     </div>
 
-                    <div class="experience__item" id="exp-ad">
+                    <div class="experience__item experience__item--left" id="exp-ad">
                         <div class="experience__content">
                             <h3 class="experience__title">Audit de sécurité Active Directory</h3>
                             <p class="experience__text">Ce projet porte sur la réalisation d’un audit de sécurité Active Directory visant à évaluer la posture de sécurité globale d’un système d’information. Il a permis d’identifier les principales faiblesses de configuration, d’analyser les risques associés et de mesurer l’écart avec les bonnes pratiques en vigueur.</p>
@@ -525,24 +524,28 @@
                                 <a href="assets/pdf/alamelou_rohan_audit.pdf" class="button" target="_blank" rel="noopener">Voir compte rendu</a>
                                 <h4 class="experience__tech-title">Technologies/Services utilisés</h4>
                                 <div class="experience__tech-logos">
-                                    <div class="tech-chip tech-chip--text">
-                                        <span class="tech-chip__text">AD Windows</span>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/ad.png" alt="Active Directory">
+                                        <span class="tech-chip__label">AD Windows</span>
                                     </div>
-                                    <div class="tech-chip tech-chip--text">
-                                        <span class="tech-chip__text">PingCastle</span>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/pingcastle_logo.png" alt="PingCastle">
+                                        <span class="tech-chip__label">PingCastle</span>
                                     </div>
-                                    <div class="tech-chip tech-chip--text">
-                                        <span class="tech-chip__text">ISO 27000</span>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/iso.png" alt="ISO 27000">
+                                        <span class="tech-chip__label">ISO 27000</span>
                                     </div>
-                                    <div class="tech-chip tech-chip--text">
-                                        <span class="tech-chip__text">ANSSI</span>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/annsi.png" alt="ANSSI">
+                                        <span class="tech-chip__label">ANSSI</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="experience__item" id="exp-siem">
+                    <div class="experience__item experience__item--right" id="exp-siem">
                         <div class="experience__content">
                             <h3 class="experience__title">SIEM & Supervision</h3>
                             <p class="experience__text">Ce projet correspond à une SAE de BUT3 centrée sur la sécurisation et la supervision d’une infrastructure SI, inspirée d’un environnement réaliste. L’objectif : concevoir une architecture cohérente, appliquer une logique de défense en profondeur, puis valider la détection et la remontée d’alertes sur l’ensemble du périmètre.</p>
@@ -563,22 +566,48 @@
                                 <a href="#" class="button">Voir compte rendu</a>
                                 <h4 class="experience__tech-title">Technologies/Services utilisés</h4>
                                 <div class="experience__tech-logos">
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Grafana</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Postgres</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Nextcloud</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Docker</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Alloy</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Loki</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Falco</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Wazuh</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">OPNsense</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Promtail</span></div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/grafana.jpg" alt="Grafana">
+                                        <span class="tech-chip__label">Grafana</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/postgres.png" alt="PostgreSQL">
+                                        <span class="tech-chip__label">Postgres</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/nextcloud.png" alt="Nextcloud">
+                                        <span class="tech-chip__label">Nextcloud</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/docker.png" alt="Docker">
+                                        <span class="tech-chip__label">Docker</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/alloy.png" alt="Grafana Alloy">
+                                        <span class="tech-chip__label">Alloy</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/loki.png" alt="Loki">
+                                        <span class="tech-chip__label">Loki</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/falco.png" alt="Falco">
+                                        <span class="tech-chip__label">Falco</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/wazuh.png" alt="Wazuh">
+                                        <span class="tech-chip__label">Wazuh</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/opnsense.png" alt="OPNsense">
+                                        <span class="tech-chip__label">OPNsense</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="experience__item" id="exp-waf">
+                    <div class="experience__item experience__item--left" id="exp-waf">
                         <div class="experience__content">
                             <h3 class="experience__title">WAF & Détection</h3>
                             <p class="experience__text">Ce projet (SAE5.Cyber.03 – TP Wazuh) vise à mettre en place une supervision et une sécurisation avancées d’un système d’information. L’objectif est de centraliser les logs, détecter rapidement les comportements anormaux et améliorer la réaction face aux incidents sur une infrastructure multi-serveurs.</p>
@@ -598,15 +627,24 @@
                                 <a href="assets/pdf/SAE5.Cyber.03_TP_WAF.pdf" class="button" target="_blank" rel="noopener">Voir compte rendu</a>
                                 <h4 class="experience__tech-title">Technologies/Services utilisés</h4>
                                 <div class="experience__tech-logos">
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">OPNsense</span></div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/opnsense.png" alt="OPNsense">
+                                        <span class="tech-chip__label">OPNsense</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/ad.png" alt="Active Directory">
+                                    </div>
                                     <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Windows AD</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Wazuh</span></div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/wazuh.png" alt="Wazuh">
+                                        <span class="tech-chip__label">Wazuh</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="experience__item" id="exp-ctf">
+                    <div class="experience__item experience__item--right" id="exp-ctf">
                         <div class="experience__content">
                             <h3 class="experience__title">CTF & Pentest</h3>
                             <p class="experience__text">Série d’exercices sur machines d’entraînement (Machine 1 à 11) pour appliquer les bases du pentest : identification de services, faiblesses de configuration et validation par scénarios contrôlés (reconnaissance → exploitation → élévation de privilèges → flags).</p>
@@ -626,16 +664,28 @@
                                 <a href="assets/pdf/Projet_CTF.pdf" class="button" target="_blank" rel="noopener">Voir compte rendu</a>
                                 <h4 class="experience__tech-title">Technologies/Services utilisés</h4>
                                 <div class="experience__tech-logos">
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">CTF</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Kali Linux</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">WordPress</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Shell</span></div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/ctf.png" alt="CTF">
+                                        <span class="tech-chip__label">CTF</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/kali.png" alt="Kali Linux">
+                                        <span class="tech-chip__label">Kali Linux</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/wordpress.png" alt="WordPress">
+                                        <span class="tech-chip__label">WordPress</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/shell.png" alt="Shell">
+                                        <span class="tech-chip__label">Shell</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="experience__item" id="exp-stage-telecom">
+                    <div class="experience__item experience__item--left" id="exp-stage-telecom">
                         <div class="experience__content">
                             <h3 class="experience__title">Stage en Télécom & Infrastructure Réseau</h3>
                             <p class="experience__text">Ce rapport présente mon stage de huit semaines réalisé au sein de l’entreprise ERCOM SAS, spécialisée en téléphonie d’entreprise, réseaux et infrastructures de communication. Cette immersion m’a permis de mettre en pratique mes connaissances théoriques dans un contexte professionnel réel, à travers des missions variées allant de l’installation et la supervision de systèmes de téléphonie IP à la maintenance d’infrastructures réseau et au câblage informatique. Cette expérience a renforcé mes compétences techniques, mon autonomie et ma compréhension des exigences du terrain, tout en confirmant mon intérêt pour les métiers des réseaux et télécommunications.</p>
@@ -653,15 +703,20 @@
                                 <a href="assets/pdf/ALAMELOU_Rohan_Rapport_Stage_RT2.pdf" class="button" target="_blank" rel="noopener">Voir compte rendu</a>
                                 <h4 class="experience__tech-title">Technologies/Services utilisés</h4>
                                 <div class="experience__tech-logos">
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Unify Phone</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">VoIP</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Siemens</span></div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/unify.png" alt="Unify Phone">
+                                        <span class="tech-chip__label">Unify Phone</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/siemens.png" alt="Siemens">
+                                        <span class="tech-chip__label">Siemens</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="experience__item" id="exp-docker">
+                    <div class="experience__item experience__item--right" id="exp-docker">
                         <div class="experience__content">
                             <h3 class="experience__title">Supervision des conteneurs Docker</h3>
                             <p class="experience__text">Ce TP de supervision repose sur une chaîne d’observabilité moderne déployée avec <strong>Docker</strong> et <strong>Docker Compose</strong>, garantissant une infrastructure reproductible et facile à maintenir. Les services supervisés incluent notamment une base <strong>PostgreSQL</strong> et plusieurs conteneurs applicatifs.</p>
@@ -683,14 +738,34 @@
                                 <a href="assets/pdf/TP_Grafana_Docker.pdf" class="button" target="_blank" rel="noopener">Voir compte rendu</a>
                                 <h4 class="experience__tech-title">Technologies/Services utilisés</h4>
                                 <div class="experience__tech-logos">
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Grafana</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Prometheus</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">cAdvisor</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Loki</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Alloy</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Docker</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Postgres</span></div>
-                                    <div class="tech-chip tech-chip--text"><span class="tech-chip__text">Linux</span></div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/grafana.jpg" alt="Grafana">
+                                        <span class="tech-chip__label">Grafana</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/prometheus.png" alt="Prometheus">
+                                        <span class="tech-chip__label">Prometheus</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/loki.png" alt="Loki">
+                                        <span class="tech-chip__label">Loki</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/alloy.png" alt="Grafana Alloy">
+                                        <span class="tech-chip__label">Alloy</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/docker.png" alt="Docker">
+                                        <span class="tech-chip__label">Docker</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/postgres.png" alt="PostgreSQL">
+                                        <span class="tech-chip__label">Postgres</span>
+                                    </div>
+                                    <div class="tech-chip">
+                                        <img src="assets/img/linux.png" alt="Linux">
+                                        <span class="tech-chip__label">Linux</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

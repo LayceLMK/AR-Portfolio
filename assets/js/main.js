@@ -59,6 +59,8 @@ sr.reveal('.skills__group',{origin: 'right', distance: '60px', interval: 160});
 sr.reveal('.skills__group-icon',{origin: 'right', distance: '80px', delay: 200}); 
 sr.reveal('.parcours__item--left',{origin: 'left', distance: '60px', interval: 120}); 
 sr.reveal('.parcours__item--right',{origin: 'right', distance: '60px', interval: 120}); 
+sr.reveal('.experience__item--left',{origin: 'left', distance: '60px', interval: 120}); 
+sr.reveal('.experience__item--right',{origin: 'right', distance: '60px', interval: 120}); 
 sr.reveal('.about__extra',{origin: 'left', distance: '50px', delay: 300}); 
 sr.reveal('.section',{opacity: 0, distance: '20px', interval: 120}); 
 
