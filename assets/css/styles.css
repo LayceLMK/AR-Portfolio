@@ -48,6 +48,7 @@ body {
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
   color: var(--second-color);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 h1, h2, p {
@@ -190,6 +191,47 @@ img {
   color: var(--second-color);
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+/* language toggle button */
+.nav__lang {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.75rem;
+}
+.lang-button {
+  background: transparent;
+  border: 2px solid var(--first-color);
+  color: var(--first-color);
+  font-size: 0.9rem;
+  font-weight: var(--font-semi);
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  cursor: pointer;
+  line-height: 1;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.lang-button:hover {
+  background: var(--first-color);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(46, 96, 255, 0.2);
+}
+@media screen and (max-width: 767px) {
+  .nav__menu .lang-button {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.7);
+  }
+  .nav__menu .lang-button:hover {
+    background: #fff;
+    color: var(--second-color);
+  }
+}
+/* transformation effect when switching languages */
+body.language-switch {
+  opacity: 0.4;
+  transform: scale(0.985);
 }
 
 /*Active menu*/

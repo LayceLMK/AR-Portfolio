@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en">
+<html lang="fr">
 
 
     <head>
@@ -67,10 +67,13 @@
                     <ul class="nav__list">
 
 
-                        <li class="nav__item"><a href="#home" class="nav__link active-link">Accueil</a></li>
+                        <li class="nav__item nav__lang">
+                            <button class="lang-button" id="lang-button" type="button" data-lang-fr="EN" data-lang-en="FR" aria-label="Changer de langue">EN</button>
+                        </li>
+                        <li class="nav__item"><a href="#home" class="nav__link active-link" data-en="Home">Accueil</a></li>
 
 
-                        <li class="nav__item"><a href="#about" class="nav__link">Profil</a></li>
+                        <li class="nav__item"><a href="#about" class="nav__link" data-en="Profile">Profil</a></li>
 
 
                         <li class="nav__item"><a href="#skills" class="nav__link">Compétences</a></li>
@@ -121,7 +124,7 @@
                 <div class="home__data">
 
 
-                    <h1 class="home__title">Bonjour,<br>je suis <span class="home__title-color home__title-typed" data-text="Rohan ALAMELOU">Rohan ALAMELOU</span></h1>
+                    <h1 class="home__title"><span class="home__title-greet">Bonjour,<br>je suis</span> <span class="home__title-color home__title-typed" data-text="Rohan ALAMELOU">Rohan ALAMELOU</span></h1>
 
 
 
@@ -849,6 +852,9 @@
 
 
         <!--===== MAIN JS =====-->
+
+
+        <script src="assets/js/i18n.js"></script>
 
 
         <script src="assets/js/main.js"></script>

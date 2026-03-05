@@ -138,3 +138,8 @@ if (typedName) {
 
     setTimeout(tick, pause)
 }
+
+/*===== LANGUAGE SWITCH =====*/
+if (window.PortfolioI18n) {
+    window.PortfolioI18n.init()
+}
