@@ -8,7 +8,7 @@ window.PROJECTS = [
     {
         id: 'siem',
         wide: true,
-        cover: 'assets/img/wazuh_grafana.png',
+        cover: 'assets/img/wazuh_grafana.jpg',
         context: { fr: 'SAE · BUT 3', en: 'Project · BUT year 3' },
         title: { fr: 'SIEM & supervision <em>d’un SI</em>', en: 'SIEM & monitoring <em>of an IS</em>' },
         short: {
@@ -41,7 +41,7 @@ window.PROJECTS = [
     },
     {
         id: 'waf',
-        cover: 'assets/img/WAF.png',
+        cover: 'assets/img/WAF.jpg',
         context: { fr: 'SAE5.Cyber.03 · BUT 3', en: 'SAE5.Cyber.03 · BUT year 3' },
         title: { fr: 'WAF & détection <em>d’intrusions</em>', en: 'WAF & intrusion <em>detection</em>' },
         short: {
@@ -71,7 +71,7 @@ window.PROJECTS = [
     },
     {
         id: 'audit-ad',
-        cover: 'assets/img/pingcastle.png',
+        cover: 'assets/img/pingcastle.jpg',
         context: { fr: 'Audit · BUT 3', en: 'Audit · BUT year 3' },
         title: { fr: 'Audit de sécurité <em>Active Directory</em>', en: '<em>Active Directory</em> security audit' },
         short: {
@@ -101,7 +101,7 @@ window.PROJECTS = [
     },
     {
         id: 'ctf',
-        cover: 'assets/img/ctf-image.png',
+        cover: 'assets/img/ctf-image.jpg',
         context: { fr: 'Pentest · BUT 3', en: 'Pentest · BUT year 3' },
         title: { fr: 'CTF & <em>pentest</em>', en: 'CTF & <em>pentest</em>' },
         short: {
@@ -131,7 +131,7 @@ window.PROJECTS = [
     },
     {
         id: 'docker',
-        cover: 'assets/img/thibault.png',
+        cover: 'assets/img/thibault.jpg',
         context: { fr: 'TP · Supervision', en: 'Lab · Monitoring' },
         title: { fr: 'Observabilité <em>de conteneurs</em>', en: 'Container <em>observability</em>' },
         short: {
@@ -161,7 +161,7 @@ window.PROJECTS = [
     },
     {
         id: 'sae201',
-        cover: 'assets/img/pfsense-image.png',
+        cover: 'assets/img/pfsense-image.jpg',
         context: { fr: 'SAE 2.01 · BUT 1', en: 'SAE 2.01 · BUT year 1' },
         title: { fr: 'Réseau d’entreprise <em>sécurisé</em>', en: 'A <em>secured</em> enterprise network' },
         short: {
@@ -196,28 +196,35 @@ window.EXPERIENCES = [
     {
         id: 'uwe',
         feature: true,
-        date: { fr: 'Mars → juin 2026', en: 'March → June 2026' },
-        title: { fr: 'Recherche en cybersécurité <em>à Bristol</em>', en: 'Cybersecurity research <em>in Bristol</em>' },
-        org: { fr: 'University of the West of England · Royaume-Uni', en: 'University of the West of England · United Kingdom' },
-        tags: ['MITRE ATT&CK', 'SOC', 'Recherche'],
+        date: { fr: 'Mars → juin 2026 · 14 semaines', en: 'March → June 2026 · 14 weeks' },
+        title: { fr: 'CyberReasoning : une IA locale <em>qui lit les logs d’attaque</em>', en: 'CyberReasoning: a local AI <em>that reads attack logs</em>' },
+        org: { fr: 'Stage de recherche · University of the West of England, Bristol · Royaume-Uni', en: 'Research internship · University of the West of England, Bristol · United Kingdom' },
+        tags: ['MITRE ATT&CK', 'auditd', 'LLM local', 'Recherche'],
         bullets: {
             fr: [
-                'Conception d’un système qui associe des événements de sécurité aux <b>techniques MITRE ATT&CK</b> en quasi temps réel.',
-                '<b>Pipeline d’ingestion</b> et normalisation de logs hétérogènes, intégration d’un classifieur.',
-                '<b>Benchmark</b> latence / précision / rappel, analyse des erreurs et optimisation.',
-                'Environnement universitaire britannique : réunions, documentation et restitution <b>100 % en anglais</b>.'
+                'Question de recherche : un <b>petit modèle de langage, exécuté en local</b> sur du matériel grand public, peut-il reconnaître les <b>techniques MITRE ATT&CK</b> dans des logs Linux <b>auditd</b>, sans fine-tuning ?',
+                'Conception d’un <b>pipeline déterministe</b> : filtrage par un catalogue de signatures (regex) puis classification par <b>Qwen 2.5 7B</b> via Ollama, température 0 et graine fixe pour des résultats <b>reproductibles</b>.',
+                'Catalogue calibré <b>uniquement sur des sources publiques</b> (MITRE, Sigma, Atomic Red Team, GTFOBins, Elastic, Wazuh) pour garder une évaluation indépendante.',
+                '<b>Benchmark</b> sur le jeu de données public <b>CAM-LDS</b> et analyse des erreurs : la plupart des faux positifs viennent de signatures trop larges, pas d’hallucinations du modèle.',
+                'Travail mené <b>entièrement en anglais</b>, en autonomie, avec un encadrant chercheur.'
             ],
             en: [
-                'Designed a system mapping security events to <b>MITRE ATT&CK techniques</b> in near real time.',
-                '<b>Ingestion pipeline</b> and normalisation of heterogeneous logs, classifier integration.',
-                'Latency / precision / recall <b>benchmarking</b>, error analysis and optimisation.',
-                'British academic setting: meetings, documentation and presentations <b>100% in English</b>.'
+                'Research question: can a <b>small language model running locally</b> on consumer hardware recognise <b>MITRE ATT&CK techniques</b> in Linux <b>auditd</b> logs, without fine-tuning?',
+                'Designed a <b>deterministic pipeline</b>: filtering with a signature catalogue (regex), then classification by <b>Qwen 2.5 7B</b> via Ollama, temperature 0 and fixed seed for <b>reproducible</b> results.',
+                'Catalogue calibrated <b>only on public sources</b> (MITRE, Sigma, Atomic Red Team, GTFOBins, Elastic, Wazuh) to keep the evaluation independent.',
+                '<b>Benchmark</b> on the public <b>CAM-LDS</b> dataset and error analysis: most false positives come from over-broad signatures, not model hallucinations.',
+                'Carried out <b>entirely in English</b>, independently, with a research supervisor.'
             ]
         },
+        note: {
+            fr: '<b>Article de recherche</b> co-écrit avec mon encadrant et soumis à la revue scientifique <b>MDPI Electronics</b> — en cours de révision par les pairs.',
+            en: '<b>Research paper</b> co-written with my supervisor and submitted to the journal <b>MDPI Electronics</b> — currently under peer review.'
+        },
         kpis: [
-            { n: '3', l: { fr: 'mois au Royaume-Uni', en: 'months in the UK' } },
-            { n: '100%', l: { fr: 'en anglais', en: 'in English' } },
-            { n: 'ATT&CK', l: { fr: 'framework de classification', en: 'classification framework' } }
+            { n: '81', l: { fr: 'techniques ATT&CK couvertes', en: 'ATT&CK techniques covered' } },
+            { n: '100%', l: { fr: 'local · aucune donnée envoyée au cloud', en: 'local · no data sent to the cloud' } },
+            { n: '0', l: { fr: 'fine-tuning du modèle', en: 'model fine-tuning' } },
+            { n: '14', l: { fr: 'semaines au Royaume-Uni', en: 'weeks in the UK' } }
         ],
         docs: []
     },
