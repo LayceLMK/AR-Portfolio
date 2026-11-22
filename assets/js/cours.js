@@ -40,8 +40,8 @@
 
     const total = data.matieres.reduce((n, m) => n + m.ressources.length, 0)
     stats.innerHTML = `
-        <div class="hub__stat"><span class="hub__stat-value">${data.matieres.length}</span><span class="hub__stat-label">matières</span></div>
-        <div class="hub__stat"><span class="hub__stat-value">${total}</span><span class="hub__stat-label">ressources</span></div>`
+        <div class="hub__stat"><span class="hub__stat-value">${data.matieres.length}</span><span class="hub__stat-label">matière${data.matieres.length > 1 ? 's' : ''}</span></div>
+        <div class="hub__stat"><span class="hub__stat-value">${total}</span><span class="hub__stat-label">ressource${total > 1 ? 's' : ''}</span></div>`
 
     const upcoming = data.matieres
         .filter((m) => m.examen && daysUntil(m.examen) >= 0)
@@ -103,15 +103,17 @@
                 const list = items.length
                     ? items.map((r) => {
                         const t = TYPES[r.type] || TYPES.fiche
+                        // Les pages du site s'ouvrent dans le même onglet, les liens externes dans un nouvel onglet
+                        const external = /^https?:\/\//.test(r.url)
                         return `
                         <li>
-                            <a class="hub__res" href="${escapeHTML(r.url)}" target="_blank" rel="noopener">
+                            <a class="hub__res" href="${escapeHTML(r.url)}"${external ? ' target="_blank" rel="noopener"' : ''}>
                                 <i class='bx ${t.icon} hub__res-icon'></i>
                                 <span class="hub__res-body">
                                     <span class="hub__res-title">${escapeHTML(r.titre)}</span>
                                     <span class="hub__res-meta"><span class="hub__tag hub__tag--${escapeHTML(r.type)}">${t.label}</span>${r.date ? formatDate(r.date) : ''}</span>
                                 </span>
-                                <i class='bx bx-link-external hub__res-arrow'></i>
+                                <i class='bx ${external ? 'bx-link-external' : 'bx-right-arrow-alt'} hub__res-arrow'></i>
                             </a>
                         </li>`
                     }).join('')
