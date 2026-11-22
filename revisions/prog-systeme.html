@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Révisions Programmation Système — Rohan Alamelou</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+<meta name="theme-color" content="#070b16">
+<style>
+/* Plan : barre latérale fixe (chapitres + progression) | colonne de lecture ~72ch.
+   Monde visuel : console Unix, encre bleu nuit, accent ambre "curseur". */
+:root {
+  --bg: #070b16;
+  --surface: #0e1629;
+  --ink: #e9eef9;
+  --muted: rgba(233,238,249,.64);
+  --line: rgba(160,185,255,.15);
+  --accent: #4f86ff;
+  --accent-soft: rgba(61,116,255,.18);
+  --code-bg: #0a1020;
+  --ok: #4fe0a0; --ok-soft: rgba(67,227,155,.1);
+  --bad: #ff7a93; --bad-soft: rgba(255,107,138,.1);
+  --info: #5ee3ff; --info-soft: rgba(94,227,255,.08);
+  --tok-kw: #c9a2ff; --tok-str: #7fe0a8; --tok-com: #6b7690; --tok-pp: #7aa2ff; --tok-num: #ffc46b; --tok-fn: #5ee3ff;
+  --f-display: "Space Grotesk", system-ui, sans-serif;
+  --f-body: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --serif: "Instrument Serif", Georgia, serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 16px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--f-body); }
+a { color: var(--info); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+
+.layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); max-width: 1180px; margin: 0 auto; }
+nav.side { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 24px 16px 24px 20px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 18px; }
+main { padding: 28px 40px 80px; display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+
+.brand { font-family: var(--f-mono); font-size: 13px; color: var(--muted); }
+.brand b { color: var(--ink); }
+.countdown { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 8px; padding: 12px 14px; }
+.countdown .big { font-family: var(--f-display); font-size: 34px; line-height: 1; font-weight: 700; font-variant-numeric: tabular-nums; }
+.countdown .small { font-size: 13px; color: var(--muted); }
+.progress { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--muted); }
+.bar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.bar > i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+nav.side ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+nav.side li a { display: flex; gap: 10px; align-items: baseline; padding: 6px 8px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 14px; }
+nav.side li a:hover { background: var(--surface); }
+nav.side li a .n { font-family: var(--f-mono); font-size: 12px; color: var(--muted); min-width: 22px; }
+nav.side li a.done .n { color: var(--ok); }
+nav.side li a.done::after { content: "✓"; margin-left: auto; color: var(--ok); font-size: 13px; }
+.navsep { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 10px 8px 2px; }
+
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; line-height: 1.15; margin: 0; }
+h1 { font-size: 40px; }
+h2 { font-size: 28px; }
+h3 { font-size: 19px; font-family: var(--f-body); font-weight: 600; }
+p { margin: 0; max-width: 72ch; }
+.lead { font-size: 17px; color: var(--muted); max-width: 70ch; }
+
+section.chap { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 28px 30px; display: flex; flex-direction: column; gap: 16px; }
+.chap-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--line); padding-bottom: 14px; }
+.chap-head .tag { font-family: var(--f-mono); font-size: 12px; color: var(--accent); }
+.chap-head h2 { flex: 1 1 340px; }
+.check { display: inline-flex; gap: 8px; align-items: center; font-size: 14px; color: var(--muted); cursor: pointer; user-select: none; }
+.check input { width: 18px; height: 18px; accent-color: var(--ok); }
+.src { font-size: 13px; color: var(--muted); font-family: var(--f-mono); }
+
+ol.steps { margin: 0; padding: 0; list-style: none; counter-reset: s; display: flex; flex-direction: column; gap: 8px; max-width: 76ch; }
+ol.steps > li { counter-increment: s; display: grid; grid-template-columns: 28px 1fr; gap: 10px; }
+ol.steps > li::before { content: counter(s); font: 600 13px/26px var(--f-mono); text-align: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); }
+ul.plain { margin: 0; padding-left: 20px; max-width: 74ch; display: flex; flex-direction: column; gap: 4px; }
+
+code { font-family: var(--f-mono); font-size: .88em; background: var(--code-bg); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
+.code { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--code-bg); }
+.code-bar { display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; border-bottom: 1px solid var(--line); font: 12px var(--f-mono); color: var(--muted); gap: 12px; }
+.code-bar button { font: 12px var(--f-body); border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 5px; padding: 3px 10px; cursor: pointer; }
+.code-bar button:hover { border-color: var(--accent); }
+.code pre { margin: 0; padding: 14px 16px; overflow-x: auto; font: 13px/1.55 var(--f-mono); tab-size: 4; }
+.code pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.k { color: var(--tok-kw); font-weight: 600; } .s { color: var(--tok-str); } .c { color: var(--tok-com); font-style: italic; }
+.p { color: var(--tok-pp); } .nmb { color: var(--tok-num); } .f { color: var(--tok-fn); }
+
+.callout { border-radius: 8px; padding: 12px 16px; display: flex; flex-direction: column; gap: 6px; max-width: 82ch; }
+.callout b.t { font-size: 13px; letter-spacing: .04em; text-transform: uppercase; }
+.trap { background: var(--bad-soft); border-left: 4px solid var(--bad); }
+.trap b.t { color: var(--bad); }
+.tip { background: var(--info-soft); border-left: 4px solid var(--info); }
+.tip b.t { color: var(--info); }
+.okc { background: var(--ok-soft); border-left: 4px solid var(--ok); }
+.okc b.t { color: var(--ok); }
+
+.tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); background: var(--code-bg); }
+tr:last-child td { border-bottom: 0; }
+td code { white-space: nowrap; }
+.num { font-variant-numeric: tabular-nums; font-family: var(--f-mono); }
+
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.tree { font: 14px/1.6 var(--f-mono); background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; white-space: pre; overflow-x: auto; margin: 0; }
+.tree .dir { color: var(--info); font-weight: 600; } .tree .ino { color: var(--accent); }
+
+details.answer { border: 1px solid var(--line); border-radius: 8px; padding: 0; background: var(--surface); }
+details.answer > summary { cursor: pointer; padding: 10px 14px; font-weight: 600; list-style: none; display: flex; gap: 10px; align-items: baseline; }
+details.answer > summary::-webkit-details-marker { display: none; }
+details.answer > summary::before { content: "▸"; color: var(--accent); }
+details.answer[open] > summary::before { content: "▾"; }
+details.answer > div { padding: 2px 16px 14px 34px; display: flex; flex-direction: column; gap: 10px; }
+
+/* Plan de révision */
+.plan { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
+.day { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--surface); display: flex; flex-direction: column; gap: 4px; }
+.day .d { font: 600 12px var(--f-mono); color: var(--muted); }
+.day.today { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.day.today .d { color: var(--accent); }
+.day.past { opacity: .55; }
+.day.exam { background: var(--accent-soft); border-color: var(--accent); }
+.day .w { font-size: 14px; }
+
+/* Quiz */
+.quiz-top { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: 13px var(--f-body); border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.score { font: 600 15px var(--f-mono); font-variant-numeric: tabular-nums; }
+.btn { font: 600 14px var(--f-body); border: 1px solid var(--accent); background: var(--accent); color: #fff; border-radius: 6px; padding: 7px 14px; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.qlist { display: flex; flex-direction: column; gap: 14px; }
+.q { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.q .qh { display: flex; gap: 10px; align-items: baseline; }
+.q .qn { font: 600 12px var(--f-mono); color: var(--muted); min-width: 28px; }
+.q .qt { font-weight: 600; }
+.q .qtag { margin-left: auto; font: 11px var(--f-mono); color: var(--accent); white-space: nowrap; }
+.opts { display: grid; gap: 6px; }
+.opt { text-align: left; font: 15px/1.4 var(--f-body); border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 7px; padding: 8px 12px; cursor: pointer; }
+.opt:hover:not(:disabled) { border-color: var(--accent); }
+.opt:disabled { cursor: default; }
+.opt.right { background: var(--ok-soft); border-color: var(--ok); }
+.opt.wrong { background: var(--bad-soft); border-color: var(--bad); }
+.expl { font-size: 14px; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 8px; }
+.expl b { color: var(--ink); }
+.opt.sel { border-color: var(--info); background: var(--info-soft); box-shadow: inset 0 0 0 1px var(--info); }
+.manref { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 13px; color: var(--muted); }
+.manref code { color: var(--info); }
+kbd { font: 600 12px var(--f-mono); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 1px 6px; background: var(--surface); }
+.exam-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; background: var(--info-soft); border: 1px solid var(--info); border-radius: 8px; padding: 10px 14px; }
+.exam-bar .timer { font: 700 20px var(--f-mono); font-variant-numeric: tabular-nums; }
+.note { font: 700 30px var(--f-display); }
+#exam-bar { position: sticky; top: 8px; z-index: 5; }
+.page { display: flex; flex-direction: column; gap: 28px; }
+.js .page { display: none; }
+.js .page.on { display: flex; }
+nav.side li a.cur { background: var(--surface); box-shadow: inset 3px 0 0 var(--accent); font-weight: 600; }
+.pager { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pager a { display: flex; flex-direction: column; gap: 2px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); text-decoration: none; }
+.pager a:hover { border-color: var(--accent); }
+.pager a.next { text-align: right; grid-column: 2; }
+.pager small { color: var(--muted); font-size: 12px; }
+.pager b { font-size: 15px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+.card { display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); text-decoration: none; }
+.card:hover { border-color: var(--accent); }
+.card .n { font: 600 12px var(--f-mono); color: var(--accent); display: flex; justify-content: space-between; }
+.card b { font-size: 16px; }
+.card span.d { font-size: 14px; color: var(--muted); }
+.card.done .n::after { content: "✓ maîtrisé"; color: var(--ok); }
+.hidden { display: none !important; }
+.defis { display: flex; flex-direction: column; gap: 8px; }
+.defis details.answer > summary { font-weight: 500; }
+.defis .cmd { font: 600 13px var(--f-mono); color: var(--accent); }
+
+footer { color: var(--muted); font-size: 13px; }
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  nav.side { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); padding: 16px; }
+  nav.side ol { flex-direction: row; flex-wrap: wrap; }
+  nav.side li a { padding: 4px 8px; border: 1px solid var(--line); }
+  .navsep { display: none; }
+  main { padding: 20px 16px 60px; }
+  section.chap { padding: 20px 16px; }
+  h1 { font-size: 30px; }
+}
+/* ===== Habillage portfolio ===== */
+body { background: radial-gradient(1100px 600px at 75% -10%, #13204a 0%, var(--bg) 60%) fixed, var(--bg); -webkit-font-smoothing: antialiased; }
+h1, h2 { letter-spacing: -.02em; font-weight: 600; }
+h1 em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: 0; color: #7aa2ff; }
+section.chap { border-radius: 18px; background: rgba(14,22,41,.78); box-shadow: 0 30px 60px -36px rgba(0,0,0,.8); backdrop-filter: blur(8px); }
+.countdown { border-left-color: var(--info); }
+.countdown .big { color: #fff; }
+.bar > i { background: linear-gradient(90deg, #3d74ff, #5ee3ff); }
+.btn { border-radius: 999px; }
+.chip, .code-bar button { border-radius: 999px; }
+.card, .day, .q, .pager a { border-radius: 14px; }
+.card:hover, .pager a:hover { border-color: #7aa2ff; background: rgba(61,116,255,.08); }
+.chap-head .tag, .card .n, .q .qtag, .defis .cmd { color: var(--info); }
+::selection { background: #3d74ff; color: #fff; }
+.topbar { position: relative; z-index: 10; border-bottom: 1px solid var(--line); background: rgba(7,11,22,.7); backdrop-filter: blur(12px); }
+.topbar .in { max-width: 1180px; margin: 0 auto; padding: 0 20px; height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.topbar .logo { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-weight: 500; font-size: 15px; }
+.topbar .logo i { font-family: var(--serif); font-size: 1.2em; color: #7aa2ff; }
+.topbar .mark { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; font: 500 11px var(--f-mono); color: #fff; background: linear-gradient(140deg,#3d74ff,#1c3fa8); }
+.topbar nav { display: flex; gap: 6px; }
+.topbar nav a { color: var(--muted); text-decoration: none; font-size: 14px; padding: 7px 12px; border-radius: 999px; transition: background .2s, color .2s; }
+.topbar nav a:hover { color: var(--ink); background: rgba(122,162,255,.12); }
+nav.side { height: 100vh; }
+@media (max-width: 600px) { .topbar .logo span:last-child { display: none; } }
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add("js");</script>
+<header class="topbar"><div class="in">
+  <a class="logo" href="../index.html"><span class="mark">RA</span><span>Rohan <i>Alamelou</i></span></a>
+  <nav><a href="../cours.html">← Hub de révision</a><a href="../index.html">Portfolio</a></nav>
+</div></header>
+<div class="layout">
+<nav class="side" aria-label="Chapitres">
+  <div class="brand"><b>INSA CVL</b> · STI · Programmation Système</div>
+  <div class="countdown">
+    <div class="big" id="jour">J-12</div>
+    <div class="small" id="jour-txt">avant l'examen du jeudi 3 décembre</div>
+  </div>
+  <div class="progress">
+    <span id="prog-txt">0 / 10 chapitres maîtrisés</span>
+    <div class="bar"><i id="prog-bar"></i></div>
+  </div>
+  <ol>
+    <li><a href="#accueil"><span class="n">⌂</span>Accueil et plan</a></li>
+    <li class="navsep">Cours + TD</li>
+    <li><a href="#man" data-ch="man"><span class="n">00</span>Savoir utiliser man</a></li>
+    <li><a href="#ch1" data-ch="ch1"><span class="n">01</span>Appels système, erreurs, env.</a></li>
+    <li><a href="#ch2" data-ch="ch2"><span class="n">02</span>stat, droits, ls -lR</a></li>
+    <li><a href="#ch3" data-ch="ch3"><span class="n">03</span>Système de fichiers, i-nœuds</a></li>
+    <li><a href="#ch4" data-ch="ch4"><span class="n">04</span>Fichiers : open, read, write</a></li>
+    <li><a href="#ch5" data-ch="ch5"><span class="n">05</span>Verrous et mmap</a></li>
+    <li><a href="#ch6" data-ch="ch6"><span class="n">06</span>fork et wait</a></li>
+    <li><a href="#ch7" data-ch="ch7"><span class="n">07</span>Orphelins, zombies, exec</a></li>
+    <li><a href="#ch8" data-ch="ch8"><span class="n">08</span>Mini-shell et dup2</a></li>
+    <li><a href="#ch9" data-ch="ch9"><span class="n">09</span>TP Mini-GLIBC</a></li>
+    <li class="navsep">S'entraîner</li>
+    <li><a href="#memo"><span class="n">≡</span>Antisèche des fonctions</a></li>
+    <li><a href="#pieges"><span class="n">!</span>Pièges classiques</a></li>
+    <li><a href="#quiz"><span class="n">?</span>QCM</a></li>
+  </ol>
+</nav>
+
+<main>
+<div class="page" id="accueil">
+<header style="display:flex;flex-direction:column;gap:10px">
+  <h1>Programmation Système&nbsp;: <em>tout pour le 3 décembre</em></h1>
+  <p class="lead">Évaluation individuelle : un QCM + savoir trouver la bonne info dans <code>man</code>. Ce site reprend les 8 TD et le TP Mini-GLIBC en une page par chapitre, avec pour chacun les pages man où chercher, plus une page dédiée à man et un QCM blanc chronométré. Coche un chapitre quand tu sais réécrire son code et retrouver ses infos dans man sans aide.</p>
+</header>
+
+<section class="chap" id="pages-list">
+  <div class="chap-head"><h2>Les pages</h2><span class="src">clique pour ouvrir</span></div>
+  <div class="cards">
+    <a class="card" href="#man" data-ch="man"><span class="n">00</span><b>Savoir utiliser man</b><span class="d">Sections, rubriques, navigation, où chercher, 14 défis</span></a>
+    <a class="card" href="#ch1" data-ch="ch1"><span class="n">01 · TD 1</span><b>Appels système, erreurs, env.</b><span class="d">errno, perror, environ, getenv, getpwnam</span></a>
+    <a class="card" href="#ch2" data-ch="ch2"><span class="n">02 · TD 2</span><b>stat, droits, ls -lR</b><span class="d">struct stat, S_ISDIR, opendir/readdir</span></a>
+    <a class="card" href="#ch3" data-ch="ch3"><span class="n">03 · TD 3</span><b>Système de fichiers</b><span class="d">i-nœuds, blocs, corrigé complet</span></a>
+    <a class="card" href="#ch4" data-ch="ch4"><span class="n">04 · TD 4</span><b>open, read, write, lseek</b><span class="d">copie, comparaison, tail, enregistrements</span></a>
+    <a class="card" href="#ch5" data-ch="ch5"><span class="n">05 · TD 5</span><b>Verrous et mmap</b><span class="d">fcntl, struct flock, MAP_SHARED</span></a>
+    <a class="card" href="#ch6" data-ch="ch6"><span class="n">06 · TD 6</span><b>fork et wait</b><span class="d">PID, code de retour, offset partagé</span></a>
+    <a class="card" href="#ch7" data-ch="ch7"><span class="n">07 · TD 7</span><b>Orphelins, zombies, exec</b><span class="d">famille exec, mini-shell</span></a>
+    <a class="card" href="#ch8" data-ch="ch8"><span class="n">08 · TD 8</span><b>Mini-shell et dup2</b><span class="d">redirections &gt;, &gt;&gt;, 2&gt;</span></a>
+    <a class="card" href="#ch9" data-ch="ch9"><span class="n">09 · TP</span><b>Mini-GLIBC</b><span class="d">sbrk, tampons, MYFILE, commandes</span></a>
+    <a class="card" href="#memo"><span class="n">≡</span><b>Antisèche</b><span class="d">tous les prototypes et retours</span></a>
+    <a class="card" href="#pieges"><span class="n">!</span><b>Pièges classiques</b><span class="d">ce qui fait perdre des points</span></a>
+    <a class="card" href="#quiz"><span class="n">?</span><b>QCM</b><span class="d">entraînement et QCM blanc chronométré</span></a>
+  </div>
+</section>
+
+<section class="chap" id="plan-rev">
+  <div class="chap-head"><h2>Plan de révision</h2><span class="src">1 à 2 h par jour suffit</span></div>
+  <div class="plan" id="plan-grid"></div>
+  <div class="callout tip"><b class="t">La méthode qui marche</b><p>Chaque jour : lis le chapitre, puis fais ses exercices avec <b>man ouvert à côté</b> au lieu de cette page, comme le jour de l'examen. Termine par le QCM filtré sur le chapitre. Les deux derniers jours, passe le QCM blanc chronométré.</p></div>
+</section>
+</div>
+
+<!-- ============ MAN ============ -->
+<section class="chap page-sec" id="man">
+  <div class="chap-head">
+    <span class="tag">Compétence évaluée</span>
+    <h2>Savoir utiliser man et savoir où regarder</h2>
+    <label class="check"><input type="checkbox" data-done="man"> Je maîtrise</label>
+  </div>
+  <h3>En deux phrases</h3>
+  <p><code>man</code> est la documentation installée sur la machine : chaque fonction a une page, toujours découpée dans les mêmes rubriques. Le jour de l'examen, tu n'as pas besoin de tout retenir : il faut savoir <b>quelle page ouvrir</b> et <b>quelle rubrique lire</b>.</p>
+
+  <h3>1. Les sections : le numéro qui change tout</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Section</th><th>Contenu</th><th>Exemples de ton cours</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>Commandes du shell</td><td><code>ls</code>, <code>chmod</code>, <code>ps</code>, et aussi <code>printf</code>, <code>stat</code>, <code>kill</code> (les commandes)</td></tr>
+      <tr><td class="num"><b>2</b></td><td><b>Appels système</b> (le noyau)</td><td><code>open</code>, <code>read</code>, <code>write</code>, <code>lseek</code>, <code>stat</code>, <code>fork</code>, <code>wait</code>, <code>execve</code>, <code>dup</code>, <code>fcntl</code>, <code>mmap</code>, <code>brk</code></td></tr>
+      <tr><td class="num"><b>3</b></td><td><b>Fonctions de la bibliothèque C</b></td><td><code>printf</code>, <code>fopen</code>, <code>getenv</code>, <code>perror</code>, <code>strerror</code>, <code>errno</code>, <code>opendir</code>, <code>readdir</code>, <code>getpwnam</code>, <code>exec</code> (execv, execvp…), <code>exit</code>, <code>strftime</code></td></tr>
+      <tr><td class="num">3type</td><td>Types et structures (man récent)</td><td><code>man 3type stat</code> = les champs de <code>struct stat</code></td></tr>
+      <tr><td class="num">5</td><td>Formats de fichiers</td><td><code>man 5 passwd</code> = format de <code>/etc/passwd</code></td></tr>
+      <tr><td class="num"><b>7</b></td><td><b>Vues d'ensemble</b></td><td><code>man 7 inode</code> (types et droits), <code>man 7 environ</code>, <code>man 7 signal</code></td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout trap"><b class="t">Le piège n°1</b><p>Sans numéro, <code>man</code> ouvre la première section qui a une page de ce nom. <code>man printf</code>, <code>man write</code>, <code>man stat</code> ou <code>man kill</code> ouvrent la <b>commande shell</b> (section 1), pas la fonction C. Toujours taper la section : <code>man 3 printf</code>, <code>man 2 write</code>, <code>man 2 stat</code>. En haut de la page, <code>WRITE(2)</code> ou <code>WRITE(1)</code> te dit dans quelle section tu es.</p></div>
+  <p><b>Comment savoir si c'est 2 ou 3 ?</b> Si la fonction parle directement au noyau (descripteurs, processus, mémoire brute), c'est 2. Si c'est une fonction « confort » de la libc (<code>FILE*</code>, chaînes, environnement, annuaire), c'est 3. Dans le doute : <code>man -f nom</code> (ou <code>whatis nom</code>) liste toutes les sections où il existe.</p>
+
+  <h3>2. Anatomie d'une page : quelle rubrique pour quelle question</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Rubrique</th><th>Ce que tu y trouves</th><th>Exemple</th></tr></thead>
+    <tbody>
+      <tr><td><b>NAME</b></td><td>Toutes les fonctions documentées sur la page</td><td><code>dup, dup2, dup3</code> → dup2 est dans <code>man 2 dup</code></td></tr>
+      <tr><td><b>SYNOPSIS</b></td><td>Les <code>#include</code> à mettre, le prototype exact, et parfois les « Feature Test Macro Requirements »</td><td><code>waitpid</code> → <code>#include &lt;sys/wait.h&gt;</code></td></tr>
+      <tr><td><b>DESCRIPTION</b></td><td>Ce que fait la fonction, ses options, ses structures, ses macros</td><td>drapeaux <code>O_APPEND</code> ; <code>struct flock</code> ; <code>WIFEXITED</code></td></tr>
+      <tr><td><b>RETURN VALUE</b></td><td>Ce qui est renvoyé en cas de succès et d'échec</td><td><code>mmap</code> → <code>MAP_FAILED</code> ; <code>waitpid</code> + <code>WNOHANG</code> → 0</td></tr>
+      <tr><td><b>ERRORS</b></td><td>Chaque valeur possible d'<code>errno</code> et sa cause</td><td><code>open</code> → <code>ENOENT</code>, <code>EACCES</code>, <code>EEXIST</code></td></tr>
+      <tr><td>NOTES / BUGS</td><td>Subtilités, différences entre systèmes</td><td></td></tr>
+      <tr><td><b>EXAMPLES</b></td><td>Un programme complet qui compile</td><td>présent dans <code>stat(2)</code>, <code>fork(2)</code>, <code>wait(2)</code>, <code>mmap(2)</code>, <code>execve(2)</code>, <code>getpwnam(3)</code>, <code>strftime(3)</code></td></tr>
+      <tr><td><b>SEE ALSO</b></td><td>Les pages voisines, pour rebondir</td><td><code>stat(2)</code> renvoie vers <code>inode(7)</code></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>3. Se déplacer vite dans une page</h3>
+  <div class="two">
+    <div class="tbl"><table>
+      <thead><tr><th>Touche</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>Espace</kbd> / <kbd>b</kbd></td><td>page suivante / précédente</td></tr>
+        <tr><td><kbd>/</kbd>mot <kbd>Entrée</kbd></td><td>chercher « mot » vers le bas</td></tr>
+        <tr><td><kbd>n</kbd> / <kbd>N</kbd></td><td>occurrence suivante / précédente</td></tr>
+        <tr><td><kbd>g</kbd> / <kbd>G</kbd></td><td>début / fin de la page</td></tr>
+        <tr><td><kbd>q</kbd></td><td>quitter</td></tr>
+        <tr><td><kbd>h</kbd></td><td>aide de toutes les touches</td></tr>
+      </tbody>
+    </table></div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="callout tip"><b class="t">Sauter directement à une rubrique</b><p>Tape <code>/^RETURN</code> ou <code>/^ERRORS</code> : le <code>^</code> veut dire « en début de ligne », ce qui évite de tomber sur le mot au milieu du texte.</p></div>
+      <div class="callout tip"><b class="t">Commandes utiles</b>
+        <ul class="plain">
+          <li><code>man -k mot</code> (ou <code>apropos mot</code>) : chercher une page quand on ne connaît pas son nom. Ex. <code>man -k duplicate</code> trouve <code>dup(2)</code>.</li>
+          <li><code>man -f nom</code> (ou <code>whatis nom</code>) : dans quelles sections existe ce nom.</li>
+          <li><code>man 2 syscalls</code> : la liste de tous les appels système.</li>
+          <li><code>man 2 open | grep -n O_APPEND</code> : chercher sans ouvrir la page.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h3>4. Où regarder pour chaque notion de ton cours</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Tu cherches…</th><th>Page</th><th>Rubrique</th></tr></thead>
+    <tbody>
+      <tr><td>Les <code>#include</code> d'une fonction</td><td><code>man 2|3 nom</code></td><td>SYNOPSIS</td></tr>
+      <tr><td>Ce qu'elle renvoie (-1 ? NULL ? autre ?)</td><td><code>man 2|3 nom</code></td><td>RETURN VALUE</td></tr>
+      <tr><td>Le sens d'un code d'erreur (EAGAIN, EBADF…)</td><td><code>man 3 errno</code></td><td>DESCRIPTION (liste)</td></tr>
+      <tr><td>Les drapeaux de <code>open</code> et les constantes de droits <code>S_IRUSR</code>…</td><td><code>man 2 open</code></td><td>DESCRIPTION (O_CREAT)</td></tr>
+      <tr><td>Les macros <code>S_ISDIR</code>, <code>S_ISLNK</code> et les valeurs octales des droits</td><td><code>man 7 inode</code></td><td>« The file type and mode »</td></tr>
+      <tr><td>Les champs de <code>struct stat</code></td><td><code>man 3type stat</code> (sur un vieux système : <code>man 2 stat</code>)</td><td>DESCRIPTION</td></tr>
+      <tr><td>Les champs de <code>struct dirent</code> (<code>d_name</code>, <code>d_type</code>)</td><td><code>man 3 readdir</code></td><td>DESCRIPTION</td></tr>
+      <tr><td>Les champs de <code>struct passwd</code></td><td><code>man 3 getpwnam</code></td><td>DESCRIPTION</td></tr>
+      <tr><td><code>struct flock</code>, <code>F_SETLK</code>, <code>F_SETLKW</code></td><td><code>man 2 fcntl</code></td><td>« Advisory record locking »</td></tr>
+      <tr><td><code>PROT_READ</code>, <code>MAP_SHARED</code></td><td><code>man 2 mmap</code></td><td>DESCRIPTION</td></tr>
+      <tr><td>Ce que le fils hérite (offset partagé, verrous non hérités)</td><td><code>man 2 fork</code></td><td>DESCRIPTION</td></tr>
+      <tr><td><code>WIFEXITED</code>, <code>WEXITSTATUS</code>, <code>WNOHANG</code></td><td><code>man 2 wait</code></td><td>DESCRIPTION</td></tr>
+      <tr><td><code>execv</code>, <code>execvp</code>, <code>execl</code>…</td><td><code>man 3 exec</code></td><td>DESCRIPTION</td></tr>
+      <tr><td><code>execve</code> et les descripteurs qui restent ouverts</td><td><code>man 2 execve</code></td><td>DESCRIPTION</td></tr>
+      <tr><td><code>dup2</code></td><td><code>man 2 dup</code></td><td>DESCRIPTION</td></tr>
+      <tr><td><code>sbrk</code></td><td><code>man 2 brk</code></td><td>RETURN VALUE</td></tr>
+      <tr><td><code>exit</code> vs <code>_exit</code> (tampons vidés ou non)</td><td><code>man 3 exit</code>, <code>man 2 _exit</code></td><td>DESCRIPTION</td></tr>
+      <tr><td>Les <code>%a %d %H</code>… de strftime</td><td><code>man 3 strftime</code></td><td>DESCRIPTION</td></tr>
+      <tr><td><code>environ</code>, <code>getenv</code>, <code>putenv</code></td><td><code>man 7 environ</code>, <code>man 3 getenv</code>, <code>man 3 putenv</code></td><td>DESCRIPTION</td></tr>
+      <tr><td>Les noms <code>_PC_LINK_MAX</code>…</td><td><code>man 3 pathconf</code></td><td>DESCRIPTION</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>5. Défis chronométrés : 1 minute chacun</h3>
+  <p>Ouvre un terminal, lance un chrono, cherche la réponse dans man, puis seulement ensuite clique pour vérifier.</p>
+  <div class="defis">
+    <details class="answer"><summary>Quels <code>#include</code> faut-il pour <code>waitpid</code> ?</summary><div><p><span class="cmd">man 2 waitpid</span> → SYNOPSIS : <code>#include &lt;sys/wait.h&gt;</code>.</p></div></details>
+    <details class="answer"><summary>Que renvoie <code>waitpid</code> avec <code>WNOHANG</code> si le fils tourne encore ?</summary><div><p><span class="cmd">man 2 wait</span> → <code>/^RETURN</code> : <b>0</b>.</p></div></details>
+    <details class="answer"><summary>Quel <code>errno</code> si on ouvre sans <code>O_CREAT</code> un fichier qui n'existe pas ?</summary><div><p><span class="cmd">man 2 open</span> → <code>/^ERRORS</code> puis <code>/ENOENT</code> : <b>ENOENT</b>.</p></div></details>
+    <details class="answer"><summary>Que renvoie <code>sbrk</code> en cas d'erreur ?</summary><div><p><span class="cmd">man 2 sbrk</span> (c'est la page <code>brk</code>) → RETURN VALUE : <b><code>(void *) -1</code></b> et errno = ENOMEM.</p></div></details>
+    <details class="answer"><summary>Quels sont les champs de <code>struct dirent</code> ?</summary><div><p><span class="cmd">man 3 readdir</span> → DESCRIPTION : <code>d_ino</code>, <code>d_off</code>, <code>d_reclen</code>, <code>d_type</code>, <code>d_name[256]</code>. Seuls <code>d_name</code> et <code>d_ino</code> sont garantis par POSIX ; <code>d_type</code> peut valoir <code>DT_UNKNOWN</code>, d'où l'usage de <code>lstat</code>.</p></div></details>
+    <details class="answer"><summary>Quelle macro teste un lien symbolique, et sur quel champ ?</summary><div><p><span class="cmd">man 7 inode</span> → <code>/S_ISLNK</code> : <code>S_ISLNK(st.st_mode)</code>.</p></div></details>
+    <details class="answer"><summary>Quel champ de <code>struct flock</code> donne le type de verrou ?</summary><div><p><span class="cmd">man 2 fcntl</span> → <code>/Advisory</code> : <code>l_type</code> (F_RDLCK, F_WRLCK, F_UNLCK).</p></div></details>
+    <details class="answer"><summary>Le fils hérite-t-il des verrous fcntl du père ?</summary><div><p><span class="cmd">man 2 fork</span> → <code>/record locks</code> : <b>non</b>.</p></div></details>
+    <details class="answer"><summary>Après un fork, le fils et le père partagent-ils l'offset d'un fichier ?</summary><div><p><span class="cmd">man 2 fork</span> → <code>/open file desc</code> : <b>oui</b>, même « open file description », donc mêmes flags et même offset.</p></div></details>
+    <details class="answer"><summary><code>_exit</code> vide-t-il les tampons de <code>printf</code> ?</summary><div><p><span class="cmd">man 2 _exit</span> → <code>/stdio</code> : <b>non</b>, les flux stdio ne sont pas vidés. <code>exit(3)</code>, lui, les vide.</p></div></details>
+    <details class="answer"><summary>Quel format <code>strftime</code> donne le jour de la semaine abrégé ?</summary><div><p><span class="cmd">man 3 strftime</span> → <code>/%a</code> : <b>%a</b>.</p></div></details>
+    <details class="answer"><summary>Faut-il le droit de lecture sur un fichier pour faire <code>stat</code> dessus ?</summary><div><p><span class="cmd">man 2 stat</span> → DESCRIPTION : <b>non</b>, aucun droit sur le fichier lui-même, seulement le droit d'exécution (traversée) sur les répertoires du chemin.</p></div></details>
+    <details class="answer"><summary>Dans quelle page est documenté <code>execvp</code> ?</summary><div><p><span class="cmd">man -f execvp</span> → <code>exec(3)</code>. C'est une fonction de la libc qui finit par appeler l'appel système <code>execve(2)</code>.</p></div></details>
+    <details class="answer"><summary>Tu ne te rappelles plus le nom de la fonction qui « duplique un descripteur ». Comment la trouver ?</summary><div><p><span class="cmd">man -k duplicate</span> (ou <code>apropos duplicate</code>) → <code>dup (2) - duplicate a file descriptor</code>.</p></div></details>
+  </div>
+  <div class="callout tip"><b class="t">Si man -k ne trouve rien</b><p>L'index n'est peut-être pas construit sur la machine (<code>mandb</code> pas lancé). Passe par <code>man 2 syscalls</code> ou par la rubrique SEE ALSO d'une page proche.</p></div>
+</section>
+
+<!-- ============ CH1 ============ -->
+<section class="chap page-sec" id="ch1">
+  <div class="chap-head">
+    <span class="tag">TD 1</span>
+    <h2>Appels système, erreurs et environnement</h2>
+    <label class="check"><input type="checkbox" data-done="ch1"> Je maîtrise</label>
+  </div>
+  <div class="manref"><b>Dans man :</b> <code>man 2 write</code> <code>man 3 errno</code> <code>man 3 perror</code> <code>man 3 strerror</code> <code>man 3 getenv</code> <code>man 7 environ</code> <code>man 3 pathconf</code> <code>man 3 getpwnam</code></div>
+  <h3>En deux phrases</h3>
+  <p>Un <b>appel système</b> est une demande faite au noyau (écrire, ouvrir un fichier, créer un processus…). En cas d'échec il renvoie presque toujours <code>-1</code> et range un numéro d'erreur dans la variable globale <code>errno</code>.</p>
+  <h3>Gérer une erreur, étape par étape</h3>
+  <ol class="steps">
+    <li><span>Faire l'appel et <b>stocker son retour</b> : <code>ret = write(...)</code>.</span></li>
+    <li><span>Tester <code>ret == -1</code> (ou <code>NULL</code> pour les fonctions qui renvoient un pointeur).</span></li>
+    <li><span>Copier <code>errno</code> tout de suite dans une variable : le moindre appel suivant peut l'écraser.</span></li>
+    <li><span>Afficher : <code>perror("contexte")</code> écrit « contexte: message » sur la sortie d'erreur. Ou fais-le à la main avec <code>strerror(errno)</code>, qui renvoie le texte.</span></li>
+  </ol>
+  <div class="code"><div class="code-bar"><span>erreur.c · exercices 2 à 4</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;stdio.h&gt;    // printf, fprintf, perror
+#include &lt;string.h&gt;   // strerror
+#include &lt;errno.h&gt;    // la variable globale errno
+#include &lt;unistd.h&gt;   // write
+
+int main(void) {
+    // 42 n'est pas un descripteur ouvert -&gt; l'appel système échoue
+    ssize_t ret = write(42, "hello\n", 6);
+
+    if (ret == -1) {                 // -1 = échec, errno a été rempli
+        int e = errno;               // on SAUVE errno tout de suite :
+                                     // le prochain appel peut l'écraser
+        perror("write");             // -&gt; write: Bad file descriptor
+
+        // Équivalent "fait main" : strerror traduit le code en texte
+        fprintf(stderr, "Mon perror : %s (errno=%d)\n", strerror(e), e);
+        return 1;
+    }
+    return 0;
+}</code></pre></div>
+  <div class="callout tip"><b class="t">Exercice 1 en une ligne</b><p><code>syscall(SYS_write, STDOUT_FILENO, "hello\n", 6);</code> appelle le noyau directement par son numéro. <code>write(1, "hello\n", 6)</code> fait la même chose via une petite fonction de la libc. Le 6 = 5 lettres + <code>'\n'</code>.</p></div>
+  <h3>Variables d'environnement</h3>
+  <p><code>extern char **environ;</code> est un tableau de chaînes <code>"NOM=valeur"</code> qui se termine par <code>NULL</code>. <code>getenv("HOME")</code> renvoie juste la partie valeur, ou <code>NULL</code> si la variable n'existe pas. <code>putenv("X=1")</code> ajoute ou modifie une variable.</p>
+  <div class="code"><div class="code-bar"><span>monenv.c · exercices 6 et 7</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;   // getenv
+
+extern char **environ;   // tableau de chaînes "NOM=valeur", terminé par NULL
+
+int main(int argc, char *argv[]) {
+    if (argc &lt; 2) {                        // pas d'argument : on imite "env"
+        for (char **p = environ; *p != NULL; p++)
+            printf("%s\n", *p);
+        return 0;
+    }
+    char *valeur = getenv(argv[1]);        // ex : ./monenv HOME
+    if (valeur == NULL) {                  // la variable n'existe pas
+        fprintf(stderr, "%s : variable inconnue\n", argv[1]);
+        return 1;
+    }
+    printf("%s=%s\n", argv[1], valeur);
+    return 0;
+}</code></pre></div>
+  <h3>Limites du système et comptes utilisateurs</h3>
+  <ul class="plain">
+    <li><code>long pathconf(const char *path, int name)</code> donne une limite qui dépend du fichier : <code>_PC_LINK_MAX</code> (nb max de liens), <code>_PC_NAME_MAX</code> (longueur d'un nom), <code>_PC_PATH_MAX</code>. Renvoie <code>-1</code> si erreur ou si pas de limite.</li>
+    <li><code>getpwnam(login)</code> et <code>getpwuid(uid)</code> renvoient un <code>struct passwd *</code> (champs <code>pw_name</code>, <code>pw_uid</code>, <code>pw_gid</code>, <code>pw_gecos</code>, <code>pw_dir</code>, <code>pw_shell</code>), ou <code>NULL</code> si inconnu.</li>
+  </ul>
+  <div class="code"><div class="code-bar"><span>infouser.c · exercice 10</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;pwd.h&gt;      // struct passwd, getpwnam
+
+int main(int argc, char *argv[]) {
+    if (argc != 2) { fprintf(stderr, "usage : %s login\n", argv[0]); return 1; }
+
+    struct passwd *u = getpwnam(argv[1]);  // cherche le compte par son nom
+    if (u == NULL) { printf("Utilisateur inconnu\n"); return 1; }
+
+    printf("Nom     : %s\n", u-&gt;pw_name);
+    printf("UID/GID : %d / %d\n", (int)u-&gt;pw_uid, (int)u-&gt;pw_gid);
+    printf("Infos   : %s\n", u-&gt;pw_gecos);
+    printf("Home    : %s\n", u-&gt;pw_dir);
+    printf("Shell   : %s\n", u-&gt;pw_shell);
+    return 0;
+}</code></pre></div>
+  <div class="callout okc"><b class="t">Question de cours (exo 12)</b><p>Ton login n'est pas dans <code>/etc/passwd</code> mais <code>getpwnam</code> le trouve : les comptes de l'école viennent d'un annuaire réseau (LDAP). <code>/etc/passwd</code> ne contient que les comptes locaux.</p></div>
+</section>
+
+<!-- ============ CH2 ============ -->
+<section class="chap page-sec" id="ch2">
+  <div class="chap-head">
+    <span class="tag">TD 2 · ton fichier td02_correction.c</span>
+    <h2>stat, types de fichiers, droits et ls -lR</h2>
+    <label class="check"><input type="checkbox" data-done="ch2"> Je maîtrise</label>
+  </div>
+  <div class="manref"><b>Dans man :</b> <code>man 2 stat</code> <code>man 3type stat</code> <code>man 7 inode</code> <code>man 3 opendir</code> <code>man 3 readdir</code> <code>man 3 getpwuid</code> <code>man 3 getgrgid</code> <code>man 3 strftime</code></div>
+  <h3>En deux phrases</h3>
+  <p><code>stat(chemin, &amp;st)</code> remplit une structure <code>struct stat</code> avec tout ce que l'i-nœud sait du fichier : type, droits, taille, propriétaire, dates. Pour lister un répertoire on utilise <code>opendir</code>, puis <code>readdir</code> en boucle, puis <code>closedir</code>.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Champ de struct stat</th><th>Contenu</th><th>Comment l'afficher</th></tr></thead>
+    <tbody>
+      <tr><td><code>st_mode</code></td><td>type + 9 bits de droits</td><td><code>S_ISDIR(st.st_mode)</code>, <code>st.st_mode &amp; S_IRUSR</code></td></tr>
+      <tr><td><code>st_size</code></td><td>taille en octets</td><td><code>(long)st.st_size</code></td></tr>
+      <tr><td><code>st_nlink</code></td><td>nombre de liens physiques</td><td><code>(int)st.st_nlink</code></td></tr>
+      <tr><td><code>st_uid</code>, <code>st_gid</code></td><td>numéros propriétaire / groupe</td><td><code>getpwuid(uid)-&gt;pw_name</code>, <code>getgrgid(gid)-&gt;gr_name</code></td></tr>
+      <tr><td><code>st_mtime</code></td><td>date de dernière modification</td><td><code>strftime(buf, n, "%d/%m %H:%M", localtime(&amp;st.st_mtime))</code></td></tr>
+      <tr><td><code>st_ino</code></td><td>numéro d'i-nœud</td><td><code>(long)st.st_ino</code></td></tr>
+    </tbody>
+  </table></div>
+  <h3>Lire les droits : le masque binaire</h3>
+  <p><code>st_mode</code> est un nombre dont chaque bit veut dire quelque chose. <code>st_mode &amp; S_IWGRP</code> garde uniquement le bit « écriture pour le groupe » : le résultat est non nul si le droit existe. Les droits en octal : <b>r = 4, w = 2, x = 1</b>, un chiffre pour propriétaire / groupe / autres. Exemple : <code>0754</code> = <code>rwx r-x r--</code>.</p>
+  <div class="code"><div class="code-bar"><span>mon_ls.c · version courte et commentée du TD 2</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;dirent.h&gt;     // opendir, readdir, closedir
+#include &lt;sys/stat.h&gt;   // lstat, S_ISDIR...
+
+// Affiche type + droits comme "ls -l" : ex. drwxr-xr-x
+void affiche_droits(mode_t m) {
+    char type = '?';
+    if      (S_ISREG(m))  type = '-';   // fichier ordinaire
+    else if (S_ISDIR(m))  type = 'd';   // répertoire
+    else if (S_ISLNK(m))  type = 'l';   // lien symbolique (lstat seulement !)
+    else if (S_ISCHR(m))  type = 'c';   // périphérique caractère
+    else if (S_ISBLK(m))  type = 'b';   // périphérique bloc
+    else if (S_ISFIFO(m)) type = 'p';   // tube nommé
+    else if (S_ISSOCK(m)) type = 's';   // socket
+
+    // m &amp; S_IRUSR est NON NUL si le bit "lecture propriétaire" est à 1
+    printf("%c%c%c%c%c%c%c%c%c%c", type,
+           m &amp; S_IRUSR ? 'r' : '-', m &amp; S_IWUSR ? 'w' : '-', m &amp; S_IXUSR ? 'x' : '-',
+           m &amp; S_IRGRP ? 'r' : '-', m &amp; S_IWGRP ? 'w' : '-', m &amp; S_IXGRP ? 'x' : '-',
+           m &amp; S_IROTH ? 'r' : '-', m &amp; S_IWOTH ? 'w' : '-', m &amp; S_IXOTH ? 'x' : '-');
+}
+
+// Parcours RÉCURSIF d'un répertoire (comme ls -lR)
+void parcours(const char *chemin) {
+    DIR *d = opendir(chemin);              // 1) ouvrir le répertoire
+    if (d == NULL) { perror(chemin); return; }
+
+    struct dirent *e;
+    while ((e = readdir(d)) != NULL) {     // 2) une entrée à chaque appel
+        // ignorer "." et ".." sinon boucle infinie !
+        if (strcmp(e-&gt;d_name, ".") == 0 || strcmp(e-&gt;d_name, "..") == 0)
+            continue;
+
+        char complet[4096];                // 3) construire "chemin/nom"
+        snprintf(complet, sizeof(complet), "%s/%s", chemin, e-&gt;d_name);
+
+        struct stat st;
+        if (lstat(complet, &amp;st) == -1) { perror(complet); continue; }
+
+        affiche_droits(st.st_mode);
+        printf(" %8ld %s\n", (long)st.st_size, complet);
+
+        if (S_ISDIR(st.st_mode))           // 4) sous-répertoire -&gt; on descend
+            parcours(complet);
+    }
+    closedir(d);                           // 5) toujours fermer
+}
+
+int main(int argc, char *argv[]) {
+    parcours(argc &gt; 1 ? argv[1] : ".");
+    return 0;
+}</code></pre></div>
+  <div class="callout tip"><b class="t">Ce que fait ta correction en plus</b><p>Elle parcourt chaque répertoire <b>deux fois</b> : un premier <code>readdir</code> pour tout afficher, puis <code>rewinddir(dp)</code> pour revenir au début et descendre dans les sous-répertoires. On obtient ainsi l'ordre de <code>ls -lR</code> : tout le contenu d'un dossier, puis les sous-dossiers.</p></div>
+  <div class="callout trap"><b class="t">Pièges</b>
+    <ul class="plain">
+      <li><code>stat</code> suit les liens symboliques : avec lui, <code>S_ISLNK</code> n'est jamais vrai. Il faut <code>lstat</code> pour voir le lien lui-même.</li>
+      <li>Oublier d'ignorer <code>.</code> et <code>..</code> dans un parcours récursif donne une boucle infinie.</li>
+      <li><code>d_name</code> ne contient que le nom : il faut construire <code>"chemin/nom"</code> avec <code>snprintf</code> avant d'appeler <code>lstat</code>.</li>
+      <li>Dans ta correction, <code>char pws[9]</code> puis <code>strcpy(pws, pw-&gt;pw_name)</code> déborde si le login fait plus de 8 lettres. Version sûre : <code>snprintf(pws, sizeof(pws), "%s", pw-&gt;pw_name)</code>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ CH3 ============ -->
+<section class="chap page-sec" id="ch3">
+  <div class="chap-head">
+    <span class="tag">TD 3 · corrigé complet</span>
+    <h2>Système de fichiers et i-nœuds</h2>
+    <label class="check"><input type="checkbox" data-done="ch3"> Je maîtrise</label>
+  </div>
+  <div class="manref"><b>Dans man :</b> <code>man 7 inode</code> <code>man 2 link</code> <code>man 2 symlink</code> <code>man 2 unlink</code> <code>man 2 rename</code></div>
+  <h3>En deux phrases</h3>
+  <p>Un fichier = un <b>i-nœud</b> (type, taille, nb de liens, liste des blocs) + des <b>blocs de données</b>. Le <b>nom</b> n'est pas dans l'i-nœud : il est stocké dans le bloc du répertoire parent, sous forme de paires (nom, n° d'i-nœud).</p>
+  <h3>Le sujet résumé</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>i-nœud</th><th>Type</th><th>Taille</th><th>Liens</th><th>Blocs</th><th>Contenu des blocs</th></tr></thead>
+    <tbody class="num">
+      <tr><td>0</td><td>rép.</td><td>1024</td><td>4</td><td>0</td><td>. 0 · .. 0 · toto 1 · tata 3</td></tr>
+      <tr><td>1</td><td>rép.</td><td>1024</td><td>2</td><td>1</td><td>. 1 · .. 0 · a.txt 2 · b.txt 5</td></tr>
+      <tr><td>2</td><td>fichier</td><td>1900</td><td>1</td><td>3, 5</td><td>bloc 3 : aaaa… · bloc 5 : bbbb…</td></tr>
+      <tr><td>3</td><td>rép.</td><td>1024</td><td>2</td><td>4</td><td>. 3 · .. 0 · c.txt 7</td></tr>
+      <tr><td>5</td><td>fichier</td><td>16</td><td>1</td><td>7</td><td>bonjour\nbonjour\n</td></tr>
+      <tr><td>7</td><td>fichier</td><td>20</td><td>1</td><td>6</td><td>12345 / 67890 / 67890</td></tr>
+    </tbody>
+  </table></div>
+  <p>Bitmap i-nœuds <code>1111010100</code> : libres = 4, 6, 8, 9. Bitmap blocs <code>1101111100</code> : libres = 2, 8, 9.</p>
+
+  <details class="answer" open><summary>Exercice 1 · arborescence, place libre, fragmentation</summary><div>
+    <div class="two">
+<pre class="tree"><span class="dir">/</span>            <span class="ino">(i-nœud 0)</span>
+├── <span class="dir">toto/</span>    <span class="ino">(1)</span>
+│   ├── a.txt  <span class="ino">(2)</span>
+│   └── b.txt  <span class="ino">(5)</span>
+└── <span class="dir">tata/</span>    <span class="ino">(3)</span>
+    └── c.txt  <span class="ino">(7)</span></pre>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <p><b>Place libre</b> : 3 blocs libres (2, 8, 9) × 1024 = <b>3072 octets</b>.</p>
+        <p><b>Fragmentation interne</b> = ce qui est perdu à la fin du dernier bloc de chaque fichier :</p>
+        <ul class="plain num">
+          <li>a.txt : 2 × 1024 − 1900 = 148</li>
+          <li>b.txt : 1024 − 16 = 1008</li>
+          <li>c.txt : 1024 − 20 = 1004</li>
+          <li><b>Total : 2160 octets</b> (les répertoires ont une taille de 1024, ils n'en perdent pas)</li>
+        </ul>
+      </div>
+    </div>
+    <p><b>Vérifier les liens</b> : « / » a 4 liens = son <code>.</code> + son <code>..</code> + le <code>..</code> de toto + le <code>..</code> de tata. Un répertoire sans sous-répertoire a toujours 2 liens (son nom dans le parent + son <code>.</code>).</p>
+  </div></details>
+
+  <details class="answer" open><summary>Exercice 2 · contenu des fichiers</summary><div>
+    <ul class="plain">
+      <li><b>a.txt</b> (1900 octets, blocs 3 puis 5) : 1024 « a » puis 876 « b ».</li>
+      <li><b>b.txt</b> (16 octets, bloc 7) : <code>bonjour\nbonjour\n</code> (2 × 8 = 16 ✓).</li>
+      <li><b>c.txt</b> (20 octets, bloc 6) : les lignes 12345, 67890, 67890.</li>
+    </ul>
+  </div></details>
+
+  <details class="answer" open><summary>Exercice 3 · blocs à lire pour trouver l'i-nœud de /toto/a.txt</summary><div>
+    <ol class="steps">
+      <li><span>i-nœud 0 (racine, connu d'avance) → lire le <b>bloc 0</b> → on y trouve <code>toto 1</code>.</span></li>
+      <li><span>i-nœud 1 → lire le <b>bloc 1</b> → on y trouve <code>a.txt 2</code>.</span></li>
+    </ol>
+    <p><b>2 blocs de données</b> (0 et 1), en supposant la table des i-nœuds déjà en mémoire. Sinon il faut aussi lire les i-nœuds 0 et 1 sur le disque.</p>
+  </div></details>
+
+  <details class="answer" open><summary>Exercice 4 · effet de chaque commande (depuis l'état initial)</summary><div>
+    <div class="tbl"><table>
+      <thead><tr><th>Commande</th><th>Ce qui change</th></tr></thead>
+      <tbody>
+        <tr><td><code>mv /toto/b.txt /tata</code></td><td>L'entrée <code>b.txt 5</code> quitte le bloc 1 et s'ajoute au bloc 4. L'i-nœud 5 et ses données ne bougent pas : un <code>mv</code> dans le même disque ne déplace que le nom.</td></tr>
+        <tr><td><code>mv /toto /tata</code></td><td><code>toto 1</code> quitte le bloc 0 et s'ajoute au bloc 4. Dans le bloc 1, <code>.. 0</code> devient <code>.. 3</code>. Liens : i-nœud 0 passe de 4 à 3, i-nœud 3 passe de 2 à 3.</td></tr>
+        <tr><td><code>rm /toto/b.txt</code></td><td>Entrée retirée du bloc 1. Liens de l'i-nœud 5 : 1 → 0, donc l'i-nœud 5 et le bloc 7 sont libérés (bits remis à 0 dans les deux bitmaps).</td></tr>
+        <tr><td><code>cp /toto/a.txt /tata</code></td><td>Nouvel i-nœud 4 (fichier, 1900 octets, 1 lien), 2 nouveaux blocs (2 et 8) qui reçoivent une copie des données, entrée <code>a.txt 4</code> ajoutée au bloc 4. Bitmaps mis à jour.</td></tr>
+        <tr><td><code>ln -s /toto/b.txt /toto/bb.txt</code></td><td>Nouvel i-nœud 4 de type <b>lien symbolique</b>, taille 11 (longueur de « /toto/b.txt »), bloc 2 qui contient ce chemin, entrée <code>bb.txt 4</code> dans le bloc 1. L'i-nœud 5 ne change pas (un lien symbolique n'augmente pas le nb de liens).</td></tr>
+        <tr><td><code>cat /tata/c.txt &gt;&gt; toto/a.txt</code></td><td>a.txt passe de 1900 à 1920 octets. Le bloc 5 contenait 876 octets : 876 + 20 = 896 ≤ 1024, donc on écrit dans le bloc 5 sans nouveau bloc. Seuls la taille de l'i-nœud 2 et le bloc 5 changent.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout tip"><b class="t">Lien physique vs symbolique</b><p><code>ln a b</code> (physique) ajoute un nom vers le <b>même</b> i-nœud, dont le compteur de liens augmente. <code>ln -s a b</code> crée un <b>nouvel</b> i-nœud qui contient juste le chemin « a ». Si on supprime a, le lien physique marche toujours, le symbolique est cassé.</p></div>
+  </div></details>
+
+  <details class="answer" open><summary>Exercices 5 à 7 · l'implémentation en mémoire</summary><div>
+    <p><b>Exo 5</b> : <code>num_bloc</code> est un tableau d'entiers alloué avec <code>calloc</code>. La case 0 contient le <b>nombre</b> de blocs, les cases suivantes les numéros. Pour l'i-nœud 2 : <code>{2, 3, 5}</code> = « 2 blocs : le 3 et le 5 ».</p>
+    <div class="code"><div class="code-bar"><span>fs.c · fonctions print et get_num_inode</span><button type="button" class="copy">Copier</button></div><pre><code>// Exercice 6 : afficher le contenu du fichier de l'i-noeud n
+// Rappel du modèle : num_bloc[0] = NOMBRE de blocs,
+//                    num_bloc[1..] = numéros des blocs
+void print(int n) {
+    int nb_blocs = table[n].num_bloc[0];
+    int reste    = table[n].taille;          // octets qu'il reste à afficher
+
+    for (int i = 1; i &lt;= nb_blocs; i++) {
+        int b = table[n].num_bloc[i];        // numéro du i-ème bloc
+        int a_lire = (reste &lt; TMAX) ? reste : TMAX;  // dernier bloc : pas plein
+        for (int k = 0; k &lt; a_lire; k++)
+            putchar(blocs[b][k]);
+        reste -= a_lire;
+    }
+}
+
+// Exercice 7 : numéro d'i-noeud de "name" dans le répertoire d'i-noeud rep
+// Un bloc de répertoire contient des lignes "nom numero\n"
+int get_num_inode(int rep, char *name) {
+    if (table[rep].type != 0) return -1;     // ce n'est pas un répertoire
+
+    int nb_blocs = table[rep].num_bloc[0];
+    for (int i = 1; i &lt;= nb_blocs; i++) {
+        char copie[TMAX + 1];
+        strncpy(copie, blocs[table[rep].num_bloc[i]], TMAX);
+        copie[TMAX] = '\0';                  // strtok modifie la chaîne : on copie
+
+        char *ligne = strtok(copie, "\n");   // découpe ligne par ligne
+        while (ligne != NULL) {
+            char nom[TMAX]; int num;
+            if (sscanf(ligne, "%s %d", nom, &amp;num) == 2
+                &amp;&amp; strcmp(nom, name) == 0)
+                return num;                  // trouvé !
+            ligne = strtok(NULL, "\n");
+        }
+    }
+    return -1;                               // pas trouvé
+}</code></pre></div>
+  </div></details>
+</section>
+
+<!-- ============ CH4 ============ -->
+<section class="chap page-sec" id="ch4">
+  <div class="chap-head">
+    <span class="tag">TD 4</span>
+    <h2>Fichiers : open, read, write, lseek</h2>
+    <label class="check"><input type="checkbox" data-done="ch4"> Je maîtrise</label>
+  </div>
+  <div class="manref"><b>Dans man :</b> <code>man 2 open</code> <code>man 2 read</code> <code>man 2 write</code> <code>man 2 lseek</code> <code>man 2 close</code> <code>man 2 access</code> <code>man 2 creat</code></div>
+  <h3>En deux phrases</h3>
+  <p><code>open</code> renvoie un <b>descripteur</b> : un petit entier (0 = entrée standard, 1 = sortie, 2 = erreur, puis 3, 4…). Ensuite <code>read</code> et <code>write</code> lisent ou écrivent à partir de la <b>position courante</b> (l'offset), qui avance à chaque appel et que <code>lseek</code> déplace.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Drapeau de open</th><th>Effet</th></tr></thead>
+    <tbody>
+      <tr><td><code>O_RDONLY</code> / <code>O_WRONLY</code> / <code>O_RDWR</code></td><td>lecture seule / écriture seule / les deux (un seul des trois)</td></tr>
+      <tr><td><code>O_CREAT</code></td><td>crée le fichier s'il n'existe pas. <b>Exige le 3e argument</b> : les droits, ex. <code>0644</code></td></tr>
+      <tr><td><code>O_TRUNC</code></td><td>vide le fichier à l'ouverture</td></tr>
+      <tr><td><code>O_APPEND</code></td><td>chaque write se fait à la fin</td></tr>
+      <tr><td><code>O_EXCL</code> (avec O_CREAT)</td><td>échoue si le fichier existe déjà</td></tr>
+    </tbody>
+  </table></div>
+  <p><b>Valeurs de retour de read</b> : nombre d'octets lus (peut être moins que demandé), <code>0</code> = fin de fichier, <code>-1</code> = erreur. C'est ce qui permet la boucle <code>while ((n = read(...)) &gt; 0)</code>.</p>
+  <div class="code"><div class="code-bar"><span>moncp.c · exercice 3, copie avec vérifications</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;fcntl.h&gt;    // open, O_RDONLY, O_WRONLY...
+#include &lt;unistd.h&gt;   // read, write, close, access
+
+#define TAILLE 4096
+
+int main(int argc, char *argv[]) {
+    // 1) Vérifier le nombre d'arguments
+    if (argc != 3) {
+        fprintf(stderr, "usage : %s source destination\n", argv[0]);
+        return 1;
+    }
+    // 2) Le fichier source est-il lisible ?
+    if (access(argv[1], R_OK) == -1) { perror(argv[1]); return 1; }
+
+    // 3) Ouvrir la source en lecture
+    int src = open(argv[1], O_RDONLY);
+    if (src == -1) { perror("open source"); return 1; }
+
+    // 4) Créer/vider la destination (droits rw-r--r-- = 0644)
+    //    open échoue si le répertoire n'est pas accessible en écriture
+    int dst = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    if (dst == -1) { perror("open destination"); close(src); return 1; }
+
+    // 5) Boucle lire -&gt; écrire jusqu'à la fin du fichier (read renvoie 0)
+    char buf[TAILLE];
+    ssize_t n;
+    while ((n = read(src, buf, TAILLE)) &gt; 0) {
+        if (write(dst, buf, n) != n) { perror("write"); return 1; }
+    }
+    if (n == -1) perror("read");
+
+    // 6) Toujours fermer
+    close(src);
+    close(dst);
+    return 0;
+}</code></pre></div>
+  <div class="code"><div class="code-bar"><span>moncmp.c · exercice 5, OK / NOK</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;unistd.h&gt;
+
+int main(int argc, char *argv[]) {
+    if (argc != 3) { fprintf(stderr, "usage : %s f1 f2\n", argv[0]); return 2; }
+
+    int f1 = open(argv[1], O_RDONLY);
+    int f2 = open(argv[2], O_RDONLY);
+    if (f1 == -1 || f2 == -1) { perror("open"); return 2; }
+
+    char c1, c2;
+    ssize_t n1, n2;
+    do {
+        n1 = read(f1, &amp;c1, 1);           // 1 octet de chaque fichier
+        n2 = read(f2, &amp;c2, 1);
+        if (n1 != n2 || (n1 == 1 &amp;&amp; c1 != c2)) {
+            printf("NOK\n");             // tailles ou contenus différents
+            return 1;
+        }
+    } while (n1 == 1);                   // on s'arrête quand les deux sont finis
+
+    printf("OK\n");
+    close(f1); close(f2);
+    return 0;
+}</code></pre></div>
+  <h3>Enregistrements de taille fixe (exos 6 et 7)</h3>
+  <p>Si chaque entrée fait exactement <code>sizeof(Entree)</code> octets, l'entrée n° k commence à l'octet <code>k * sizeof(Entree)</code>. On y saute directement avec <code>lseek</code>, sans tout lire.</p>
+  <div class="code"><div class="code-bar"><span>notes.c · exercices 6 et 7</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;   // atoi
+#include &lt;string.h&gt;   // strncpy
+#include &lt;fcntl.h&gt;
+#include &lt;unistd.h&gt;
+
+// Un enregistrement = taille FIXE -&gt; on peut sauter directement au n-ième
+typedef struct {
+    char nom[20];
+    int  note;
+} Entree;
+
+int main(int argc, char *argv[]) {
+    if (argc == 3) {                         // ./notes Alice 15  -&gt; AJOUT
+        Entree e;
+        memset(&amp;e, 0, sizeof(e));            // tout à zéro (nom propre)
+        strncpy(e.nom, argv[1], 19);         // 19 max + '\0'
+        e.note = atoi(argv[2]);
+
+        int fd = open("note.dat", O_WRONLY | O_CREAT | O_APPEND, 0644);
+        if (fd == -1) { perror("open"); return 1; }
+        write(fd, &amp;e, sizeof(e));            // on écrit la struct brute
+        close(fd);
+    }
+    else if (argc == 2) {                    // ./notes 2  -&gt; LECTURE entrée n°2
+        int num = atoi(argv[1]);
+        int fd = open("note.dat", O_RDONLY);
+        if (fd == -1) { perror("open"); return 1; }
+
+        // On se place au début de l'entrée num (numérotée à partir de 0)
+        lseek(fd, num * sizeof(Entree), SEEK_SET);
+
+        Entree e;
+        if (read(fd, &amp;e, sizeof(e)) != sizeof(e)) {
+            fprintf(stderr, "Entrée %d inexistante\n", num);
+            return 1;
+        }
+        printf("%s : %d\n", e.nom, e.note);
+        close(fd);
+    }
+    return 0;
+}</code></pre></div>
+  <div class="code"><div class="code-bar"><span>montail.c · exercice 4, les N dernières lignes</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;unistd.h&gt;
+
+// ./montail 3 fichier.txt  -&gt; affiche les 3 dernières lignes
+int main(int argc, char *argv[]) {
+    if (argc != 3) { fprintf(stderr, "usage : %s N fichier\n", argv[0]); return 1; }
+    int N  = atoi(argv[1]);
+    int fd = open(argv[2], O_RDONLY);
+    if (fd == -1) { perror("open"); return 1; }
+
+    off_t taille = lseek(fd, 0, SEEK_END);   // lseek renvoie la position = taille
+    off_t pos = taille;
+    int sauts = 0;
+    char c;
+
+    // On remonte depuis la fin en comptant les '\n'
+    while (pos &gt; 0) {
+        pos--;
+        lseek(fd, pos, SEEK_SET);
+        read(fd, &amp;c, 1);
+        // le '\n' final du fichier ne compte pas
+        if (c == '\n' &amp;&amp; pos != taille - 1) {
+            sauts++;
+            if (sauts == N) { pos++; break; }  // on démarre après ce '\n'
+        }
+    }
+    // On affiche de pos jusqu'à la fin
+    lseek(fd, pos, SEEK_SET);
+    char buf[1024]; ssize_t n;
+    while ((n = read(fd, buf, sizeof(buf))) &gt; 0)
+        write(STDOUT_FILENO, buf, n);
+    close(fd);
+    return 0;
+}</code></pre></div>
+  <div class="callout trap"><b class="t">Pièges</b>
+    <ul class="plain">
+      <li><code>write(dst, buf, TAILLE)</code> au lieu de <code>write(dst, buf, n)</code> : au dernier tour on écrit des déchets.</li>
+      <li><code>O_CREAT</code> sans le 3e argument donne des droits aléatoires.</li>
+      <li><code>read</code> ne met pas de <code>'\0'</code> à la fin : ajoute-le toi-même si tu veux faire <code>printf("%s")</code>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ CH5 ============ -->
+<section class="chap page-sec" id="ch5">
+  <div class="chap-head">
+    <span class="tag">TD 5</span>
+    <h2>Verrous (fcntl) et projection mémoire (mmap)</h2>
+    <label class="check"><input type="checkbox" data-done="ch5"> Je maîtrise</label>
+  </div>
+  <div class="manref"><b>Dans man :</b> <code>man 2 fcntl (rubrique « Advisory record locking »)</code> <code>man 2 mmap</code> <code>man 2 munmap</code></div>
+  <h3>En deux phrases</h3>
+  <p>Un verrou empêche deux processus de modifier la même zone d'un fichier en même temps. On décrit la zone et le type de verrou dans une <code>struct flock</code>, puis on appelle <code>fcntl(fd, commande, &amp;lock)</code>.</p>
+  <div class="two">
+    <div class="tbl"><table>
+      <thead><tr><th>Un processus tient…</th><th>Lecture demandée</th><th>Écriture demandée</th></tr></thead>
+      <tbody>
+        <tr><td>rien</td><td>accordé</td><td>accordé</td></tr>
+        <tr><td>verrou lecture</td><td>accordé (partagé)</td><td><b>refusé</b></td></tr>
+        <tr><td>verrou écriture</td><td><b>refusé</b></td><td><b>refusé</b></td></tr>
+      </tbody>
+    </table></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Commande</th><th>Si le verrou est pris</th></tr></thead>
+      <tbody>
+        <tr><td><code>F_SETLK</code></td><td>renvoie -1 tout de suite (errno = EAGAIN ou EACCES)</td></tr>
+        <tr><td><code>F_SETLKW</code></td><td>attend (W = Wait) jusqu'à libération</td></tr>
+        <tr><td><code>F_GETLK</code></td><td>dit qui bloque, sans rien poser</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="code"><div class="code-bar"><span>lock.h · exercice 1</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;fcntl.h&gt;
+#include &lt;unistd.h&gt;
+
+// Pose (ou enlève) un verrou sur une zone du fichier fd
+int lock_reg(int fd, int cmd, int type, off_t offset, int whence, off_t len) {
+    struct flock lock;
+    lock.l_type   = type;    // F_RDLCK (lecture), F_WRLCK (écriture), F_UNLCK
+    lock.l_start  = offset;  // début de la zone, relatif à whence
+    lock.l_whence = whence;  // SEEK_SET, SEEK_CUR ou SEEK_END
+    lock.l_len    = len;     // nb d'octets (0 = jusqu'à la fin du fichier)
+    return fcntl(fd, cmd, &amp;lock);  // cmd : F_SETLK ou F_SETLKW
+}
+
+// F_SETLK  = NON bloquant : échoue tout de suite (-1, errno=EAGAIN/EACCES)
+// F_SETLKW = bloquant (W = Wait) : attend que le verrou soit libre
+#define read_lock(fd, o, w, l)   lock_reg(fd, F_SETLK,  F_RDLCK, o, w, l)
+#define readw_lock(fd, o, w, l)  lock_reg(fd, F_SETLKW, F_RDLCK, o, w, l)
+#define write_lock(fd, o, w, l)  lock_reg(fd, F_SETLK,  F_WRLCK, o, w, l)
+#define writew_lock(fd, o, w, l) lock_reg(fd, F_SETLKW, F_WRLCK, o, w, l)
+#define un_lock(fd, o, w, l)     lock_reg(fd, F_SETLK,  F_UNLCK, o, w, l)</code></pre></div>
+  <div class="code"><div class="code-bar"><span>lockfile.c · exercices 2 à 4</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;sys/stat.h&gt;
+#include "lock.h"
+
+int main(void) {
+    // Créer templock1 : rw-r--r--
+    int fd = creat("templock1", S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+    if (fd == -1) { perror("creat"); exit(1); }
+    write(fd, "ab", 2);
+
+    // Verrou BLOQUANT en écriture sur l'octet 0
+    if (writew_lock(fd, 0, SEEK_SET, 1) == -1) perror("writew_lock");
+    printf("lockfile : verrou posé sur l'octet 0, je dors 30 s\n");
+    sleep(30);
+    // Le verrou est libéré automatiquement à la fin du processus
+    return 0;
+}</code></pre></div>
+  <p><b>Exo 5, ce qu'on observe</b> : lance <code>lockfile</code> dans un terminal puis <code>trytolockfile</code> (qui ouvre en <code>O_RDONLY</code> et fait <code>read_lock</code>) dans un autre. Le verrou lecture est refusé tant que lockfile dort avec son verrou écriture. Avec <code>readw_lock</code>, trytolockfile reste bloqué jusqu'à la fin des 30 s.</p>
+  <div class="callout trap"><b class="t">Pièges</b>
+    <ul class="plain">
+      <li>Pour un verrou lecture le fichier doit être ouvert en lecture, pour un verrou écriture en écriture. Sinon : <code>EBADF</code>.</li>
+      <li>Les verrous <code>fcntl</code> sont <b>consultatifs</b> : un processus qui ne demande pas de verrou peut quand même écrire.</li>
+      <li>Les verrous ne sont <b>pas hérités</b> par le fils après <code>fork</code> et disparaissent quand le processus se termine ou ferme le fichier.</li>
+    </ul>
+  </div>
+  <h3>mmap : un fichier vu comme un tableau</h3>
+  <p><code>mmap</code> place le contenu du fichier dans la mémoire du processus et renvoie un pointeur. On lit et écrit alors avec <code>adr[i]</code> au lieu de read/write. Avec <code>MAP_SHARED</code>, une modification en mémoire est <b>écrite dans le fichier</b> (réponse de l'exo 7) et visible par les autres processus. Avec <code>MAP_PRIVATE</code>, elle reste une copie privée.</p>
+  <div class="code"><div class="code-bar"><span>projection.c · exercice 7</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/mman.h&gt;   // mmap, munmap
+#include &lt;sys/stat.h&gt;   // fstat
+
+int main(void) {
+    // O_RDWR obligatoire pour PROT_WRITE + MAP_SHARED
+    int fd = open("test.dat", O_RDWR);
+    if (fd == -1) { perror("open"); exit(1); }
+
+    struct stat st;
+    fstat(fd, &amp;st);                       // taille réelle du fichier
+
+    char *adr = mmap(NULL, st.st_size,    // NULL : le noyau choisit l'adresse
+                     PROT_READ | PROT_WRITE,
+                     MAP_SHARED,          // modifs répercutées DANS le fichier
+                     fd, 0);              // à partir de l'octet 0
+    if (adr == MAP_FAILED) { perror("mmap"); exit(2); }
+
+    printf("Avant : %.*s\n", (int)st.st_size, adr);
+    adr[1] = 'e';                         // on écrit en mémoire...
+    printf("Après : %.*s\n", (int)st.st_size, adr);
+    // ... et le fichier test.dat est modifié lui aussi !
+
+    munmap(adr, st.st_size);
+    close(fd);
+    return 0;
+}</code></pre></div>
+  <div class="callout trap"><b class="t">Piège de la correction</b><p>Elle ouvre avec <code>O_RDONLY | 0666</code> puis demande <code>PROT_WRITE</code> + <code>MAP_SHARED</code> : <code>mmap</code> échoue (<code>EACCES</code>). Il faut <code>O_RDWR</code>. Le <code>0666</code> n'a rien à faire dans les drapeaux, c'est un 3e argument. Et <code>mmap</code> renvoie <code>MAP_FAILED</code>, pas <code>NULL</code>, en cas d'erreur.</p></div>
+</section>
+
+<!-- ============ CH6 ============ -->
+<section class="chap page-sec" id="ch6">
+  <div class="chap-head">
+    <span class="tag">TD 6</span>
+    <h2>Processus : fork et wait</h2>
+    <label class="check"><input type="checkbox" data-done="ch6"> Je maîtrise</label>
+  </div>
+  <div class="manref"><b>Dans man :</b> <code>man 2 fork</code> <code>man 2 wait</code> <code>man 2 getpid</code> <code>man 2 pread</code></div>
+  <h3>En deux phrases</h3>
+  <p><code>fork()</code> crée une copie presque identique du processus. Les deux continuent le code juste après <code>fork</code> ; seule la valeur renvoyée les distingue : <b>0 dans le fils</b>, <b>le PID du fils dans le père</b>, -1 en cas d'échec.</p>
+  <ol class="steps">
+    <li><span>Le père appelle <code>fork()</code>.</span></li>
+    <li><span><code>if (pid == 0)</code> : code du fils, qui finit par <code>exit(code)</code>.</span></li>
+    <li><span>Sinon : code du père, qui appelle <code>wait(&amp;status)</code> pour attendre et « ramasser » le fils.</span></li>
+    <li><span><code>WIFEXITED(status)</code> est vrai si le fils a fini normalement ; <code>WEXITSTATUS(status)</code> donne alors son code (0 à 255).</span></li>
+  </ol>
+  <div class="code"><div class="code-bar"><span>fork.c · exercices 1 et 4</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;     // fork, getpid, getppid, sleep
+#include &lt;sys/wait.h&gt;   // wait, WIFEXITED, WEXITSTATUS
+
+int main(void) {
+    printf("[%d] Je vais engendrer\n", getpid());
+
+    fflush(stdout);              // vider le tampon AVANT fork (voir pièges)
+    pid_t pid = fork();          // à partir d'ici : 2 processus exécutent la suite
+
+    if (pid == -1) {             // échec (trop de processus...)
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+    if (pid == 0) {              // ===== FILS : fork a renvoyé 0 =====
+        printf("[%d] Fils, mon père est %d\n", getpid(), getppid());
+        sleep(2);
+        exit(7);                 // code de retour choisi : 7
+    }
+    // ===== PÈRE : fork a renvoyé le PID du fils =====
+    printf("[%d] Père, mon fils est %d\n", getpid(), pid);
+
+    int status;
+    pid_t fini = wait(&amp;status);  // bloque jusqu'à la fin d'UN fils
+    if (WIFEXITED(status))       // terminé normalement (exit / return) ?
+        printf("[%d] Fils %d fini, code = %d\n",
+               getpid(), fini, WEXITSTATUS(status));   // -&gt; 7
+    else
+        printf("Fils terminé anormalement (signal)\n");
+    return 0;
+}</code></pre></div>
+  <p><b>Ordre d'apparition (exo 1)</b> : après <code>fork</code>, c'est l'ordonnanceur qui décide qui s'exécute d'abord. On ne peut <b>jamais</b> supposer que le père ou le fils affiche en premier. Seul <code>wait</code> garantit que le père termine après le fils.</p>
+  <h3>Fichier ouvert avant fork (exos 2 et 3)</h3>
+  <p>Le fils reçoit une copie des descripteurs, mais ils pointent vers la <b>même entrée de la table des fichiers ouverts</b> que ceux du père. Ils partagent donc le <b>même offset</b>.</p>
+  <ol class="steps">
+    <li><span>Le père lit 2 octets avant le fork : l'offset partagé vaut 2.</span></li>
+    <li><span>Le premier qui écrit (disons le père, « bar ») écrit aux octets 2 à 4 ; l'offset passe à 5.</span></li>
+    <li><span>Le fils écrit « foo » aux octets 5 à 7 ; offset = 8.</span></li>
+    <li><span>Le père relit après 1 s à partir de 8, le fils après 2 s à partir de 11 : <b>aucun ne relit ce qu'il a écrit</b>.</span></li>
+  </ol>
+  <div class="code"><div class="code-bar"><span>exercice 3 · solution avec pread / pwrite</span><button type="button" class="copy">Copier</button></div><pre><code>// Solution exo 3 : pwrite / pread prennent l'offset en paramètre
+// et ne touchent PAS à l'offset partagé -&gt; plus d'interférence
+if (pid == 0) {                       // fils
+    pwrite(fd, "foo", 3, 3);          // écrit à l'offset 3
+    sleep(2);
+    pread(fd, buf, 3, 3);             // relit à l'offset 3
+} else {                              // père
+    pwrite(fd, "bar", 3, 3);
+    sleep(1);
+    pread(fd, buf, 3, 3);
+}
+// Il reste une course (qui écrit en dernier ?) -&gt; ajouter un verrou
+// fcntl (TD5) autour de "écrire + relire" pour la rendre atomique.</code></pre></div>
+  <p>Autres solutions acceptées : faire <code>lseek(fd, 3, SEEK_SET)</code> avant chaque opération (mais un autre processus peut bouger l'offset entre les deux, donc il faut un verrou), ou faire le <code>open</code> <b>après</b> le fork pour que chacun ait son propre offset.</p>
+</section>
+
+<!-- ============ CH7 ============ -->
+<section class="chap page-sec" id="ch7">
+  <div class="chap-head">
+    <span class="tag">TD 7 · corrigé rédigé</span>
+    <h2>Orphelins, zombies et exec</h2>
+    <label class="check"><input type="checkbox" data-done="ch7"> Je maîtrise</label>
+  </div>
+  <div class="manref"><b>Dans man :</b> <code>man 2 execve</code> <code>man 3 exec</code> <code>man 3 exit</code> <code>man 2 _exit</code></div>
+  <div class="two">
+    <div class="callout tip"><b class="t">Orphelin</b><p>Le <b>père meurt avant le fils</b>. Le fils est adopté par <code>init</code> (PID 1), ou par un « subreaper » comme <code>systemd --user</code> sur les Linux récents. Usage (exo 2) : les <b>démons</b> (serveurs en arrière-plan) se détachent ainsi du terminal.</p></div>
+    <div class="callout trap"><b class="t">Zombie</b><p>Le <b>fils est mort</b> mais le père, toujours vivant, n'a pas fait <code>wait</code>. Le noyau garde son entrée (PID + code de retour). Visible avec <code>ps aux</code> : état <code>Z</code>, <code>&lt;defunct&gt;</code>. Danger (exo 5) : chaque zombie occupe un PID, assez de zombies et plus aucun processus ne peut être créé.</p></div>
+  </div>
+  <div class="code"><div class="code-bar"><span>orphelin.c · exercice 1</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+
+int main(void) {
+    pid_t pid = fork();
+    if (pid == 0) {                         // FILS
+        printf("Fils : mon père est %d\n", getppid());
+        sleep(3);                           // pendant ce temps le père meurt
+        printf("Fils : maintenant mon père est %d (adopté)\n", getppid());
+        exit(0);                            // -&gt; 1 (init) ou un "subreaper"
+    }
+    printf("Père %d : je quitte sans attendre\n", getpid());
+    exit(0);                                // le père meurt AVANT le fils
+}</code></pre></div>
+  <div class="code"><div class="code-bar"><span>zombie.c · exercices 3 et 4</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+
+int main(void) {
+    pid_t pid = fork();
+    if (pid == 0) {                         // FILS : meurt tout de suite
+        exit(0);
+    }
+    // PÈRE : vivant mais ne fait PAS wait() -&gt; le fils reste zombie
+    printf("Père : lance  ps aux | grep defunct  (fils %d)\n", pid);
+    sleep(60);
+    return 0;   // à la mort du père, init adopte le zombie et le "ramasse"
+}</code></pre></div>
+  <h3>exec : la mutation</h3>
+  <p><code>exec</code> <b>remplace</b> le programme du processus par un autre. Le PID reste le même, les descripteurs ouverts sont conservés. Si exec réussit, il ne revient jamais : les lignes après lui ne s'exécutent qu'en cas d'échec.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Fonction</th><th>Arguments passés</th><th>Cherche dans le PATH ?</th><th>Environnement</th></tr></thead>
+    <tbody>
+      <tr><td><code>execve(path, argv, envp)</code></td><td>tableau</td><td>non, chemin complet</td><td>donné</td></tr>
+      <tr><td><code>execv(path, argv)</code></td><td>tableau</td><td>non</td><td>hérité</td></tr>
+      <tr><td><code>execvp(file, argv)</code></td><td>tableau</td><td><b>oui</b></td><td>hérité</td></tr>
+      <tr><td><code>execl(path, a0, a1, ..., NULL)</code></td><td>liste</td><td>non</td><td>hérité</td></tr>
+      <tr><td><code>execlp(file, a0, ..., NULL)</code></td><td>liste</td><td><b>oui</b></td><td>hérité</td></tr>
+    </tbody>
+  </table></div>
+  <p>Moyen mnémotechnique : <b>v</b> = vecteur (tableau), <b>l</b> = liste, <b>p</b> = PATH, <b>e</b> = environnement. Le tableau <code>argv</code> doit commencer par le nom du programme et <b>finir par NULL</b>.</p>
+  <div class="code"><div class="code-bar"><span>lance.c · exercice 6</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+
+extern char **environ;
+
+// ./lance /bin/ls -l /tmp
+int main(int argc, char *argv[]) {
+    if (argc &lt; 2) { fprintf(stderr, "usage : %s /chemin/cmd [args]\n", argv[0]); return 1; }
+
+    // argv+1 = {"/bin/ls", "-l", "/tmp", NULL} : déjà terminé par NULL !
+    execve(argv[1], argv + 1, environ);
+
+    // On n'arrive ICI que si execve a ÉCHOUÉ
+    // (en cas de succès, le code du programme est remplacé)
+    perror("execve");
+    return 1;
+}</code></pre></div>
+  <h3>Mini-shell (exo 7) = boucle lire, fork, exec, wait</h3>
+  <div class="code"><div class="code-bar"><span>minishell.c · exercice 7</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/wait.h&gt;
+
+#define MAX 256
+
+int main(void) {
+    char ligne[MAX];
+    char *args[MAX / 2];
+
+    while (1) {
+        printf("mini-shell&gt; ");
+        fflush(stdout);                        // afficher le prompt maintenant
+        if (fgets(ligne, MAX, stdin) == NULL) break;   // Ctrl-D
+        ligne[strcspn(ligne, "\n")] = '\0';    // enlever le '\n' final
+
+        // Découper la ligne en mots : "ls -l /tmp" -&gt; {"ls","-l","/tmp",NULL}
+        int n = 0;
+        char *mot = strtok(ligne, " ");
+        while (mot != NULL) {
+            args[n++] = mot;
+            mot = strtok(NULL, " ");
+        }
+        args[n] = NULL;                        // exec exige un NULL final
+        if (n == 0) continue;                  // ligne vide
+        if (strcmp(args[0], "exit") == 0) break;
+
+        pid_t pid = fork();
+        if (pid == -1) { perror("fork"); continue; }
+        if (pid == 0) {                        // FILS : devient la commande
+            execvp(args[0], args);             // p = cherche dans le PATH
+            perror(args[0]);                   // seulement si exec a échoué
+            exit(127);
+        }
+        int status;                            // PÈRE : attend la fin
+        waitpid(pid, &amp;status, 0);
+    }
+    return 0;
+}</code></pre></div>
+  <div class="callout tip"><b class="t">Pourquoi fork avant exec ?</b><p>Si le shell appelait exec directement, il serait remplacé par la commande et disparaîtrait. Le fils se « sacrifie » pour devenir la commande, le père survit et attend.</p></div>
+</section>
+
+<!-- ============ CH8 ============ -->
+<section class="chap page-sec" id="ch8">
+  <div class="chap-head">
+    <span class="tag">TD 8</span>
+    <h2>Redirections : dup2 dans le mini-shell</h2>
+    <label class="check"><input type="checkbox" data-done="ch8"> Je maîtrise</label>
+  </div>
+  <div class="manref"><b>Dans man :</b> <code>man 2 dup</code> <code>man 3 exec</code> <code>man 2 open</code></div>
+  <h3>En deux phrases</h3>
+  <p>Une commande comme <code>echo</code> écrit toujours sur le descripteur 1, sans savoir où il mène. <code>dup2(fd, 1)</code> fait pointer le descripteur 1 vers le même fichier que <code>fd</code> : tout ce qui allait à l'écran va désormais dans le fichier.</p>
+  <ol class="steps">
+    <li><span>Le shell lit <code>/bin/echo toto &gt; test</code> et repère le <code>&gt;</code> et le nom <code>test</code>.</span></li>
+    <li><span><code>fork()</code>.</span></li>
+    <li><span>Dans le <b>fils</b> : <code>open("test", O_WRONLY|O_CREAT|O_TRUNC, 0644)</code>, puis <code>dup2(fd, STDOUT_FILENO)</code>, puis <code>close(fd)</code>.</span></li>
+    <li><span>Toujours dans le fils : <code>execv</code>. La commande hérite du descripteur 1 redirigé.</span></li>
+    <li><span>Le <b>père</b> n'a rien redirigé : il fait <code>wait</code> et réaffiche le prompt normalement.</span></li>
+  </ol>
+  <div class="code"><div class="code-bar"><span>extrait de run_command · cœur de la redirection</span><button type="button" class="copy">Copier</button></div><pre><code>// Dans le FILS, AVANT exec : rediriger la sortie standard vers fdest
+if (strlen(fdest) &gt; 0) {                       // il y avait un "&gt; fichier"
+    int fd = open(fdest, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    //  "&gt;&gt;" : remplacer O_TRUNC par O_APPEND
+    if (fd == -1) { perror(fdest); exit(1); }
+
+    dup2(fd, STDOUT_FILENO);   // le descripteur 1 pointe maintenant sur le fichier
+    close(fd);                 // fd ne sert plus : 1 suffit
+    //  "2&gt;" : dup2(fd, STDERR_FILENO)
+}
+execv(command, arg);           // ls écrit sur "1"... donc dans le fichier
+perror("execv");
+exit(EXIT_FAILURE);</code></pre></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Syntaxe shell</th><th>open</th><th>dup2</th></tr></thead>
+    <tbody>
+      <tr><td><code>&gt; f</code></td><td><code>O_WRONLY|O_CREAT|O_TRUNC</code></td><td><code>dup2(fd, 1)</code></td></tr>
+      <tr><td><code>&gt;&gt; f</code></td><td><code>O_WRONLY|O_CREAT|O_APPEND</code></td><td><code>dup2(fd, 1)</code></td></tr>
+      <tr><td><code>2&gt; f</code></td><td><code>O_WRONLY|O_CREAT|O_TRUNC</code></td><td><code>dup2(fd, 2)</code></td></tr>
+      <tr><td><code>2&gt;&gt; f</code></td><td><code>O_WRONLY|O_CREAT|O_APPEND</code></td><td><code>dup2(fd, 2)</code></td></tr>
+      <tr><td><code>&lt; f</code></td><td><code>O_RDONLY</code></td><td><code>dup2(fd, 0)</code></td></tr>
+      <tr><td><code>cmd &amp;</code></td><td colspan="2">le père ne fait <b>pas</b> <code>wait</code> tout de suite (il ramassera plus tard avec <code>waitpid(-1, &amp;s, WNOHANG)</code>)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout trap"><b class="t">Piège</b><p>Faire le <code>dup2</code> dans le père : le shell lui-même écrirait ensuite son prompt dans le fichier. La redirection se fait <b>toujours dans le fils</b>, entre <code>fork</code> et <code>exec</code>.</p></div>
+</section>
+
+<!-- ============ CH9 ============ -->
+<section class="chap page-sec" id="ch9">
+  <div class="chap-head">
+    <span class="tag">TP Mini-GLIBC</span>
+    <h2>Recoder malloc, printf et fopen avec des appels système</h2>
+    <label class="check"><input type="checkbox" data-done="ch9"> Je maîtrise</label>
+  </div>
+  <div class="manref"><b>Dans man :</b> <code>man 2 brk</code> <code>man 2 _exit</code> <code>man 2 open</code> <code>man 2 read</code> <code>man 2 write</code> <code>man 2 chmod</code> <code>man 2 symlink</code> <code>man 2 rename</code> <code>man 2 unlink</code> <code>man 2 chdir</code></div>
+  <h3>En deux phrases</h3>
+  <p>Les fonctions de la libc (<code>calloc</code>, <code>printf</code>, <code>fopen</code>…) sont construites au-dessus des appels système (<code>sbrk</code>, <code>write</code>, <code>open</code>…). Leur astuce principale : un <b>tampon</b> en mémoire, pour faire peu d'appels système, qui coûtent cher.</p>
+  <h3>Mémoire : sbrk et une liste chaînée</h3>
+  <ol class="steps">
+    <li><span><code>sbrk(n)</code> agrandit le tas de n octets et renvoie l'<b>ancienne</b> fin du tas, qui est donc le début de la nouvelle zone. Échec : <code>(void*)-1</code>.</span></li>
+    <li><span>On garde une liste de toutes les zones données (adresse, taille, libre ou utilisée).</span></li>
+    <li><span><code>mini_free</code> ne rend rien au système : elle marque la zone libre (exo 6 : le vrai <code>free</code> non plus, en général).</span></li>
+    <li><span><code>mini_calloc</code> réutilise d'abord une zone libre assez grande, sinon appelle <code>sbrk</code>. Elle remet tout à zéro, car une zone réutilisée contient les anciennes données (exo 5 : sécurité et valeurs prévisibles).</span></li>
+  </ol>
+  <div class="code"><div class="code-bar"><span>mini_memory.c · exercices 4 à 11</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;unistd.h&gt;    // sbrk, _exit
+
+typedef struct malloc_element {
+    void *zone;                        // adresse de la zone donnée à l'utilisateur
+    int taille;                        // size_element * number_element
+    int statut;                        // 0 = libre, 1 = utilisée
+    struct malloc_element *next_malloc;// élément suivant (NULL = fin)
+} malloc_element;
+
+malloc_element *malloc_list = NULL;    // la liste est vide au départ
+
+void *mini_calloc(int size_element, int number_element) {
+    int taille = size_element * number_element;
+    if (taille &lt;= 0) return NULL;
+
+    // 1) Chercher une zone LIBRE assez grande pour la réutiliser
+    for (malloc_element *e = malloc_list; e != NULL; e = e-&gt;next_malloc) {
+        if (e-&gt;statut == 0 &amp;&amp; e-&gt;taille &gt;= taille) {
+            e-&gt;statut = 1;
+            char *p = e-&gt;zone;
+            for (int i = 0; i &lt; taille; i++) p[i] = '\0';  // remise à zéro
+            return e-&gt;zone;
+        }
+    }
+    // 2) Sinon : agrandir le tas avec sbrk (renvoie l'ANCIENNE fin du tas)
+    char *p = sbrk(taille);
+    if (p == (void *)-1) return NULL;  // échec de sbrk
+    for (int i = 0; i &lt; taille; i++) p[i] = '\0';  // calloc = mémoire à 0
+
+    // 3) Mémoriser la zone dans la liste (l'élément aussi vient de sbrk)
+    malloc_element *e = sbrk(sizeof(malloc_element));
+    if (e == (void *)-1) return NULL;
+    e-&gt;zone = p;
+    e-&gt;taille = taille;
+    e-&gt;statut = 1;
+    e-&gt;next_malloc = malloc_list;      // ajout en tête de liste
+    malloc_list = e;
+    return p;
+}
+
+void mini_free(void *ptr) {
+    // On ne rend RIEN au système : on marque juste la zone comme libre
+    for (malloc_element *e = malloc_list; e != NULL; e = e-&gt;next_malloc)
+        if (e-&gt;zone == ptr) { e-&gt;statut = 0; return; }
+}</code></pre></div>
+  <h3>mini_printf : écriture tamponnée</h3>
+  <div class="code"><div class="code-bar"><span>mini_string.c · exercices 15 à 18</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;unistd.h&gt;    // write
+
+#define BUF_SIZE 1024
+char *buffer = NULL;   // le tampon
+int ind = -1;          // -1 = tampon pas encore alloué
+
+void mini_printf(char *msg) {
+    if (ind == -1) {                         // premier appel : allocation
+        buffer = mini_calloc(sizeof(char), BUF_SIZE);
+        ind = 0;
+    }
+    for (int i = 0; msg[i] != '\0'; i++) {
+        buffer[ind++] = msg[i];              // on remplit le tampon
+        if (ind == BUF_SIZE || msg[i] == '\n') {
+            write(STDOUT_FILENO, buffer, ind);   // plein ou '\n' : on vide
+            ind = 0;
+        }
+    }
+}
+
+void mini_exit(void) {
+    // Problème de l'exo 17 : un texte SANS '\n' reste dans le tampon
+    // -&gt; on le vide avant de quitter
+    if (ind &gt; 0) write(STDOUT_FILENO, buffer, ind);
+    _exit(0);                                // appel système brut
+}</code></pre></div>
+  <div class="callout okc"><b class="t">Exos 17-18 et 34</b><p>Un texte sans <code>'\n'</code> reste dans le tampon, et <code>_exit</code> quitte sans le vider : rien ne s'affiche. On corrige dans <code>mini_exit</code> en vidant le tampon (et en appelant <code>mini_fflush</code> sur chaque fichier ouvert). <code>strace ./prog</code> montre bien un seul <code>write</code> par ligne.</p></div>
+  <h3>Sécurité des fonctions de chaînes (exo 22)</h3>
+  <p><code>mini_strcpy(s, d)</code> copie sans connaître la taille de <code>d</code> : débordement de tampon possible (buffer overflow), donc écrasement de la mémoire voisine. Correction : passer la taille, <code>mini_strncpy(s, d, taille_d)</code>, copier au plus <code>taille_d - 1</code> caractères et toujours finir par <code>'\0'</code>. Même chose pour <code>mini_scanf</code> (exo 20) : si on lit exactement <code>size_buffer</code> caractères, il n'y a plus de place pour le <code>'\0'</code>, donc lire au plus <code>size_buffer - 1</code>.</p>
+  <h3>MYFILE : lecture tamponnée</h3>
+  <div class="code"><div class="code-bar"><span>mini_io.c · exercices 27 à 29</span><button type="button" class="copy">Copier</button></div><pre><code>#include &lt;fcntl.h&gt;
+#include &lt;unistd.h&gt;
+
+#define IOBUFFER_SIZE 2048
+
+typedef struct MYFILE {
+    int fd;
+    void *buffer_read;
+    void *buffer_write;
+    int ind_read;          // -1 = buffer pas encore alloué
+    int ind_write;
+    int nb_read;           // (ajout perso) nb d'octets valides dans buffer_read
+} MYFILE;
+
+MYFILE *mini_fopen(char *file, char mode) {
+    int flags;
+    switch (mode) {
+        case 'r': flags = O_RDONLY;                      break;
+        case 'w': flags = O_WRONLY | O_CREAT | O_TRUNC;  break;
+        case 'b': flags = O_RDWR   | O_CREAT;            break;
+        case 'a': flags = O_WRONLY | O_CREAT | O_APPEND; break;
+        default:  return NULL;                           // mode inconnu
+    }
+    int fd = open(file, flags, 0644);
+    if (fd == -1) return NULL;
+
+    MYFILE *f = mini_calloc(sizeof(MYFILE), 1);
+    f-&gt;fd = fd;
+    f-&gt;buffer_read = NULL;  f-&gt;ind_read = -1;
+    f-&gt;buffer_write = NULL; f-&gt;ind_write = -1;
+    return f;
+}
+
+int mini_fread(void *buffer, int size_element, int number_element, MYFILE *f) {
+    if (f-&gt;ind_read == -1) {                     // premier appel
+        f-&gt;buffer_read = mini_calloc(1, IOBUFFER_SIZE);
+        f-&gt;ind_read = 0;
+        f-&gt;nb_read = 0;
+    }
+    char *dst = buffer, *src = f-&gt;buffer_read;
+    int voulu = size_element * number_element, copie = 0;
+
+    while (copie &lt; voulu) {
+        if (f-&gt;ind_read == f-&gt;nb_read) {             // buffer épuisé -&gt; UN read
+            f-&gt;nb_read = read(f-&gt;fd, src, IOBUFFER_SIZE);
+            if (f-&gt;nb_read == -1) return -1;     // erreur
+            if (f-&gt;nb_read == 0) break;              // fin de fichier
+            f-&gt;ind_read = 0;
+        }
+        dst[copie++] = src[f-&gt;ind_read++];       // copie octet par octet
+    }
+    return copie;                                // nb de caractères lus
+}</code></pre></div>
+  <p><b>mini_fwrite</b> marche en miroir : on copie dans <code>buffer_write</code>, et on ne fait le <code>write</code> que quand il est plein. <b>mini_fflush</b> écrit ce qui reste (<code>ind_write</code> octets) et remet l'index à 0. <b>mini_fclose</b> = <code>mini_fflush</code> + retirer de la liste des fichiers ouverts + <code>close</code>.</p>
+  <h3>Commandes système : quel appel pour quoi ?</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Commande</th><th>Appel(s) clé(s)</th></tr></thead>
+    <tbody>
+      <tr><td>mini_touch, mini_clean</td><td><code>open(f, O_WRONLY|O_CREAT, 0644)</code> ; clean ajoute <code>O_TRUNC</code></td></tr>
+      <tr><td>mini_cat, mini_cp</td><td>boucle <code>read</code> / <code>write</code></td></tr>
+      <tr><td>mini_ls</td><td><code>opendir</code>, <code>readdir</code>, <code>lstat</code> (chapitre 2)</td></tr>
+      <tr><td>mini_chmod 755 f</td><td><code>chmod(f, strtol("755", NULL, 8))</code> : le droit est en <b>octal</b></td></tr>
+      <tr><td>mini_ln</td><td><code>symlink(src, dest)</code></td></tr>
+      <tr><td>mini_mkdir, mini_rmdir</td><td><code>mkdir(d, 0755)</code>, <code>rmdir(d)</code> (vérifier <code>S_ISDIR</code> avant)</td></tr>
+      <tr><td>mini_mv</td><td><code>rename(src, dest)</code></td></tr>
+      <tr><td>mini_rm</td><td><code>lstat</code> + <code>S_ISREG</code>, puis <code>unlink(f)</code></td></tr>
+      <tr><td>mini_cd (commande interne du shell)</td><td><code>chdir(dir)</code> dans le <b>père</b>, sinon seul le fils change de dossier</td></tr>
+      <tr><td>mini_export</td><td><code>putenv</code> ou <code>setenv</code> dans le père</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ MEMO ============ -->
+<section class="chap page-sec" id="memo">
+  <div class="chap-head"><h2>Antisèche des fonctions</h2><span class="src">retour en cas d'erreur entre parenthèses</span></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Prototype</th><th>En-tête</th><th>Rôle · retour</th></tr></thead>
+    <tbody>
+      <tr><td><code>int open(const char *p, int flags, mode_t mode)</code></td><td>fcntl.h</td><td>ouvre · descripteur (-1)</td></tr>
+      <tr><td><code>int creat(const char *p, mode_t mode)</code></td><td>fcntl.h</td><td>= open O_WRONLY|O_CREAT|O_TRUNC</td></tr>
+      <tr><td><code>ssize_t read(int fd, void *buf, size_t n)</code></td><td>unistd.h</td><td>nb lus, 0 = fin (-1)</td></tr>
+      <tr><td><code>ssize_t write(int fd, const void *buf, size_t n)</code></td><td>unistd.h</td><td>nb écrits (-1)</td></tr>
+      <tr><td><code>off_t lseek(int fd, off_t off, int whence)</code></td><td>unistd.h</td><td>nouvelle position (-1) · SEEK_SET/CUR/END</td></tr>
+      <tr><td><code>ssize_t pread(int fd, void *b, size_t n, off_t off)</code></td><td>unistd.h</td><td>lit à off sans bouger l'offset</td></tr>
+      <tr><td><code>int close(int fd)</code></td><td>unistd.h</td><td>0 (-1)</td></tr>
+      <tr><td><code>int access(const char *p, int mode)</code></td><td>unistd.h</td><td>R_OK, W_OK, X_OK, F_OK · 0 (-1)</td></tr>
+      <tr><td><code>int stat / lstat(const char *p, struct stat *s)</code></td><td>sys/stat.h</td><td>infos i-nœud · 0 (-1)</td></tr>
+      <tr><td><code>int fstat(int fd, struct stat *s)</code></td><td>sys/stat.h</td><td>idem sur un descripteur</td></tr>
+      <tr><td><code>DIR *opendir(const char *p)</code></td><td>dirent.h</td><td>(NULL)</td></tr>
+      <tr><td><code>struct dirent *readdir(DIR *d)</code></td><td>dirent.h</td><td>entrée suivante · NULL = fin</td></tr>
+      <tr><td><code>int closedir(DIR *d)</code> · <code>void rewinddir(DIR *d)</code></td><td>dirent.h</td><td>fermer · revenir au début</td></tr>
+      <tr><td><code>struct passwd *getpwnam(name) / getpwuid(uid)</code></td><td>pwd.h</td><td>compte (NULL)</td></tr>
+      <tr><td><code>struct group *getgrgid(gid_t g)</code></td><td>grp.h</td><td>groupe, <code>gr_name</code> (NULL)</td></tr>
+      <tr><td><code>char *getenv(const char *nom)</code></td><td>stdlib.h</td><td>valeur (NULL)</td></tr>
+      <tr><td><code>int putenv(char *"N=V")</code> · <code>setenv(n, v, ecraser)</code></td><td>stdlib.h</td><td>0 (≠0 / -1)</td></tr>
+      <tr><td><code>long pathconf(const char *p, int name)</code></td><td>unistd.h</td><td>limite (-1)</td></tr>
+      <tr><td><code>int fcntl(int fd, int cmd, struct flock *l)</code></td><td>fcntl.h</td><td>verrous F_SETLK/F_SETLKW/F_GETLK</td></tr>
+      <tr><td><code>void *mmap(NULL, len, prot, flags, fd, off)</code></td><td>sys/mman.h</td><td>adresse (MAP_FAILED)</td></tr>
+      <tr><td><code>int munmap(void *adr, size_t len)</code></td><td>sys/mman.h</td><td>0 (-1)</td></tr>
+      <tr><td><code>pid_t fork(void)</code></td><td>unistd.h</td><td>0 au fils, PID du fils au père (-1)</td></tr>
+      <tr><td><code>pid_t getpid(void)</code> · <code>getppid(void)</code></td><td>unistd.h</td><td>mon PID · PID de mon père</td></tr>
+      <tr><td><code>pid_t wait(int *status)</code></td><td>sys/wait.h</td><td>PID du fils fini (-1 si aucun fils)</td></tr>
+      <tr><td><code>pid_t waitpid(pid_t p, int *st, int opt)</code></td><td>sys/wait.h</td><td>p = -1 : n'importe lequel · opt WNOHANG</td></tr>
+      <tr><td><code>WIFEXITED(st)</code> · <code>WEXITSTATUS(st)</code></td><td>sys/wait.h</td><td>fini normalement ? · code de exit</td></tr>
+      <tr><td><code>void exit(int)</code> · <code>void _exit(int)</code></td><td>stdlib.h · unistd.h</td><td>exit vide les tampons stdio, _exit non</td></tr>
+      <tr><td><code>int execve(path, char *argv[], char *envp[])</code></td><td>unistd.h</td><td>ne revient pas (-1)</td></tr>
+      <tr><td><code>int dup2(int ancien, int nouveau)</code></td><td>unistd.h</td><td>nouveau devient copie d'ancien (-1)</td></tr>
+      <tr><td><code>void *sbrk(intptr_t n)</code></td><td>unistd.h</td><td>ancienne fin du tas ((void*)-1)</td></tr>
+      <tr><td><code>void perror(const char *s)</code> · <code>char *strerror(int e)</code></td><td>stdio.h · string.h</td><td>message d'erreur</td></tr>
+      <tr><td><code>size_t strftime(buf, n, fmt, localtime(&amp;t))</code></td><td>time.h</td><td>date formatée</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ PIÈGES ============ -->
+<section class="chap page-sec" id="pieges">
+  <div class="chap-head"><h2>Pièges classiques à l'examen</h2><span class="src">vérifiés en compilant les codes de cette page</span></div>
+  <div class="two">
+    <div class="callout trap"><b class="t">printf puis fork</b><p>Si la sortie est redirigée (fichier, pipe), <code>printf</code> garde le texte en tampon. Le <code>fork</code> copie ce tampon : le texte sort <b>deux fois</b>. Remède : <code>fflush(stdout)</code> juste avant <code>fork</code>. Testé pendant la préparation de cette page.</p></div>
+    <div class="callout trap"><b class="t">errno écrasé</b><p>En testant <code>perror</code> puis <code>strerror(errno)</code>, la 2e ligne affichait « Invalid argument » au lieu de « Bad file descriptor » : <code>perror</code> avait modifié <code>errno</code>. Sauve-le dans une variable dès l'échec.</p></div>
+    <div class="callout trap"><b class="t">Oublier le NULL d'exec</b><p>Le tableau d'arguments doit finir par <code>NULL</code>, sinon exec lit n'importe quoi. Et <code>argv[0]</code> = le nom du programme, pas le 1er argument.</p></div>
+    <div class="callout trap"><b class="t">Tester le mauvais retour</b><p><code>mmap</code> échoue avec <code>MAP_FAILED</code>, <code>sbrk</code> avec <code>(void*)-1</code>, <code>opendir</code>/<code>getenv</code>/<code>getpwnam</code> avec <code>NULL</code>, les autres avec <code>-1</code>.</p></div>
+    <div class="callout trap"><b class="t">Droits en décimal</b><p><code>open(f, O_CREAT|O_WRONLY, 644)</code> sans le 0 devant = 644 en décimal = droits absurdes. Écris <code>0644</code>.</p></div>
+    <div class="callout trap"><b class="t">wait oublié</b><p>Sans <code>wait</code>, le fils fini devient zombie, et le père peut réafficher le prompt avant que la commande ait fini.</p></div>
+    <div class="callout trap"><b class="t">cd dans un fils</b><p>Une commande interne (<code>cd</code>, <code>export</code>, <code>exit</code>) doit être traitée par le père, <b>sans</b> fork : un fils qui change de dossier ne change rien pour le shell.</p></div>
+    <div class="callout trap"><b class="t">Ordre père / fils</b><p>« Le père s'affiche toujours en premier » est faux. Toute réponse qui dépend de l'ordre d'exécution sans <code>wait</code>, <code>sleep</code> ou verrou doit dire que l'ordre n'est pas garanti.</p></div>
+  </div>
+  <div class="callout tip"><b class="t">Squelette fork + exec + wait à savoir par cœur</b>
+<div class="code" style="margin-top:6px"><div class="code-bar"><span>squelette</span><button type="button" class="copy">Copier</button></div><pre><code>pid_t pid = fork();
+if (pid == -1) { perror("fork"); exit(1); }
+if (pid == 0) {                     // fils
+    execvp(args[0], args);          // args finit par NULL
+    perror("exec");                 // seulement si échec
+    exit(127);
+}
+int status;                         // père
+waitpid(pid, &amp;status, 0);
+if (WIFEXITED(status)) printf("code %d\n", WEXITSTATUS(status));</code></pre></div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="chap page-sec" id="quiz">
+  <div class="chap-head"><h2>QCM</h2><span class="score" id="score"></span></div>
+  <p>Deux façons de t'entraîner. <b>Entraînement</b> : la correction s'affiche dès que tu réponds, filtre par chapitre. <b>QCM blanc</b> : 20 questions tirées au hasard, 20 minutes, aucune correction avant de rendre la copie, comme le jour J.</p>
+  <div class="exam-bar hidden" id="exam-bar">
+    <span><b>QCM blanc en cours</b> · <span id="exam-count">0 / 20 répondues</span></span>
+    <span class="timer" id="timer">20:00</span>
+    <span style="display:flex;gap:8px"><button type="button" class="btn" id="rendre">Rendre ma copie</button><button type="button" class="btn ghost" id="quitter">Revenir à l'entraînement</button></span>
+  </div>
+  <div class="exam-bar hidden" id="exam-result"></div>
+  <div class="quiz-top" id="train-bar">
+    <div class="chips" id="filters" role="group" aria-label="Filtrer par chapitre"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button type="button" class="btn ghost" id="shuffle">Mélanger</button>
+      <button type="button" class="btn ghost" id="reset">Effacer mes réponses</button>
+      <button type="button" class="btn" id="blanc">Lancer un QCM blanc</button>
+    </div>
+  </div>
+  <div class="qlist" id="qlist"></div>
+</section>
+
+<footer>Sources : tes TD 1 à 8 (énoncés et corrections), ta correction du TD 2 et le TP Mini-GLIBC (J. Briffaut, J.-F. Lalande, C. Toinard, INSA CVL). Les corrigés des TD 3, 4, 7 et du TP ont été rédigés pour cette page, compilés avec <code>gcc -Wall -Wextra</code> et testés sous Linux.</footer>
+</main>
+</div>
+
+<script>
+/* ---------- Coloration syntaxique C ---------- */
+(function () {
+  const KW = new Set("int char void long short unsigned signed float double struct typedef return if else while for do switch case default break continue sizeof const static extern NULL pid_t ssize_t size_t off_t mode_t DIR FILE uid_t gid_t".split(" "));
+  const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const re = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)|("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')|(^[ \t]*#[^\n]*)|\b(\d+)\b|\b([A-Za-z_]\w*)\b(?=\s*\()|\b([A-Za-z_]\w*)\b/gm;
+  document.querySelectorAll(".code pre code").forEach(el => {
+    const src = el.textContent;
+    let out = "", last = 0, m;
+    re.lastIndex = 0;
+    while ((m = re.exec(src))) {
+      out += esc(src.slice(last, m.index));
+      const t = esc(m[0]);
+      if (m[1]) out += '<span class="c">' + t + "</span>";
+      else if (m[2]) out += '<span class="s">' + t + "</span>";
+      else if (m[3]) out += '<span class="p">' + t + "</span>";
+      else if (m[4]) out += '<span class="nmb">' + t + "</span>";
+      else if (m[5]) out += KW.has(m[5]) ? '<span class="k">' + t + "</span>" : '<span class="f">' + t + "</span>";
+      else if (m[6]) out += KW.has(m[6]) ? '<span class="k">' + t + "</span>" : t;
+      last = m.index + m[0].length;
+    }
+    el.innerHTML = out + esc(src.slice(last));
+  });
+  document.querySelectorAll(".code .copy").forEach(b => {
+    b.addEventListener("click", async () => {
+      const txt = b.closest(".code").querySelector("code").textContent;
+      try { await navigator.clipboard.writeText(txt); b.textContent = "Copié"; }
+      catch (e) { b.textContent = "Sélectionne et copie"; }
+      setTimeout(() => (b.textContent = "Copier"), 1600);
+    });
+  });
+})();
+
+/* ---------- Compte à rebours + plan ---------- */
+(function () {
+  const exam = new Date(2026, 11, 3);
+  const now = new Date(); const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const days = Math.round((exam - today) / 86400000);
+  const j = document.getElementById("jour"), jt = document.getElementById("jour-txt");
+  if (days > 0) { j.textContent = "J-" + days; jt.textContent = "avant l'examen du jeudi 3 décembre"; }
+  else if (days === 0) { j.textContent = "Jour J"; jt.textContent = "Examen aujourd'hui. Relis l'antisèche et les pièges."; }
+  else { j.textContent = "Terminé"; jt.textContent = "L'examen du 3 décembre est passé."; }
+
+  const plan = [
+    [2026,10,22,"Man + Ch. 1","Chapitre man en entier, puis appels système et errno. 5 défis man."],
+    [2026,10,23,"Ch. 4","open/read/write/lseek avec man 2 open ouvert. QCM ch. 1, 4 et man."],
+    [2026,10,24,"Ch. 2","stat, droits, ls -lR. Refaire ton TD 2 sans regarder."],
+    [2026,10,25,"Ch. 3","i-nœuds : refaire les exos 1 à 4 du TD 3 sur papier."],
+    [2026,10,26,"Ch. 5","Verrous fcntl, table de compatibilité, mmap."],
+    [2026,10,27,"Ch. 6","fork, wait, offset partagé. Prévoir les affichages."],
+    [2026,10,28,"Ch. 7","Orphelin, zombie (ps aux), famille exec."],
+    [2026,10,29,"Ch. 8","Mini-shell complet avec > et >>."],
+    [2026,10,30,"Ch. 9","sbrk, tampons, mini_printf, MYFILE."],
+    [2026,11,1,"QCM blanc n°1","QCM blanc chronométré + les 14 défis man. Revoir les erreurs."],
+    [2026,11,2,"QCM blanc n°2","Un 2e QCM blanc, antisèche, pièges. Dormir tôt."],
+    [2026,11,3,"Examen","Doute sur une question ? Vérifie dans man avant de cocher."]
+  ];
+  const fmt = new Intl.DateTimeFormat("fr-FR", { weekday: "short", day: "numeric", month: "short" });
+  const grid = document.getElementById("plan-grid");
+  plan.forEach(([y, mo, d, t, w]) => {
+    const dt = new Date(y, mo, d);
+    const div = document.createElement("div");
+    div.className = "day" + (dt.getTime() === today.getTime() ? " today" : dt < today ? " past" : "") + (d === 3 && mo === 11 ? " exam" : "");
+    div.innerHTML = '<span class="d">' + fmt.format(dt) + (dt.getTime() === today.getTime() ? " · aujourd'hui" : "") + '</span><b>' + t + '</b><span class="w">' + w + '</span>';
+    grid.appendChild(div);
+  });
+})();
+
+/* ---------- Chapitres maîtrisés (mémorisés dans ce navigateur) ---------- */
+(function () {
+  const KEY = "progsys-done";
+  let done = {};
+  try { done = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+  const boxes = document.querySelectorAll("input[data-done]");
+  function render() {
+    let n = 0;
+    boxes.forEach(b => {
+      b.checked = !!done[b.dataset.done];
+      if (b.checked) n++;
+      const a = document.querySelector('nav a[data-ch="' + b.dataset.done + '"]');
+      if (a) a.classList.toggle("done", b.checked);
+      const c = document.querySelector('.card[data-ch="' + b.dataset.done + '"]');
+      if (c) c.classList.toggle("done", b.checked);
+    });
+    document.getElementById("prog-txt").textContent = n + " / " + boxes.length + " chapitres maîtrisés";
+    document.getElementById("prog-bar").style.width = (100 * n / boxes.length) + "%";
+  }
+  boxes.forEach(b => b.addEventListener("change", () => {
+    done[b.dataset.done] = b.checked;
+    try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {}
+    render();
+  }));
+  render();
+})();
+
+/* ---------- QCM ---------- */
+(function () {
+  const Q = [
+    ["ch1","En cas d'échec, que fait la plupart des appels système ?",["Ils renvoient 0 et affichent l'erreur","Ils renvoient -1 et remplissent errno","Ils arrêtent le programme","Ils renvoient NULL et remplissent errno"],1,"Retour -1 + code dans errno. NULL concerne les fonctions qui renvoient un pointeur (opendir, getenv…)."],
+    ["ch1","Que fait perror(\"open\") ?",["Affiche « open: message de l'erreur » sur stderr","Remet errno à 0","Renvoie le texte de l'erreur","Affiche errno en nombre sur stdout"],0,"perror écrit sur la sortie d'erreur le préfixe, « : », puis le texte correspondant à errno. strerror, elle, renvoie le texte."],
+    ["ch1","Pourquoi copier errno dans une variable juste après l'échec ?",["Parce que errno est en lecture seule","Parce que l'appel suivant peut le modifier","Parce que errno n'existe que dans main","Ce n'est jamais utile"],1,"Toute fonction appelée ensuite (même perror ou printf) peut changer errno."],
+    ["ch1","Comment sait-on qu'on est arrivé au bout de environ ?",["La dernière case vaut NULL","On utilise argc","La dernière chaîne est vide","environ[0] contient la taille"],0,"environ est un tableau de char* terminé par un pointeur NULL, d'où while (*p != NULL)."],
+    ["ch2","On appelle stat() sur un lien symbolique. Que décrit la structure ?",["Le lien lui-même","Le fichier pointé par le lien","Le répertoire parent","stat échoue toujours sur un lien"],1,"stat suit le lien. Pour décrire le lien (type l), il faut lstat."],
+    ["ch2","Les droits 0640 correspondent à :",["rw-r-----","rwxr-----","rw-r--r--","r--rw----"],0,"6 = 4+2 = rw-, 4 = r--, 0 = ---."],
+    ["ch2","Que vaut st.st_mode & S_IXOTH si les autres ont le droit d'exécution ?",["0","Une valeur non nulle","-1","1 exactement"],1,"Le & garde le bit concerné : une valeur non nulle (pas forcément 1), donc « vrai » dans un if."],
+    ["ch2","Pourquoi ignorer « . » et « .. » dans un parcours récursif ?",["Ce sont des fichiers cachés","Sinon on redescend dans le même dossier ou on remonte : boucle infinie","readdir ne les renvoie jamais","lstat échoue dessus"],1,"« . » est le dossier lui-même et « .. » son parent : y descendre fait tourner le parcours en rond."],
+    ["ch3","Où est stocké le nom d'un fichier ?",["Dans son i-nœud","Dans le premier bloc du fichier","Dans le bloc de données du répertoire parent","Dans la bitmap"],2,"Un répertoire contient des paires (nom, n° d'i-nœud). L'i-nœud ne connaît pas son nom, ce qui permet d'avoir plusieurs noms (liens physiques)."],
+    ["ch3","On fait rm sur un fichier dont l'i-nœud a 2 liens. Que se passe-t-il ?",["Les données sont effacées","Le compteur passe à 1, les données restent","rm refuse","L'autre nom devient un lien cassé"],1,"Les blocs ne sont libérés que quand le nombre de liens atteint 0 (et que plus personne n'a le fichier ouvert)."],
+    ["ch3","Combien de liens a un répertoire qui ne contient aucun sous-répertoire ?",["1","2","3","0"],1,"Son nom dans le parent + son propre « . ». Chaque sous-répertoire ajoute 1 (son « .. »)."],
+    ["ch3","Un fichier de 1900 octets avec des blocs de 1024 octets perd combien en fragmentation interne ?",["124","148","876","0"],1,"Il occupe 2 blocs = 2048 octets, 2048 − 1900 = 148."],
+    ["ch4","read() renvoie 0. Cela veut dire :",["Erreur","Fin du fichier","Le fichier est vide ou fermé, on ne sait pas","Il faut rappeler read"],1,"0 = fin de fichier. Erreur = -1."],
+    ["ch4","Que renvoie lseek(fd, 0, SEEK_END) ?",["0","La taille du fichier","-1 toujours","Le dernier caractère"],1,"lseek renvoie la nouvelle position. À la fin du fichier, c'est sa taille."],
+    ["ch4","Quel appel ouvre un fichier en écriture en ajoutant à la fin, en le créant au besoin ?",["open(f, O_WRONLY|O_CREAT|O_APPEND, 0644)","open(f, O_APPEND)","open(f, O_RDWR|O_TRUNC, 0644)","open(f, O_WRONLY, O_CREAT)"],0,"Il faut un mode d'accès (O_WRONLY), O_CREAT avec les droits en 3e argument, et O_APPEND."],
+    ["ch5","Quelle est la différence entre F_SETLK et F_SETLKW ?",["Aucune","F_SETLKW attend que le verrou soit libre","F_SETLK est réservé à la lecture","F_SETLKW lit le verrou sans le poser"],1,"W = Wait : bloquant. F_SETLK échoue immédiatement si la zone est déjà verrouillée."],
+    ["ch5","Deux processus demandent un verrou en lecture sur le même octet :",["Les deux l'obtiennent","Le second est refusé","Le système plante","Seul le propriétaire du fichier l'obtient"],0,"Les verrous de lecture sont partagés. Seul un verrou d'écriture est exclusif."],
+    ["ch5","Un processus écrit dans un fichier sans demander de verrou alors qu'un autre en tient un en écriture :",["write échoue","write réussit : les verrous fcntl sont consultatifs","write attend","le fichier est corrompu"],1,"Les verrous fcntl ne protègent que les processus qui jouent le jeu et demandent le verrou."],
+    ["ch5","Avec mmap(..., MAP_SHARED, fd, 0), on fait adr[1] = 'e'. Le fichier :",["N'est pas modifié","Est modifié","Est supprimé","Est verrouillé"],1,"MAP_SHARED répercute les écritures dans le fichier. MAP_PRIVATE ferait une copie privée."],
+    ["ch6","Dans le fils, fork() renvoie :",["Le PID du père","0","Le PID du fils","-1"],1,"0 dans le fils, PID du fils dans le père, -1 en cas d'échec (dans le père, aucun fils créé)."],
+    ["ch6","Un fichier ouvert avant fork() est utilisé par le père et le fils. Leur offset est :",["Indépendant","Partagé","Remis à 0 dans le fils","Copié puis indépendant"],1,"Les deux descripteurs pointent vers la même entrée de la table des fichiers ouverts, donc le même offset."],
+    ["ch6","Le fils fait exit(3). Comment le père récupère-t-il ce 3 ?",["return de wait","WEXITSTATUS(status) après wait(&status)","getppid()","status directement"],1,"wait renvoie le PID. Le code est codé dans status : on vérifie WIFEXITED puis on lit WEXITSTATUS."],
+    ["ch6","Après un fork, qui s'exécute en premier ?",["Toujours le père","Toujours le fils","Ce n'est pas garanti","Celui qui a le plus petit PID"],2,"C'est l'ordonnanceur qui décide. Seul wait (ou un autre mécanisme de synchronisation) impose un ordre."],
+    ["ch6","printf(\"A\\n\") puis fork(), sortie redirigée dans un fichier : combien de A ?",["1","2","0","Ça dépend du PID"],1,"Vers un fichier, stdout est tamponné entièrement : le tampon contenant A est copié par fork et vidé par les deux processus. fflush(stdout) avant fork corrige."],
+    ["ch7","Un processus zombie est :",["Un fils dont le père est mort","Un fils terminé que le père n'a pas encore attendu avec wait","Un processus bloqué sur un verrou","Un démon"],1,"L'entrée reste dans la table des processus jusqu'au wait du père. Le cas « père mort » est l'orphelin."],
+    ["ch7","Un orphelin est adopté par :",["Le shell","Le processus init (PID 1) ou un subreaper","Personne, il meurt","Son grand-père"],1,"Le noyau le rattache à init (ou au subreaper le plus proche, comme systemd --user)."],
+    ["ch7","Quand la ligne écrite juste après execv() s'exécute-t-elle ?",["Toujours","Jamais","Seulement si execv a échoué","Après la fin de la commande lancée"],2,"Si exec réussit, le code du programme est remplacé : il ne revient jamais."],
+    ["ch7","Quelle fonction cherche la commande dans le PATH ?",["execv","execve","execvp","execl"],2,"Le p de execvp/execlp = PATH. Les autres demandent le chemin complet, ex. /bin/ls."],
+    ["ch8","Après dup2(fd, STDOUT_FILENO) :",["fd est fermé","Le descripteur 1 pointe vers le même fichier que fd","Le fichier est copié","stdout est fermé définitivement"],1,"dup2 ferme d'abord le 1 si besoin, puis en fait une copie de fd. On peut ensuite fermer fd."],
+    ["ch8","Dans un mini-shell, où faire la redirection > fichier ?",["Dans le père avant fork","Dans le fils, entre fork et exec","Dans le père après wait","Dans la commande lancée"],1,"Dans le fils, pour que seule la commande soit redirigée et pas le shell."],
+    ["ch9","Que renvoie sbrk(100) ?",["La nouvelle fin du tas","L'ancienne fin du tas, donc le début de la nouvelle zone","100","Toujours NULL"],1,"sbrk renvoie l'ancienne valeur du « break ». Échec : (void*)-1."],
+    ["ch9","mini_printf(\"Bonjour\") puis mini_exit() avec _exit : pourquoi rien ne s'affiche ?",["write est cassé","Le texte sans \\n reste dans le tampon et _exit ne le vide pas","_exit efface l'écran","Le tampon n'est pas alloué"],1,"Il faut vider le tampon dans mini_exit avant _exit. C'est exactement la différence entre exit (vide les tampons stdio) et _exit."]
+  ,
+    ["man","Dans quelle section du man est documenté read() ?",["1","2","3","7"],1,"read est un appel système : section 2. man 2 read."],
+    ["man","Tu tapes « man printf ». Qu'est-ce qui s'affiche ?",["La fonction C printf","La commande shell printf, section 1","Une erreur","La liste des sections"],1,"Sans numéro, man prend la première section trouvée : printf(1). Pour la fonction C : man 3 printf."],
+    ["man","Quelle rubrique donne les #include à écrire ?",["NAME","SYNOPSIS","DESCRIPTION","SEE ALSO"],1,"SYNOPSIS liste les en-têtes puis le prototype exact."],
+    ["man","Tu veux savoir si une fonction renvoie NULL ou -1 en cas d'erreur. Quelle rubrique ?",["ERRORS","NOTES","RETURN VALUE","DESCRIPTION"],2,"RETURN VALUE décrit succès et échec. ERRORS liste les valeurs d'errno."],
+    ["man","Où est documenté dup2 ?",["Dans la page dup(2), avec dup et dup3","man 3 dup2","man 7 dup","man 1 dup2"],0,"La page dup(2) documente dup, dup2 et dup3 (voir NAME). man 2 dup2 ouvre cette même page."],
+    ["man","sbrk est documenté dans la page :",["man 3 malloc","man 2 brk","man 7 memory","man 2 mmap"],1,"NAME de brk(2) : brk, sbrk."],
+    ["man","Où trouver les macros S_ISDIR, S_ISLNK et les valeurs octales des droits ?",["man 2 chmod","man 7 inode","man 1 ls","man 3 errno"],1,"inode(7), partie « The file type and mode »."],
+    ["man","Comment trouver une page quand on ne connaît pas le nom de la fonction ?",["man -k mot-clé (ou apropos)","man -a","man --help","man 0 mot"],0,"man -k cherche le mot dans les descriptions courtes de toutes les pages."],
+    ["man","Dans une page man, comment chercher « WNOHANG » ?",["Ctrl+F","/WNOHANG puis Entrée, n pour la suivante","?WNOHANG uniquement","s WNOHANG"],1,"man s'affiche dans less : / cherche vers le bas, n passe à l'occurrence suivante, N à la précédente."],
+    ["man","Pourquoi execvp est-il en section 3 et execve en section 2 ?",["Erreur de la doc","execvp est une fonction de la libc qui appelle l'appel système execve","execve est obsolète","Section 3 = fonctions de processus"],1,"Toute la famille exec (sauf execve) est un habillage en bibliothèque de l'appel système execve(2)."],
+    ["man","Quelle page liste tous les codes d'erreur (ENOENT, EACCES…) et leur sens ?",["man 2 errors","man 3 errno","man 3 perror","man 7 error"],1,"errno(3) liste les noms symboliques et leur description."],
+    ["man","Les champs de struct flock et F_SETLKW sont expliqués dans :",["man 2 flock","man 2 fcntl","man 3 lockf","man 7 locks"],1,"fcntl(2), rubrique « Advisory record locking ». Attention : flock(2) est une autre fonction de verrouillage."],
+    ["man","La rubrique EXAMPLES de man 2 stat contient :",["Rien, elle n'existe pas","Un programme complet qui affiche les infos d'un fichier","La liste des options de la commande stat","Les codes d'erreur"],1,"Plusieurs pages ont un programme complet : stat(2), fork(2), wait(2), mmap(2), execve(2), getpwnam(3), strftime(3)."],
+    ["man","Comment savoir dans quelles sections existe « write » ?",["man -f write (ou whatis write)","man write --sections","man 9 write","grep write /usr/man"],0,"man -f affiche une ligne par section : write (1) la commande, write (2) l'appel système."],
+    ["man","Selon man 2 fork, le fils hérite-t-il des verrous fcntl du père ?",["Oui","Non","Seulement en lecture","Seulement si F_SETLKW"],1,"fork(2) : le fils n'hérite pas des verrous d'enregistrement du père."],
+    ["man","Pour quitter une page man :",["Échap","q","Ctrl+X","exit"],1,"q quitte less, donc man."],
+    ["ch1","Que contient argv[0] ?",["Le premier argument donné par l'utilisateur","Le nom du programme","Le nombre d'arguments","NULL"],1,"argv[0] = nom utilisé pour lancer le programme. Le 1er vrai argument est argv[1], et argv[argc] vaut NULL."],
+    ["ch2","Faut-il le droit de lecture sur un fichier pour faire stat dessus ?",["Oui","Non, seul le droit x sur les répertoires du chemin compte","Seulement pour lstat","Il faut être root"],1,"man 2 stat : aucune permission n'est requise sur le fichier lui-même."],
+    ["ch2","readdir donne d_type = DT_UNKNOWN. Que faire ?",["Ignorer le fichier","Appeler lstat pour connaître le type","C'est forcément un répertoire","Relancer readdir"],1,"Certains systèmes de fichiers ne remplissent pas d_type : lstat sur le chemin complet est la méthode sûre."],
+    ["ch3","Quand les blocs d'un fichier sont-ils vraiment libérés ?",["Dès le rm","Quand le nombre de liens vaut 0 et que plus aucun processus ne l'a ouvert","Au redémarrage","Quand le répertoire parent est supprimé"],1,"rm (unlink) retire un nom. Les données restent tant qu'il reste un lien ou un descripteur ouvert."],
+    ["ch4","Les descripteurs 0, 1 et 2 sont :",["stdin, stdout, stderr","stdout, stdin, stderr","réservés au noyau","les 3 premiers fichiers ouverts par le programme"],0,"0 = entrée standard, 1 = sortie standard, 2 = sortie d'erreur. STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO."],
+    ["ch4","creat(f, 0644) est équivalent à :",["open(f, O_RDONLY)","open(f, O_CREAT|O_WRONLY|O_TRUNC, 0644)","open(f, O_CREAT|O_APPEND, 0644)","open(f, O_RDWR|O_CREAT, 0644)"],1,"C'est écrit dans man 2 open, partie creat()."],
+    ["ch7","Après un execve réussi, les descripteurs ouverts :",["Sont tous fermés","Restent ouverts (sauf ceux marqués close-on-exec)","Sont remis à 0, 1, 2","Sont dupliqués"],1,"C'est ce qui permet la redirection : dup2 avant exec, la commande hérite du descripteur 1 redirigé."],
+    ["ch7","Le fils obtenu par fork a-t-il les variables d'environnement du père ?",["Non, il repart d'un environnement vide","Oui, une copie","Seulement PATH","Seulement s'il appelle getenv"],1,"Le fils reçoit une copie de toute la mémoire, environnement compris. Une modification dans le fils ne touche pas le père."]
+  ];
+  const names = {all:"Tout", man:"man", ch1:"Ch.1", ch2:"Ch.2", ch3:"Ch.3", ch4:"Ch.4", ch5:"Ch.5", ch6:"Ch.6", ch7:"Ch.7", ch8:"Ch.8", ch9:"Ch.9"};
+  const EXAM_N = 20, EXAM_MIN = 20;
+  let filter = "all", order = Q.map((_, i) => i), answers = {};
+  let mode = "train", examSet = [], examAns = {}, corrected = false, timerId = null, endAt = 0;
+  const $ = id => document.getElementById(id);
+  const list = $("qlist"), filt = $("filters");
+
+  Object.keys(names).forEach(k => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.textContent = names[k] + (k === "all" ? " (" + Q.length + ")" : "");
+    b.setAttribute("aria-pressed", k === filter ? "true" : "false");
+    b.addEventListener("click", () => { filter = k; filt.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === b ? "true" : "false")); render(); });
+    filt.appendChild(b);
+  });
+
+  function visible() { return mode === "exam" ? examSet : order.filter(i => filter === "all" || Q[i][0] === filter); }
+  function score() {
+    const vis = visible();
+    if (mode === "exam") {
+      const rep = vis.filter(i => i in examAns).length;
+      $("exam-count").textContent = rep + " / " + vis.length + " répondues";
+      $("score").textContent = corrected ? "" : "QCM blanc";
+      return;
+    }
+    const rep = vis.filter(i => i in answers);
+    const ok = rep.filter(i => answers[i] === Q[i][3]).length;
+    $("score").textContent = ok + " / " + rep.length + " justes · " + rep.length + " sur " + vis.length + " répondues";
+  }
+  function render() {
+    list.innerHTML = "";
+    const ans = mode === "exam" ? examAns : answers;
+    visible().forEach((i, n) => {
+      const [ch, q, opts, good, ex] = Q[i];
+      const reveal = mode === "train" ? (i in answers) : corrected;
+      const box = document.createElement("div"); box.className = "q";
+      box.innerHTML = '<div class="qh"><span class="qn">' + String(n + 1).padStart(2, "0") + '</span><span class="qt"></span><span class="qtag">' + names[ch] + '</span></div><div class="opts"></div>';
+      box.querySelector(".qt").textContent = q;
+      const o = box.querySelector(".opts");
+      opts.forEach((t, j) => {
+        const b = document.createElement("button"); b.type = "button"; b.className = "opt"; b.textContent = t;
+        if (reveal) {
+          b.disabled = true;
+          if (j === good) b.classList.add("right"); else if (j === ans[i]) b.classList.add("wrong");
+        } else if (mode === "exam" && ans[i] === j) b.classList.add("sel");
+        b.addEventListener("click", () => { ans[i] = j; render(); });
+        o.appendChild(b);
+      });
+      if (reveal) {
+        const e = document.createElement("div"); e.className = "expl";
+        const r = !(i in ans) ? "Pas répondu." : ans[i] === good ? "Juste." : "Pas tout à fait.";
+        e.innerHTML = "<b>" + r + "</b> ";
+        e.appendChild(document.createTextNode(ex));
+        box.appendChild(e);
+      }
+      list.appendChild(box);
+    });
+    score();
+  }
+  function fmtTime(ms) { const s = Math.max(0, Math.ceil(ms / 1000)); return String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0"); }
+  function tick() { const left = endAt - Date.now(); $("timer").textContent = fmtTime(left); if (left <= 0) rendre(true); }
+  function startExam() {
+    const pool = Q.map((_, i) => i);
+    for (let k = pool.length - 1; k > 0; k--) { const r = Math.floor(Math.random() * (k + 1)); [pool[k], pool[r]] = [pool[r], pool[k]]; }
+    examSet = pool.slice(0, EXAM_N); examAns = {}; corrected = false; mode = "exam";
+    endAt = Date.now() + EXAM_MIN * 60000;
+    $("train-bar").classList.add("hidden"); $("exam-result").classList.add("hidden"); $("exam-bar").classList.remove("hidden");
+    clearInterval(timerId); timerId = setInterval(tick, 500); tick();
+    render(); window.scrollTo(0, 0);
+  }
+  function rendre(auto) {
+    if (mode !== "exam" || corrected) return;
+    clearInterval(timerId); corrected = true;
+    const ok = examSet.filter(i => examAns[i] === Q[i][3]).length;
+    const used = EXAM_MIN * 60000 - Math.max(0, endAt - Date.now());
+    const res = $("exam-result");
+    res.innerHTML = '<span><span class="note">' + (Math.round(ok / EXAM_N * 200) / 10).toString().replace(".", ",") + ' / 20</span></span><span>' + ok + " bonnes réponses sur " + EXAM_N + " · temps utilisé " + fmtTime(used) + (auto ? " · temps écoulé" : "") + '</span><span style="display:flex;gap:8px"><button type="button" class="btn" id="encore">Nouveau QCM blanc</button><button type="button" class="btn ghost" id="retour">Revenir à l\'entraînement</button></span>';
+    res.classList.remove("hidden"); $("exam-bar").classList.add("hidden");
+    $("encore").addEventListener("click", startExam);
+    $("retour").addEventListener("click", stopExam);
+    render(); window.scrollTo(0, 0);
+  }
+  function stopExam() {
+    clearInterval(timerId); mode = "train";
+    $("train-bar").classList.remove("hidden"); $("exam-bar").classList.add("hidden"); $("exam-result").classList.add("hidden");
+    render();
+  }
+  $("blanc").addEventListener("click", startExam);
+  $("rendre").addEventListener("click", () => rendre(false));
+  $("quitter").addEventListener("click", stopExam);
+  $("reset").addEventListener("click", () => { answers = {}; render(); });
+  $("shuffle").addEventListener("click", () => {
+    for (let k = order.length - 1; k > 0; k--) { const r = Math.floor(Math.random() * (k + 1)); [order[k], order[r]] = [order[r], order[k]]; }
+    answers = {}; render();
+  });
+  render();
+})();
+
+/* ---------- Pages (navigation par #ancre) ---------- */
+(function () {
+  const ids = ["accueil","man","ch1","ch2","ch3","ch4","ch5","ch6","ch7","ch8","ch9","memo","pieges","quiz"];
+  const titles = {accueil:"Accueil et plan", man:"Savoir utiliser man", ch1:"Appels système, erreurs", ch2:"stat, droits, ls -lR", ch3:"Système de fichiers", ch4:"open, read, write", ch5:"Verrous et mmap", ch6:"fork et wait", ch7:"Orphelins, zombies, exec", ch8:"Mini-shell et dup2", ch9:"TP Mini-GLIBC", memo:"Antisèche", pieges:"Pièges classiques", quiz:"QCM"};
+  // chaque section devient une page avec ses boutons précédent / suivant
+  ids.forEach((id, k) => {
+    let el = document.getElementById(id);
+    if (!el.classList.contains("page")) {
+      const w = document.createElement("div"); w.className = "page"; w.dataset.page = id;
+      el.parentNode.insertBefore(w, el); w.appendChild(el); el = w;
+    } else el.dataset.page = id;
+    const p = document.createElement("nav"); p.className = "pager"; p.setAttribute("aria-label", "Pages voisines");
+    if (k > 0) p.innerHTML += '<a class="prev" href="#' + ids[k-1] + '"><small>← Précédent</small><b>' + titles[ids[k-1]] + '</b></a>';
+    if (k < ids.length - 1) p.innerHTML += '<a class="next" href="#' + ids[k+1] + '"><small>Suivant →</small><b>' + titles[ids[k+1]] + '</b></a>';
+    el.appendChild(p);
+  });
+  const pages = document.querySelectorAll("[data-page]");
+  function show() {
+    let h = location.hash.slice(1);
+    if (!ids.includes(h)) h = "accueil";
+    pages.forEach(p => p.classList.toggle("on", p.dataset.page === h));
+    document.querySelectorAll("nav.side li a").forEach(a => a.classList.toggle("cur", a.getAttribute("href") === "#" + h));
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", show);
+  show();
+})();
+</script>
+</body>
+</html>
