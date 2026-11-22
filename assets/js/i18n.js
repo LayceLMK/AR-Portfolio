@@ -9,7 +9,7 @@ window.PortfolioI18n = (() => {
 
     const translations = {
         fr: {
-            nav: ['Accueil', 'Profil', 'Comp&eacute;tences', 'Projets', 'Contact'],
+            nav: ['Accueil', 'Profil', 'Comp&eacute;tences', 'Projets', 'Cours', 'Contact'],
             home: {
                 greet: 'Bonjour,<br>je suis',
                 contact: 'Contact'
@@ -257,7 +257,7 @@ window.PortfolioI18n = (() => {
             }
         },
         en: {
-            nav: ['Home', 'Profile', 'Skills', 'Projects', 'Contact'],
+            nav: ['Home', 'Profile', 'Skills', 'Projects', 'Courses', 'Contact'],
             home: {
                 greet: 'Hello,<br>I am',
                 contact: 'Contact'
