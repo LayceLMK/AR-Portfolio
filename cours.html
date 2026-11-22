@@ -1,72 +1,78 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="assets/css/styles.css">
-        <link rel="stylesheet" href="assets/css/cours.css">
-        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
-        <title>Cours &amp; Révisions - Rohan ALAMELOU</title>
-    </head>
-    <body>
-        <div class="animated-dots" aria-hidden="true"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours &amp; révisions — Rohan Alamelou</title>
+    <meta name="description" content="Hub de révision de Rohan Alamelou, élève ingénieur en cybersécurité à l'INSA Centre Val de Loire : fiches et pages interactives par matière.">
+    <meta name="theme-color" content="#070b16">
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/site.css">
+    <link rel="stylesheet" href="assets/css/cours.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+</head>
+<body>
+    <div class="ambient" aria-hidden="true">
+        <span class="a"></span><span class="b"></span><span class="c"></span>
+        <div class="grid-bg"></div>
+    </div>
 
-        <!--===== HEADER =====-->
-        <header class="l-header">
-            <nav class="nav bd-grid">
-                <div>
-                    <a href="index.html" class="nav__logo">Rohan ALAMELOU</a>
-                </div>
-                <div class="nav__menu" id="nav-menu">
-                    <ul class="nav__list">
-                        <li class="nav__item"><a href="index.html#home" class="nav__link">Accueil</a></li>
-                        <li class="nav__item"><a href="index.html#about" class="nav__link">Profil</a></li>
-                        <li class="nav__item"><a href="index.html#skills" class="nav__link">Compétences</a></li>
-                        <li class="nav__item"><a href="index.html#experience-details" class="nav__link">Projets</a></li>
-                        <li class="nav__item"><a href="cours.html" class="nav__link active-link">Cours</a></li>
-                        <li class="nav__item"><a href="index.html#contact" class="nav__link">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class='bx bx-menu'></i>
-                </div>
-            </nav>
-        </header>
+    <header class="header" id="header">
+        <nav class="nav wrap">
+            <a href="index.html" class="logo"><span class="logo__mark">RA</span><span>Rohan <i>Alamelou</i></span></a>
+            <div class="nav__menu" id="nav-menu">
+                <a href="index.html#profil" class="nav__link">Profil</a>
+                <a href="index.html#competences" class="nav__link">Compétences</a>
+                <a href="index.html#parcours" class="nav__link">Parcours</a>
+                <a href="index.html#experiences" class="nav__link">Expériences</a>
+                <a href="index.html#projets" class="nav__link">Projets</a>
+                <a href="cours.html" class="nav__link is-active">Cours</a>
+                <a href="index.html#contact" class="nav__link">Contact</a>
+            </div>
+            <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Menu"><span></span><span></span></button>
+        </nav>
+    </header>
 
-        <main class="l-main">
-            <!--===== EN-TÊTE DU HUB =====-->
-            <section class="hub section bd-grid">
-                <div class="hub__intro">
-                    <h1 class="hub__title">Cours &amp; <span class="hub__title-color">Révisions</span></h1>
-                    <p class="hub__formation" id="hub-formation"></p>
-                    <p class="hub__lead">Mes fiches, exercices et supports de révision, rangés par matière.</p>
+    <main class="hub">
+        <div class="wrap">
+            <!-- En-tête du hub -->
+            <div class="hub__head reveal">
+                <span class="eyebrow">Cours &amp; révisions</span>
+                <h1 class="hub__title">Mon hub de révision, <em>matière par matière.</em></h1>
+                <p class="hub__formation" id="hub-formation"></p>
+                <div class="hub__meta">
                     <div class="hub__stats" id="hub-stats"></div>
                     <p class="hub__next-exam" id="hub-next-exam" hidden></p>
                 </div>
+            </div>
 
-                <!--===== RECHERCHE + FILTRES =====-->
-                <div class="hub__toolbar">
-                    <label class="hub__search">
-                        <i class='bx bx-search'></i>
-                        <input type="search" id="hub-search" placeholder="Rechercher une fiche ou une matière…" autocomplete="off">
-                    </label>
-                    <div class="hub__filters" id="hub-filters" role="group" aria-label="Filtrer par matière"></div>
-                </div>
+            <!-- Recherche + filtres -->
+            <div class="hub__toolbar reveal d1">
+                <label class="hub__search">
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                    <input type="search" id="hub-search" placeholder="Rechercher une fiche ou une matière…" autocomplete="off">
+                </label>
+                <div class="hub__filters" id="hub-filters" role="group" aria-label="Filtrer par matière"></div>
+            </div>
 
-                <!--===== MATIÈRES (générées par assets/js/cours.js) =====-->
-                <div class="hub__grid" id="hub-grid"></div>
-                <p class="hub__empty" id="hub-empty" hidden>Aucun résultat.</p>
-            </section>
-        </main>
+            <!-- Matières (générées par assets/js/cours.js à partir de cours-data.js) -->
+            <div class="hub__grid" id="hub-grid"></div>
+            <p class="hub__empty" id="hub-empty" hidden>Aucun résultat.</p>
+        </div>
+    </main>
 
-        <!--===== FOOTER =====-->
-        <footer class="footer">
-            <p class="footer__title">Rohan ALAMELOU</p>
-            <div class="footer__social"></div>
-            <p class="footer__copy">&#169; Rohan ALAMELOU. Tous droits réservés</p>
-        </footer>
+    <footer class="footer">
+        <div class="wrap">
+            <a href="index.html" class="logo"><span class="logo__mark">RA</span><span>Rohan <i>Alamelou</i></span></a>
+            <span>© 2026 Rohan Alamelou · Cybersécurité</span>
+        </div>
+    </footer>
 
-        <script src="assets/js/cours-data.js"></script>
-        <script src="assets/js/cours.js"></script>
-    </body>
+    <script src="assets/js/site.js"></script>
+    <script src="assets/js/cours-data.js"></script>
+    <script src="assets/js/cours.js"></script>
+</body>
 </html>

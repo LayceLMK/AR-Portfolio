@@ -137,12 +137,4 @@
     }
 
     render()
-
-    /* --- Menu mobile (même comportement que la page d'accueil) --- */
-    const toggle = document.getElementById('nav-toggle')
-    const nav = document.getElementById('nav-menu')
-    if (toggle && nav) {
-        toggle.addEventListener('click', () => nav.classList.toggle('show'))
-        nav.querySelectorAll('.nav__link').forEach((l) => l.addEventListener('click', () => nav.classList.remove('show')))
-    }
 })()
