@@ -1,873 +1,373 @@
 <!DOCTYPE html>
-
-
 <html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohan Alamelou — Élève ingénieur en cybersécurité</title>
+    <meta name="description" content="Portfolio de Rohan Alamelou, élève ingénieur en cybersécurité à l'INSA Centre Val de Loire (STI, label SecNumEdu). SOC, pentest, sécurité réseau, audit.">
+    <meta property="og:title" content="Rohan Alamelou — Cybersécurité">
+    <meta property="og:description" content="Élève ingénieur en cybersécurité à l'INSA Centre Val de Loire. Projets SIEM, pentest, audit AD, supervision.">
+    <meta name="theme-color" content="#070b16">
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+    <!-- Fond animé -->
+    <div class="ambient" aria-hidden="true">
+        <span class="a"></span><span class="b"></span><span class="c"></span>
+        <div class="grid-bg"></div>
+    </div>
 
-
-    <head>
-
-
-        <meta charset="UTF-8">
-
-
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-
-
-
-        <link rel="stylesheet" href="assets/css/styles.css">
-
-
-
-
-
-        <!-- =====BOX ICONS===== -->
-
-
-        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
-
-
-
-
-
-        <title>Portfolio - Rohan ALAMELOU</title>
-
-
-    </head>
-
-
-    <body>
-
-
-        <!--===== HEADER =====-->
-
-
-        <header class="l-header">
-
-
-            <nav class="nav bd-grid">
-
-
-                <div>
-
-
-                    <a href="#" class="nav__logo">Rohan ALAMELOU</a>
-
-
+    <!--===== EN-TÊTE =====-->
+    <header class="header" id="header">
+        <nav class="nav wrap">
+            <a href="#top" class="logo"><span class="logo__mark">RA</span><span>Rohan <i>Alamelou</i></span></a>
+            <div class="nav__menu" id="nav-menu">
+                <a href="#profil" class="nav__link" data-en="Profile">Profil</a>
+                <a href="#competences" class="nav__link" data-en="Skills">Compétences</a>
+                <a href="#parcours" class="nav__link" data-en="Journey">Parcours</a>
+                <a href="#experiences" class="nav__link" data-en="Experience">Expériences</a>
+                <a href="#projets" class="nav__link" data-en="Projects">Projets</a>
+                <a href="cours.html" class="nav__link" data-en="Courses">Cours</a>
+                <a href="#contact" class="nav__link" data-en="Contact">Contact</a>
+                <div class="lang" role="group" aria-label="Langue">
+                    <button type="button" data-lang="fr" class="is-on">FR</button>
+                    <button type="button" data-lang="en">EN</button>
                 </div>
-
-
-
-
-
-                <div class="nav__menu" id="nav-menu">
-
-
-                    <ul class="nav__list">
-
-
-                        <li class="nav__item nav__lang">
-                            <button class="lang-button" id="lang-button" type="button" data-lang-fr="EN" data-lang-en="FR" aria-label="Changer de langue">EN</button>
-                        </li>
-                        <li class="nav__item"><a href="#home" class="nav__link active-link" data-en="Home">Accueil</a></li>
-
-
-                        <li class="nav__item"><a href="#about" class="nav__link" data-en="Profile">Profil</a></li>
-
-
-                        <li class="nav__item"><a href="#skills" class="nav__link">Compétences</a></li>
-
-
-                        <li class="nav__item"><a href="#experience-details" class="nav__link">Projets</a></li>
-
-
-                        <li class="nav__item"><a href="cours.html" class="nav__link">Cours</a></li>
-
-
-                        <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
-
-
-                    </ul>
-
-
-                </div>
-
-
-
-
-
-                <div class="nav__toggle" id="nav-toggle">
-
-
-                    <i class='bx bx-menu'></i>
-
-
-                </div>
-
-
-            </nav>
-
-
-        </header>
-
-
-
-
-
-        <main class="l-main">
-
-
-            <!--===== HOME =====-->
-
-
-            <section class="home bd-grid" id="home">
-
-
-                <div class="home__data">
-
-
-                    <h1 class="home__title"><span class="home__title-greet">Bonjour,<br>je suis</span> <span class="home__title-color home__title-typed" data-text="Rohan ALAMELOU">Rohan ALAMELOU</span></h1>
-
-
-
-
-
-                    <a href="#contact" class="button">Contact</a>
-
-
-                </div>
-
-
-
-
-
-                <div class="home__social">
-
-
-                    <a href="https://www.linkedin.com/in/rohan-alamelou-676767abc/" class="home__social-icon" target="_blank" rel="noopener"><i class='bx bxl-linkedin'></i></a>
-
-
-                    <a href="https://github.com/LayceLMK" class="home__social-icon" target="_blank" rel="noopener"><i class='bx bxl-github' ></i></a>
-
-
-                </div>
-
-
-            </section>
-
-
-
-
-
-            <!--===== ABOUT =====-->
-
-
-            <section class="about section " id="about">
-
-
-                <h2 class="section-title">Profil</h2>
-
-
-
-
-
-                <div class="about__container bd-grid">
-
-
-                    <div class="about__img">
-
-
-                        <img src="assets/img/loup.png" alt="Rohan ALAMELOU - Photo de profil">
-
-
-                                            <div class="about__extra">
-
-
-                            <p class="about__text"><strong>Langues :</strong> Français, Anglais (niveau C1)</p>
-
-
-                            <p class="about__text"><strong>Soft skills :</strong> Adaptabilité, travail en équipe, résolution de problèmes, persévérance</p>
-
-
-                            <p class="about__text"><strong>Certifications :</strong> EF SET (B2/C1), ANSSI MOOC</p>
-
-
-                            <p class="about__text"><strong>Centres d’intérêt :</strong> Technologie, sport, jeux vidéo</p>
-
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="about__content">
-
-                        <h2 class="about__subtitle">À propos de moi</h2>
-
-
-                        <p class="about__text">Actuellement en BUT R&eacute;seaux &amp; T&eacute;l&eacute;communications &ndash; parcours Cybers&eacute;curit&eacute;, j&rsquo;&eacute;volue au croisement des r&eacute;seaux et de la cybers&eacute;curit&eacute;.</p>
-
-                        <p class="about__text">J&rsquo;&eacute;tudie et pratique au quotidien afin de concevoir, d&eacute;ployer et s&eacute;curiser des architectures techniques, du Docker au SIEM, en passant par la supervision, l&rsquo;analyse de logs et la d&eacute;tection d&rsquo;incidents.</p>
-
-                        <p class="about__text">&Agrave; travers mes projets, je d&eacute;veloppe une approche rigoureuse et m&eacute;thodique, avec un objectif clair : comprendre en profondeur les syst&egrave;mes pour mieux les prot&eacute;ger.</p>
-
-                        <p class="about__text">Automatisation, surveillance, r&eacute;silience et tra&ccedil;abilit&eacute; sont au c&oelig;ur de ma d&eacute;marche.</p>
-
-                        <p class="about__text">Ce portfolio refl&egrave;te mon &eacute;volution et constitue la trace concr&egrave;te de ma progression constante dans ces domaines. Il met en valeur mes projets en r&eacute;seaux et en cybers&eacute;curit&eacute;, ainsi que mes exp&eacute;riences professionnelles, en coh&eacute;rence avec mon ambition &agrave; moyen terme : &eacute;voluer vers une activit&eacute; freelance sp&eacute;cialis&eacute;e en r&eacute;seaux et cybers&eacute;curit&eacute;.</p>           
-
-<div class="about__actions">
-                                                        <a href="assets/pdf/CV_Rohan_ALAMELOU.pdf" class="button button--outline" target="_blank" rel="noopener">Voir mon CV</a>
-                        </div>
-
-                    </div>                                   
-
-
-                </div>
-
-
-            </section>
-
-
-
-
-            <!--===== SKILLS =====-->
-
-
-            <section class="skills section" id="skills">
-
-                <h2 class="section-title section-title--spaced">Comp&eacute;tences</h2>
-
-                <div class="skills__container bd-grid">
-
-                    <div class="skills__groups">
-
-                        <div class="skills__group">
-
-                            <span class="skills__group-icon"><i class='bx bxs-shield-alt-2'></i></span>
-
-                            <h3 class="skills__subtitle">Cybers&eacute;curit&eacute;</h3>
-
-                            <ul class="skills__list">
-                                <li>D&eacute;fense r&eacute;seau via pare-feu OPNsense, pfSense et Stormshield</li>
-                                <li>Pentesting, Burp Suite et Kali Linux</li>
-                                <li>WAF NGINX, IDS/IPS et s&eacute;curisation d&rsquo;architectures</li>
-                                <li>Audit de s&eacute;curit&eacute;, EBIOS et analyses d&rsquo;incidents</li>
-                                <li>SIEM/Wazuh pour corr&eacute;lation et d&eacute;tection</li>
-                            </ul>
-
-                            <div class="skills__data">
-
-                                <div class="skills__names">
-
-                                    <span class="skills__name">Expertise</span>
-
-                                </div>
-
-                                <div class="skills__bar skills__cyber"></div>
-
-                                <div>
-
-                                    <span class="skills__percentage">Avanc&eacute;</span>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="skills__group">
-
-                            <span class="skills__group-icon"><i class='bx bx-network-chart'></i></span>
-
-                            <h3 class="skills__subtitle">R&eacute;seaux</h3>
-
-                            <ul class="skills__list">
-                                <li>Conception et segmentation VLAN, plan d&rsquo;adressage</li>
-                                <li>Routage dynamique OSPF/BGP</li>
-                                <li>Services r&eacute;seau DHCP/DNS</li>
-                                <li>Interconnexion MPLS et routage inter-sites</li>
-                                <li>Pare-feu et filtrage (Stormshield, OPNsense, pfSense)</li>
-                            </ul>
-
-                            <div class="skills__data">
-
-                                <div class="skills__names">
-
-                                    <span class="skills__name">Expertise</span>
-
-                                </div>
-
-                                <div class="skills__bar skills__network"></div>
-
-                                <div>
-
-                                    <span class="skills__percentage">Avanc&eacute;</span>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="skills__group">
-
-                            <span class="skills__group-icon"><i class='bx bx-line-chart'></i></span>
-
-                            <h3 class="skills__subtitle">Supervision</h3>
-
-                            <ul class="skills__list">
-                                <li>Stack Grafana pour dashboards et alerting</li>
-                                <li>Centralisation des logs et corr&eacute;lation</li>
-                                <li>Wazuh pour d&eacute;tection et supervision s&eacute;curit&eacute;</li>
-                                <li>Mise en place d&rsquo;alertes et suivi d&rsquo;incidents</li>
-                            </ul>
-
-                            <div class="skills__data">
-
-                                <div class="skills__names">
-
-                                    <span class="skills__name">Expertise</span>
-
-                                </div>
-
-                                <div class="skills__bar skills__monitoring"></div>
-
-                                <div>
-
-                                    <span class="skills__percentage">Interm&eacute;diaire</span>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="skills__group">
-
-                            <span class="skills__group-icon"><i class='bx bx-server'></i></span>
-
-                            <h3 class="skills__subtitle">Virtualisation &amp; Syst&egrave;mes</h3>
-
-                            <ul class="skills__list">
-                                <li>Linux (Debian, Kali) &amp; Windows Server AD/DNS</li>
-                                <li>VirtualBox et environnements de test</li>
-                                <li>Conteneurs Docker et orchestration l&eacute;g&egrave;re</li>
-                                <li>Gestion des services et durcissement de base</li>
-                            </ul>
-
-                            <div class="skills__data">
-
-                                <div class="skills__names">
-
-                                    <span class="skills__name">Expertise</span>
-
-                                </div>
-
-                                <div class="skills__bar skills__virtual"></div>
-
-                                <div>
-
-                                    <span class="skills__percentage">Interm&eacute;diaire</span>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-</div>
-
-            </section>
-
-
-            <!--===== PARCOURS =====-->
-            <section class="parcours section" id="parcours">
-                <h2 class="section-title">Parcours</h2>
-
-<h3 class="parcours__subheading">Formation</h3>
-
-                <div class="parcours__container bd-grid">   
-                    <div class="parcours__item parcours__item--left">
-                        <h3 class="parcours__title">2022-2023</h3>
-                        <p class="parcours__text">Diplôme du Baccalauréat </p>
-                        <ul class="parcours__sublist">
-                            <li> Spécialisation : Mathématiques et Numérique et sciences de l'informatique </li>
-                        </ul>
-                    </div>
-                    <div class="parcours__item parcours__item--right">
-                        <h3 class="parcours__title">2023-2026</h3>
-                        <p class="parcours__text">BUT Réseaux & Télécoms</p>
-                        <ul class="parcours__sublist">
-                            <li>Spécialisation : Cybersécurité</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!--===== EXPERIENCE TIMELINE =====-->
-            <section class="parcours section" id="experience-pro">
-
-                <h3 class="parcours__subheading">Exp&eacute;rience professionnelle</h3>
-
-                <div class="parcours__container bd-grid">
-                    <div class="parcours__item parcours__item--left">
-                        <h3 class="parcours__title">Avril - Juin 2025</h3>
-                        <p class="parcours__text">Stage en t&eacute;l&eacute;phonie et R&eacute;seaux</p>
-                        <ul class="parcours__sublist">
-                            <li>Ercom : Technicien en téléphonie voIP et réseau
-                    </div>
-                    <div class="parcours__item parcours__item--right">
-                        <h3 class="parcours__title">Mars - Juin 2026</h3>
-                        <p class="parcours__text">Stage &agrave; University of the West of England</p>
-                        <ul class="parcours__sublist">
-                            <li>Recherche en cybers&eacute;curit&eacute;</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-
-
-            <!--===== PROJECTS =====-->
-            <section class="experience section" id="experience-details">
-                <h2 class="section-title">Projets réalisés</h2>
-
-                <div class="experience__container bd-grid">
-                    <div class="experience__item experience__item--left" id="exp-moodle">
-                        <div class="experience__content">
-                            <h3 class="experience__title">Mise en place de services Moodle & Samba</h3>
-                            <p class="experience__text">Ce projet, réalisé dès la première année, constitue une étape fondatrice de mon parcours. Il a consolidé mes compétences en réseaux et en administration système, tout en démontrant ma capacité à concevoir et déployer une infrastructure complète, structurée et opérationnelle.<br><br>Il repose sur la conception d’une architecture multi-VLAN entre un site principal et une succursale : mise en œuvre de trunks, de sous-interfaces 802.1Q, d’un plan d’adressage cohérent, du routage inter-VLAN et de routes statiques inter-sites. Chaque VLAN dispose de son pool DHCP dédié, garantissant une gestion efficace des adresses IP.<br><br>Le projet intègre également une dimension système et services, avec le déploiement de Moodle et Samba sur un serveur Linux dédié. Cette approche globale illustre ma capacité à relier infrastructure réseau, services applicatifs et besoins utilisateurs, dans une logique proche des environnements professionnels.</p>
-                            <p class="experience__text"><strong>Compétences développées :</strong></p>
-                            <ul class="experience__list">
-                                <li>Segmentation du réseau en VLAN et mise en place de trunks.</li>
-                                <li>Routage inter-VLAN via router-on-a-stick.</li>
-                                <li>Attribution d'adresses avec DHCP sur plusieurs sous-réseaux.</li>
-                                <li>Conception d'un plan d'adressage IP cohérent.</li>
-                                <li>Déploiement de services reseau Linux (Moodle, Samba).</li>
-</ul>
-                        </div>
-                        <div class="experience__media">
-                            <a class="experience__media-link" href="assets/pdf/SAE204.pdf" target="_blank" rel="noopener">
-                                <img src="assets/img/sambamoodle.png" alt="Infrastructure VLAN et services Moodle/Samba">
-                                <span class="experience__media-overlay">Voir compte rendu</span>
-                            </a>
-                            <div class="experience__actions">
-                                <h4 class="experience__tech-title">Technologies/Services utilisés</h4>
-                                <div class="experience__tech-logos">
-                                    <div class="tech-chip">
-                                        <img src="assets/img/moodle.jpg" alt="Moodle">
-                                        <span class="tech-chip__label">Moodle</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/samba.png" alt="Samba">
-                                        <span class="tech-chip__label">Samba</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/cisco.png" alt="Cisco">
-                                        <span class="tech-chip__label">Cisco</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="experience__item experience__item--right" id="exp-pfsense">
-                        <div class="experience__content">
-                            <h3 class="experience__title">SAE 2.01 : Construction d'un réseau d'entreprise</h3>
-                            <p class="experience__text">Ce projet, l’un des plus structurants de ma première année, m’a permis de concevoir et déployer une infrastructure réseau complète, de la phase de conception jusqu’à la mise en production. Il a joué un rôle clé dans la consolidation de mes compétences et la validation de mon socle technique.</p>
-                            <p class="experience__text">L’architecture repose sur une topologie segmentée en VLAN (Direction, Gestion, ComTech), un plan d’adressage structuré, des trunks et le routage inter-VLAN. Les services essentiels (DHCP, HTTP, FTP, SSH) ont été déployés sur un serveur Debian.</p>
-                            <p class="experience__text">La dimension sécurité occupe une place centrale, avec l’intégration de pfSense pour le filtrage LAN/DMZ/WAN, la mise en œuvre du NAT et des règles de sécurité adaptées, validées par des tests de connectivité. Ce projet illustre une approche complète, proche des environnements professionnels, alliant réseau, services et sécurité.</p>
-                            <p class="experience__text"><strong>Compétences développées :</strong></p>
-                            <ul class="experience__list">
-                                <li>Conception d'une architecture reseau d'entreprise complete.</li>
-                                <li>Configuration des VLAN, trunks et routage inter-VLAN.</li>
-                                <li>Mise en place des services DHCP, HTTP, FTP et SSH.</li>
-                                <li>Parametrage du pare-feu pfSense, NAT et regles.</li>
-                                <li>Validation de la connectivite par des tests.</li>
-</ul>
-                        </div>
-                        <div class="experience__media">
-                            <a class="experience__media-link" href="assets/pdf/SAE201.pdf" target="_blank" rel="noopener">
-                                <img src="assets/img/pfsense-image.png" alt="Projet SAE 2.01 et pfSense">
-                                <span class="experience__media-overlay">Voir compte rendu</span>
-                            </a>
-                            <div class="experience__actions">
-                                <h4 class="experience__tech-title">Technologies/Services utilisés</h4>
-                                <div class="experience__tech-logos">
-                                    <div class="tech-chip">
-                                        <img src="assets/img/cisco.png" alt="Cisco">
-                                        <span class="tech-chip__label">Cisco</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/pfsense.png" alt="pfSense">
-                                        <span class="tech-chip__label">pfSense</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="experience__item experience__item--left" id="exp-ad">
-                        <div class="experience__content">
-                            <h3 class="experience__title">Audit de sécurité Active Directory</h3>
-                            <p class="experience__text">Ce projet porte sur la réalisation d’un audit de sécurité Active Directory visant à évaluer la posture de sécurité globale d’un système d’information. Il a permis d’identifier les principales faiblesses de configuration, d’analyser les risques associés et de mesurer l’écart avec les bonnes pratiques en vigueur.</p>
-                            <p class="experience__text">L’analyse met en évidence plusieurs vulnérabilités critiques impactant la gestion des comptes à privilèges, la résilience de l’infrastructure et la capacité de détection des incidents. À l’issue de l’audit, un plan d’action priorisé a été défini afin de réduire rapidement les risques majeurs et d’inscrire l’infrastructure dans une démarche d’amélioration continue.</p>
-                            <p class="experience__text">Ce projet illustre une approche méthodique de l’audit de sécurité, alliant analyse technique, évaluation des risques et recommandations opérationnelles, dans une logique proche des environnements professionnels.</p>
-                            <p class="experience__text"><strong>Compétences développées :</strong></p>
-                            <ul class="experience__list">
-                                <li>Application d'une methodologie d'audit de securite AD.</li>
-                                <li>Utilisation de PingCastle pour l'analyse.</li>
-                                <li>Identification et priorisation des vulnerabilites AD.</li>
-</ul>
-                        </div>
-                        <div class="experience__media">
-                            <a class="experience__media-link" href="assets/pdf/alamelou_rohan_audit.pdf" target="_blank" rel="noopener">
-                                <img src="assets/img/pingcastle.png" alt="Audit Active Directory">
-                                <span class="experience__media-overlay">Voir compte rendu</span>
-                            </a>
-                            <div class="experience__actions">
-                                <h4 class="experience__tech-title">Technologies/Services utilisés</h4>
-                                <div class="experience__tech-logos">
-                                    <div class="tech-chip">
-                                        <img src="assets/img/ad.png" alt="Active Directory">
-                                        <span class="tech-chip__label">AD Windows</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/pingcastle_logo.png" alt="PingCastle">
-                                        <span class="tech-chip__label">PingCastle</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/iso.png" alt="ISO 27000">
-                                        <span class="tech-chip__label">ISO 27000</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/annsi.png" alt="ANSSI">
-                                        <span class="tech-chip__label">ANSSI</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="experience__item experience__item--right" id="exp-siem">
-                        <div class="experience__content">
-                            <h3 class="experience__title">SIEM & Supervision</h3>
-                            <p class="experience__text">Ce projet correspond à une SAE de BUT3 centrée sur la sécurisation et la supervision d’une infrastructure SI, inspirée d’un environnement réaliste. L’objectif : concevoir une architecture cohérente, appliquer une logique de défense en profondeur, puis valider la détection et la remontée d’alertes sur l’ensemble du périmètre.</p>
-                            <p class="experience__text">L’infrastructure s’appuie sur une segmentation réseau et un filtrage périmétrique via pare-feu, avec une matrice de flux maîtrisée et une exposition minimale des services. Côté supervision, une plateforme de collecte et visualisation des logs a été déployée, avec un reverse proxy sécurisant l’accès aux tableaux de bord.</p>
-                            <p class="experience__text">Sur la partie services, une VM applicative héberge des composants conteneurisés (dont un service collaboratif), intégrant dès la conception la centralisation des journaux et une surveillance runtime pour détecter des comportements suspects. Enfin, le projet met en place un SIEM pour corréler les événements, qualifier les alertes et déclencher des notifications, afin d’améliorer la réactivité de l’équipe.</p>
-                            <p class="experience__text">Ce travail illustre une approche complète mêlant réseau, sécurité, supervision et exploitation, avec une logique de projet proche des pratiques professionnelles.</p>
-                            <p class="experience__text"><strong>Compétences développées :</strong></p>
-                            <ul class="experience__list">
-                                <li>Centralisation et correlation des logs.</li>
-                                <li>Mise en place d'alertes et suivi des incidents.</li>
-                                <li>Creation de dashboards de supervision avec Grafana.</li>
-                                <li>Securisation perimetrique via OPNsense.</li>
-</ul>
-                        </div>
-                        <div class="experience__media">
-                            <a class="experience__media-link" href="#">
-                                <img src="assets/img/wazuh_grafana.png" alt="Plateforme SIEM">
-                                <span class="experience__media-overlay">Voir compte rendu</span>
-                            </a>
-                            <div class="experience__actions">
-                                <h4 class="experience__tech-title">Technologies/Services utilisés</h4>
-                                <div class="experience__tech-logos">
-                                    <div class="tech-chip">
-                                        <img src="assets/img/grafana.jpg" alt="Grafana">
-                                        <span class="tech-chip__label">Grafana</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/postgres.png" alt="PostgreSQL">
-                                        <span class="tech-chip__label">Postgres</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/nextcloud.png" alt="Nextcloud">
-                                        <span class="tech-chip__label">Nextcloud</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/docker.png" alt="Docker">
-                                        <span class="tech-chip__label">Docker</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/loki.png" alt="Loki">
-                                        <span class="tech-chip__label">Loki</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/falco.png" alt="Falco">
-                                        <span class="tech-chip__label">Falco</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/wazuh.png" alt="Wazuh">
-                                        <span class="tech-chip__label">Wazuh</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/opnsense.png" alt="OPNsense">
-                                        <span class="tech-chip__label">OPNsense</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="experience__item experience__item--left" id="exp-waf">
-                        <div class="experience__content">
-                            <h3 class="experience__title">WAF & Détection</h3>
-                            <p class="experience__text">Ce projet (SAE5.Cyber.03 – TP Wazuh) vise à mettre en place une supervision et une sécurisation avancées d’un système d’information. L’objectif est de centraliser les logs, détecter rapidement les comportements anormaux et améliorer la réaction face aux incidents</p>
-                            <p class="experience__text">L’environnement déployé s’appuie sur un réseau structuré autour d’un pare-feu OPNsense, intégrant un serveur Active Directory, un serveur Linux hébergeant des services web, et un serveur Wazuh chargé de collecter et analyser les événements.</p>
-                            <p class="experience__text">Le projet inclut la création d’un dashboard de supervision, la configuration des services de sécurité côté pare-feu (filtrage et protection web) et l’ajout d’un système d’alerting permettant de recevoir des notifications en temps réel. La solution a été validée par des tests simulant des activités malveillantes</p>
-                            <p class="experience__text">Ce travail démontre une approche complète combinant réseau, supervision, sécurité et alerting, avec une logique directement applicable en environnement professionnel.</p>
-                            <p class="experience__text"><strong>Compétences développées :</strong></p>
-                            <ul class="experience__list">
-                                <li>Déploiement d'un WAF et protection web.</li>
-                                <li>Configuration et ajustement des regles de securite.</li>
-                                <li>Realisation de tests de securite applicative.</li>
-                                <li>Centralisation des logs et analyse des evenements.</li>
-                                <li>Mise en place d'un dashboard et d'un systeme d'alerting.</li>
-</ul>
-                        </div>
-                        <div class="experience__media">
-                            <a class="experience__media-link" href="assets/pdf/SAE5.Cyber.03_TP_WAF.pdf" target="_blank" rel="noopener">
-                                <img src="assets/img/WAF.png" alt="WAF NGINX et détection">
-                                <span class="experience__media-overlay">Voir compte rendu</span>
-                            </a>
-                            <div class="experience__actions">
-                                <h4 class="experience__tech-title">Technologies/Services utilisés</h4>
-                                <div class="experience__tech-logos">
-                                    <div class="tech-chip">
-                                        <img src="assets/img/opnsense.png" alt="OPNsense">
-                                        <span class="tech-chip__label">OPNsense</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/ad.png" alt="Active Directory">
-                                        <span class="tech-chip__label">Windows AD</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/wazuh.png" alt="Wazuh">
-                                        <span class="tech-chip__label">Wazuh</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="experience__item experience__item--right" id="exp-ctf">
-                        <div class="experience__content">
-                            <h3 class="experience__title">CTF & Pentest</h3>
-                            <p class="experience__text">Série d’exercices sur machines d’entraînement (Machine 1 à 11) pour appliquer les bases du pentest : identification de services, faiblesses de configuration et validation par scénarios contrôlés (reconnaissance → exploitation → élévation de privilèges → flags).</p>
-                            <p class="experience__text">Travaux variés : exploration web (CMS, répertoires, formulaires), analyse de fichiers sensibles, récupération d’identifiants, et escalade de privilèges via erreurs de configuration ou droits excessifs.</p>
-                            <p class="experience__text">Résultat : progression des réflexes d’analyse, lecture d’indices, et adoption d’une démarche structurée et reproductible.</p>
-                            <p class="experience__text"><strong>Compétences développées :</strong></p>
-                            <ul class="experience__list">
-                                <li>Application d'une methodologie de pentest complete.</li>
-                                <li>Utilisation d'OSINT pour la reconnaissance.</li>
-                                <li>Exploitation de failles et elevation de privileges.</li>
-                                <li>Redaction d'un reporting clair et structure.</li>
-</ul>
-                        </div>
-                        <div class="experience__media">
-                            <a class="experience__media-link" href="assets/pdf/Projet_CTF.pdf" target="_blank" rel="noopener">
-                                <img src="assets/img/ctf-image.png" alt="CTF et pentest">
-                                <span class="experience__media-overlay">Voir compte rendu</span>
-                            </a>
-                            <div class="experience__actions">
-                                <h4 class="experience__tech-title">Technologies/Services utilisés</h4>
-                                <div class="experience__tech-logos">
-                                    <div class="tech-chip">
-                                        <img src="assets/img/kali.png" alt="Kali Linux">
-                                        <span class="tech-chip__label">Kali Linux</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/wordpress.png" alt="WordPress">
-                                        <span class="tech-chip__label">WordPress</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/shell-logo.png" alt="Shell">
-                                        <span class="tech-chip__label">Shell</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="experience__item experience__item--left" id="exp-stage-telecom">
-                        <div class="experience__content">
-                            <h3 class="experience__title">Stage en Télécom & Infrastructure Réseau</h3>
-                            <p class="experience__text">Ce rapport présente mon stage de huit semaines réalisé au sein de l’entreprise ERCOM SAS, spécialisée en téléphonie d’entreprise, réseaux et infrastructures de communication. Cette immersion m’a permis de mettre en pratique mes connaissances théoriques dans un contexte professionnel réel, à travers des missions variées allant de l’installation et la supervision de systèmes de téléphonie IP à la maintenance d’infrastructures réseau et au câblage informatique. Cette expérience a renforcé mes compétences techniques, mon autonomie et ma compréhension des exigences du terrain, tout en confirmant mon intérêt pour les métiers des réseaux et télécommunications.</p>
-                            <p class="experience__text"><strong>Compétences développées :</strong></p>
-                            <ul class="experience__list">
-                                <li>Mise en oeuvre et maintenance de solutions VoIP.</li>
-                                <li>Interventions terrain et support utilisateurs.</li>
-                                <li>Supervision et resolution de problemes reseau.</li>
-                                <li>Maintenance preventive et corrective des equipements.</li>
-</ul>
-                        </div>
-                        <div class="experience__media">
-                            <a class="experience__media-link" href="assets/pdf/ALAMELOU_Rohan_Rapport_Stage_RT2.pdf" target="_blank" rel="noopener">
-                                <img src="assets/img/STAGE.png" alt="Télécom et VoIP">
-                                <span class="experience__media-overlay">Voir compte rendu</span>
-                            </a>
-                            <div class="experience__actions">
-                                <h4 class="experience__tech-title">Technologies/Services utilisés</h4>
-                                <div class="experience__tech-logos">
-                                    <div class="tech-chip">
-                                        <img src="assets/img/unify.png" alt="Unify Phone">
-                                        <span class="tech-chip__label">Unify Phone</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/siemens.png" alt="Siemens">
-                                        <span class="tech-chip__label">Siemens</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="experience__item experience__item--right" id="exp-docker">
-                        <div class="experience__content">
-                            <h3 class="experience__title">Supervision des conteneurs Docker</h3>
-                            <p class="experience__text">Ce TP de supervision repose sur une chaîne d’observabilité moderne déployée avec Docker et Docker Compose, garantissant une infrastructure reproductible et facile à maintenir. Les services supervisés incluent notamment une base PostgreSQL et plusieurs conteneurs applicatifs.</p>
-                            <p class="experience__text">La collecte et l’analyse des données sont assurées par Prometheus et cAdvisor pour les métriques système et conteneurs, ainsi que par Loki et Grafana Alloy pour la centralisation et l’exploitation des logs. Les requêtes PromQL, LogQL et SQL permettent une analyse fine et corrélée du comportement des services.</p>
-                            <p class="experience__text">La visualisation et la prise de décision s’appuient sur Grafana, à travers des tableaux de bord dynamiques et des indicateurs clés, tandis que Alertmanager et des webhooks Discord assurent un système d’alerte réactif, facilitant la détection et la gestion rapide des incidents.</p>
-                            <p class="experience__text"><strong>Compétences développées :</strong></p>
-                            <ul class="experience__list">
-                                <li>Déploiement et orchestration de services avec Docker et Compose.</li>
-                                <li>Supervision via Grafana et tableaux de bord.</li>
-                                <li>Collecte de metriques avec Prometheus et cAdvisor.</li>
-                                <li>Centralisation des logs avec Loki et Alloy.</li>
-                                <li>Analyse des donnees via PromQL, LogQL et SQL.</li>
-                                <li>Mise en place d'alertes avec Alertmanager et webhooks.</li>
-                                <li>Monitoring des services PostgreSQL et conteneurs.</li>
-                                <li>Gestion d'environnements Linux pour la supervision.</li>
-</ul>
-                        </div>
-                        <div class="experience__media">
-                            <a class="experience__media-link" href="assets/pdf/TP_Grafana_Docker.pdf" target="_blank" rel="noopener">
-                                <img src="assets/img/thibault.png" alt="Supervision Docker">
-                                <span class="experience__media-overlay">Voir compte rendu</span>
-                            </a>
-                            <div class="experience__actions">
-                                <h4 class="experience__tech-title">Technologies/Services utilisés</h4>
-                                <div class="experience__tech-logos">
-                                    <div class="tech-chip">
-                                        <img src="assets/img/grafana.jpg" alt="Grafana">
-                                        <span class="tech-chip__label">Grafana</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/prometheus.png" alt="Prometheus">
-                                        <span class="tech-chip__label">Prometheus</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/loki.png" alt="Loki">
-                                        <span class="tech-chip__label">Loki</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/alloy.png" alt="Grafana Alloy">
-                                        <span class="tech-chip__label">Alloy</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/docker.png" alt="Docker">
-                                        <span class="tech-chip__label">Docker</span>
-                                    </div>
-                                    <div class="tech-chip">
-                                        <img src="assets/img/postgres.png" alt="PostgreSQL">
-                                        <span class="tech-chip__label">Postgres</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!--===== CONTACT =====-->
-            <section class="contact section" id="contact">
-                <h2 class="section-title">Contact</h2>
-                <div class="contact__container bd-grid">
-                    <div class="contact__card">
-                        <span class="contact__icon"><i class='bx bx-phone'></i></span>
-                        <div class="contact__details">
-                            <h3 class="contact__title">Téléphone</h3>
-                            <a class="contact__link" href="tel:0693333232">0693 33 32 32</a>
-                        </div>
-                    </div>
-                    <div class="contact__card">
-                        <span class="contact__icon"><i class='bx bx-envelope'></i></span>
-                        <div class="contact__details">
-                            <h3 class="contact__title">Email</h3>
-                            <a class="contact__link" href="mailto:r.alamelou@rt-iut.re">r.alamelou@rt-iut.re</a>
-                        </div>
-                    </div>
-                    <div class="contact__card">
-                        <span class="contact__icon"><i class='bx bxl-linkedin'></i></span>
-                        <div class="contact__details">
-                            <h3 class="contact__title">LinkedIn</h3>
-                            <a class="contact__link" href="https://www.linkedin.com/in/rohan-alamelou-676767abc/" target="_blank" rel="noopener">linkedin.com/in/rohan-alamelou-676767abc</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-</main>
-
-        <div class="pdf-modal" id="pdf-modal" aria-hidden="true">
-            <div class="pdf-modal__backdrop" data-close></div>
-            <div class="pdf-modal__dialog" role="dialog" aria-modal="true" aria-label="Apercu du document">
-                <button class="pdf-modal__close" type="button" data-close aria-label="Fermer">×</button>
-                <iframe class="pdf-modal__frame" title="Document" src=""></iframe>
             </div>
+            <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Menu"><span></span><span></span></button>
+        </nav>
+    </header>
+
+    <main id="top">
+        <!--===== HERO =====-->
+        <section class="hero">
+            <div class="wrap hero__grid">
+                <div class="hero__text">
+                    <span class="eyebrow reveal" data-en="Portfolio · Cybersecurity">Portfolio · Cybersécurité</span>
+                    <h1 class="hero__name reveal d1">Rohan<em>Alamelou</em></h1>
+                    <p class="hero__role reveal d2" data-en="<strong>Cybersecurity engineering student</strong> at INSA Centre Val de Loire — Computer Security &amp; Technologies, ANSSI SecNumEdu label.">
+                        <strong>Élève ingénieur en cybersécurité</strong> à l’INSA Centre Val de Loire — filière Sécurité &amp; Technologies Informatiques, label SecNumEdu de l’ANSSI.
+                    </p>
+                    <p class="hero__seek reveal d2" data-en="I’m looking for a cybersecurity work-study placement (alternance): SOC &amp; detection, pentest, network security, audit &amp; GRC.">
+                        Je recherche une alternance en cybersécurité : SOC &amp; détection, pentest, sécurité réseau, audit &amp; GRC.
+                    </p>
+                    <div class="hero__cta reveal d3">
+                        <a href="#projets" class="btn btn--solid"><span data-en="See my projects">Voir mes projets</span> <span class="arr">→</span></a>
+                        <a href="assets/pdf/CV_Rohan_ALAMELOU.pdf" class="btn btn--ghost" data-pdf data-pdf-title="CV — Rohan Alamelou"><span data-en="My résumé">Mon CV</span></a>
+                    </div>
+                    <div class="hero__facts reveal d4">
+                        <span class="fact"><i class="pulse"></i><b data-en="Open to work-study">Ouvert à l’alternance</b></span>
+                        <span class="fact" data-en="Bourges · mobile across France">Bourges · mobile dans toute la France</span>
+                        <span class="fact" data-en="English <b>C1</b>">Anglais <b>C1</b></span>
+                    </div>
+                </div>
+
+                <!-- Visuel : réseau La Réunion → Bristol → Bourges -->
+                <div class="hero__visual reveal d2" aria-hidden="true">
+                    <div class="arch">
+                        <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+                            <defs>
+                                <radialGradient id="glow" cx="50%" cy="40%" r="60%">
+                                    <stop offset="0" stop-color="#2f6bff" stop-opacity=".45"/>
+                                    <stop offset="1" stop-color="#2f6bff" stop-opacity="0"/>
+                                </radialGradient>
+                                <pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse">
+                                    <circle cx="1" cy="1" r="1" fill="#8fb0ff" opacity=".18"/>
+                                </pattern>
+                            </defs>
+                            <rect width="400" height="500" fill="#0a1124"/>
+                            <rect width="400" height="500" fill="url(#dots)"/>
+                            <rect width="400" height="500" fill="url(#glow)"/>
+                            <!-- liens secondaires -->
+                            <g stroke="#5d7fd6" stroke-opacity=".28" stroke-width="1" fill="none">
+                                <path d="M70 150 L150 110 L240 140 L330 100"/>
+                                <path d="M150 110 L130 230 L240 140"/>
+                                <path d="M130 230 L90 330 L180 380 L290 330 L330 230 L240 140"/>
+                                <path d="M180 380 L210 450"/><path d="M290 330 L340 400"/>
+                                <path d="M90 330 L50 410"/><path d="M330 230 L370 170"/>
+                            </g>
+                            <!-- trajet principal -->
+                            <path class="flow" d="M90 330 C 120 260, 190 200, 240 140" stroke="#5ee3ff" stroke-width="2" fill="none"/>
+                            <path class="flow f2" d="M240 140 C 290 180, 320 210, 330 230" stroke="#5ee3ff" stroke-width="2" fill="none"/>
+                            <g fill="#5d7fd6" opacity=".7">
+                                <circle cx="70" cy="150" r="3"/><circle cx="150" cy="110" r="3"/><circle cx="130" cy="230" r="3"/>
+                                <circle cx="180" cy="380" r="3"/><circle cx="290" cy="330" r="3"/><circle cx="210" cy="450" r="3"/>
+                                <circle cx="340" cy="400" r="3"/><circle cx="50" cy="410" r="3"/><circle cx="370" cy="170" r="3"/><circle cx="330" cy="100" r="3"/>
+                            </g>
+                            <!-- nœuds clés -->
+                            <g>
+                                <circle class="pin" cx="90" cy="330" r="10" fill="#5ee3ff" opacity=".5"/>
+                                <circle cx="90" cy="330" r="6" fill="#5ee3ff"/>
+                                <text x="34" y="308" class="node-label">RUN · La Réunion</text>
+                                <circle class="pin p2" cx="240" cy="140" r="10" fill="#7aa2ff" opacity=".5"/>
+                                <circle cx="240" cy="140" r="6" fill="#7aa2ff"/>
+                                <text x="160" y="128" class="node-label">BRS · Bristol</text>
+                                <circle class="pin p3" cx="330" cy="230" r="10" fill="#ffffff" opacity=".5"/>
+                                <circle cx="330" cy="230" r="6" fill="#ffffff"/>
+                                <text x="244" y="258" class="node-label">BGS · Bourges</text>
+                            </g>
+                        </svg>
+                        <span class="arch__coords">47.08°N · 2.39°E</span>
+                    </div>
+                    <!-- Terminal flottant -->
+                    <div class="term">
+                        <div class="term__bar"><i></i><i></i><i></i><span>rohan@insa-cvl</span></div>
+                        <pre class="term__body" id="term"></pre>
+                    </div>
+                    <!-- Sceau tournant -->
+                    <div class="seal">
+                        <svg viewBox="0 0 140 140"><defs><path id="circ" d="M70,70 m-52,0 a52,52 0 1,1 104,0 a52,52 0 1,1 -104,0"/></defs>
+                            <text><textPath href="#circ">Cybersécurité · INSA CVL · SecNumEdu ·</textPath></text>
+                        </svg>
+                        <b>RA</b>
+                    </div>
+                </div>
+            </div>
+            <a href="#profil" class="scroll-hint" data-en="Scroll">Défiler<i></i></a>
+        </section>
+
+        <!--===== PROFIL =====-->
+        <section class="section" id="profil">
+            <div class="wrap">
+                <div class="head reveal">
+                    <span class="eyebrow" data-en="Profile">Profil</span>
+                    <h2 class="title" data-en="Understand systems in depth, <em>to protect them better.</em>">Comprendre les systèmes en profondeur, <em>pour mieux les protéger.</em></h2>
+                </div>
+                <div class="about__grid">
+                    <div class="about__text reveal d1">
+                        <p data-en="Originally from Réunion Island, I trained in networks and telecoms (BUT R&amp;T, cybersecurity track) before joining the engineering programme at INSA Centre Val de Loire in Bourges, which holds the ANSSI SecNumEdu label.">
+                            Originaire de La Réunion, je me suis formé aux réseaux et télécoms (BUT R&amp;T, parcours cybersécurité) avant d’intégrer le cycle ingénieur de l’INSA Centre Val de Loire à Bourges, labellisé SecNumEdu par l’ANSSI.</p>
+                        <p data-en="I design, deploy and secure technical architectures — from Docker to SIEM, through monitoring, log analysis and incident detection. Automation, monitoring, resilience and traceability are at the heart of how I work.">
+                            Je conçois, déploie et sécurise des architectures techniques — du Docker au SIEM, en passant par la supervision, l’analyse de logs et la détection d’incidents. Automatisation, surveillance, résilience et traçabilité sont au cœur de ma démarche.</p>
+                        <p data-en="Three months of research at the University of the West of England, working entirely in English, confirmed my goal: to become a cybersecurity engineer with an international outlook.">
+                            Trois mois de recherche à l’University of the West of England, entièrement en anglais, ont confirmé mon objectif : devenir ingénieur en cybersécurité avec une dimension internationale.</p>
+                    </div>
+                    <ul class="about__list reveal d2">
+                        <li><span data-en="School">École</span><b>INSA Centre Val de Loire</b></li>
+                        <li><span data-en="Programme">Filière</span><b data-en="Computer Security &amp; Technologies">Sécurité &amp; Technologies Informatiques</b></li>
+                        <li><span data-en="Label">Label</span><b>SecNumEdu · ANSSI</b></li>
+                        <li><span data-en="Based in">Basé à</span><b data-en="Bourges · from Réunion Island">Bourges · originaire de La Réunion</b></li>
+                        <li><span data-en="Languages">Langues</span><b data-en="French · English C1 (EF SET)">Français · Anglais C1 (EF SET)</b></li>
+                        <li><span data-en="Certifications">Certifications</span><b data-en="ANSSI MOOC (SecNumacadémie)">MOOC ANSSI (SecNumacadémie)</b></li>
+                        <li><span data-en="Interests">Centres d’intérêt</span><b data-en="Technology · sport · video games">Technologie · sport · jeux vidéo</b></li>
+                    </ul>
+                </div>
+
+                <div class="stats card reveal">
+                    <div class="stat"><div class="stat__num" data-count="6">6</div><div class="stat__label" data-en="documented technical projects">projets techniques documentés</div></div>
+                    <div class="stat"><div class="stat__num" data-count="2">2</div><div class="stat__label" data-en="internships, one abroad">stages, dont un à l’étranger</div></div>
+                    <div class="stat"><div class="stat__num" data-count="3">3</div><div class="stat__label" data-en="months of research in the UK">mois de recherche au Royaume-Uni</div></div>
+                    <div class="stat"><div class="stat__num">C1</div><div class="stat__label" data-en="professional English">anglais professionnel</div></div>
+                </div>
+            </div>
+        </section>
+
+        <!--===== COMPÉTENCES =====-->
+        <section class="section" id="competences">
+            <div class="wrap">
+                <div class="head reveal">
+                    <span class="eyebrow" data-en="Skills">Compétences</span>
+                    <h2 class="title" data-en="From the network layer <em>to the SOC.</em>">De la couche réseau <em>jusqu’au SOC.</em></h2>
+                </div>
+                <div class="skills__grid">
+                    <div class="card skills__block reveal d1">
+                        <h3 class="skills__h" data-en="Know-how">Savoir-faire</h3>
+                        <p class="skills__sub" data-en="What I’ve put into practice in projects and internships">Ce que j’ai mis en pratique en projet et en stage</p>
+                        <ol class="knowhow">
+                            <li data-en="Network defence with firewalls (OPNsense, pfSense, Stormshield)">Défense réseau via pare-feu (OPNsense, pfSense, Stormshield)</li>
+                            <li data-en="SIEM, log correlation and alerting (Wazuh)">SIEM, corrélation de logs et alerting (Wazuh)</li>
+                            <li data-en="Pentest methodology: recon, exploitation, privesc">Méthodologie de pentest : recon, exploitation, privesc</li>
+                            <li data-en="Security audits (AD, PingCastle), EBIOS, incident analysis">Audit de sécurité (AD, PingCastle), EBIOS, analyse d’incidents</li>
+                            <li data-en="WAF, IDS/IPS and architecture hardening">WAF, IDS/IPS et sécurisation d’architectures</li>
+                            <li data-en="VLAN design, addressing plans, OSPF/BGP routing">Conception VLAN, plan d’adressage, routage OSPF/BGP</li>
+                            <li data-en="Observability: Grafana, Prometheus, Loki">Observabilité : Grafana, Prometheus, Loki</li>
+                            <li data-en="Systems programming and sockets in C">Programmation système et sockets en C</li>
+                        </ol>
+                    </div>
+                    <div class="card skills__block reveal d2">
+                        <h3 class="skills__h" data-en="Toolbox">Boîte à outils</h3>
+                        <p class="skills__sub" data-en="Grouped by area">Classés par domaine</p>
+                        <div class="tools__group">
+                            <div class="tools__cat" data-en="Security">Sécurité</div>
+                            <div class="tools"><span class="tool">Wazuh</span><span class="tool">OPNsense</span><span class="tool">pfSense</span><span class="tool">Stormshield</span><span class="tool">Kali Linux</span><span class="tool">Burp Suite</span><span class="tool">PingCastle</span><span class="tool">Falco</span></div>
+                        </div>
+                        <div class="tools__group">
+                            <div class="tools__cat" data-en="Network">Réseau</div>
+                            <div class="tools"><span class="tool">Cisco IOS</span><span class="tool">VLAN · 802.1Q</span><span class="tool">OSPF · BGP</span><span class="tool">MPLS</span><span class="tool">DHCP · DNS</span></div>
+                        </div>
+                        <div class="tools__group">
+                            <div class="tools__cat" data-en="Systems &amp; monitoring">Systèmes &amp; supervision</div>
+                            <div class="tools"><span class="tool">Linux</span><span class="tool">Windows Server AD</span><span class="tool">Docker</span><span class="tool">Proxmox</span><span class="tool">Grafana</span><span class="tool">Prometheus</span><span class="tool">Loki</span></div>
+                        </div>
+                        <div class="tools__group">
+                            <div class="tools__cat" data-en="Languages">Langages</div>
+                            <div class="tools"><span class="tool">C</span><span class="tool">Java</span><span class="tool">Bash</span><span class="tool">SQL</span><span class="tool">Assembleur</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="levels">
+                    <div class="card level reveal d1"><div class="level__top"><span class="level__name" data-en="Cybersecurity">Cybersécurité</span><span class="level__lvl" data-en="Advanced">Avancé</span></div><div class="bar"><i data-w="85"></i></div></div>
+                    <div class="card level reveal d2"><div class="level__top"><span class="level__name" data-en="Networks">Réseaux</span><span class="level__lvl" data-en="Advanced">Avancé</span></div><div class="bar"><i data-w="85"></i></div></div>
+                    <div class="card level reveal d3"><div class="level__top"><span class="level__name" data-en="Monitoring">Supervision</span><span class="level__lvl" data-en="Intermediate">Intermédiaire</span></div><div class="bar"><i data-w="65"></i></div></div>
+                    <div class="card level reveal d4"><div class="level__top"><span class="level__name" data-en="Systems &amp; virtualisation">Systèmes &amp; virtualisation</span><span class="level__lvl" data-en="Intermediate">Intermédiaire</span></div><div class="bar"><i data-w="65"></i></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!--===== PARCOURS =====-->
+        <section class="section" id="parcours">
+            <div class="wrap">
+                <div class="head reveal">
+                    <span class="eyebrow" data-en="Journey">Parcours</span>
+                    <h2 class="title" data-en="From Réunion Island <em>to Bourges.</em>">De La Réunion <em>à Bourges.</em></h2>
+                </div>
+                <div class="timeline">
+                    <div class="tl reveal">
+                        <div class="tl__date">2026 → 2029</div><i class="tl__dot tl__dot--now"></i>
+                        <div class="tl__body card">
+                            <h3 class="tl__title" data-en="Engineering degree — Computer Security &amp; Technologies">Diplôme d’ingénieur — Sécurité &amp; Technologies Informatiques</h3>
+                            <p class="tl__school" data-en="INSA Centre Val de Loire · Bourges campus">INSA Centre Val de Loire · campus de Bourges</p>
+                            <div class="tl__tags"><span class="tag tag--hot" data-en="In progress">En cours</span><span class="tag">SecNumEdu · ANSSI</span></div>
+                        </div>
+                    </div>
+                    <div class="tl reveal">
+                        <div class="tl__date">2023 → 2026</div><i class="tl__dot"></i>
+                        <div class="tl__body card">
+                            <h3 class="tl__title" data-en="BUT Networks &amp; Telecoms — Cybersecurity track">BUT Réseaux &amp; Télécommunications — parcours Cybersécurité</h3>
+                            <p class="tl__school" data-en="IUT de La Réunion">IUT de La Réunion</p>
+                            <div class="tl__tags"><span class="tag" data-en="Internship in the UK">Stage au Royaume-Uni</span><span class="tag" data-en="SAE projects">Projets SAE</span></div>
+                        </div>
+                    </div>
+                    <div class="tl reveal">
+                        <div class="tl__date">2023</div><i class="tl__dot"></i>
+                        <div class="tl__body card">
+                            <h3 class="tl__title" data-en="Baccalauréat">Baccalauréat général</h3>
+                            <p class="tl__school" data-en="Majors: Mathematics · Computer Science (NSI)">Spécialités Mathématiques · Numérique et sciences informatiques</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--===== EXPÉRIENCES =====-->
+        <section class="section" id="experiences">
+            <div class="wrap">
+                <div class="head reveal">
+                    <span class="eyebrow" data-en="Experience">Expériences</span>
+                    <h2 class="title" data-en="In the field, <em>here and abroad.</em>">Sur le terrain, <em>ici et ailleurs.</em></h2>
+                </div>
+                <div id="xp-list"></div>
+            </div>
+        </section>
+
+        <!--===== PROJETS =====-->
+        <section class="section" id="projets">
+            <div class="wrap">
+                <div class="head reveal">
+                    <span class="eyebrow" data-en="Projects">Projets</span>
+                    <h2 class="title" data-en="Hands-on work, <em>with the reports to prove it.</em>">Du concret, <em>comptes rendus à l’appui.</em></h2>
+                    <p class="lede" data-en="Each project opens with its full description, the skills involved and its report, readable right here.">Chaque projet s’ouvre sur sa description complète, les compétences mobilisées et son compte rendu, consultable directement ici.</p>
+                </div>
+                <div class="projects" id="projects"></div>
+            </div>
+        </section>
+
+        <!--===== COMPTES RENDUS =====-->
+        <section class="section" id="documents">
+            <div class="wrap">
+                <div class="head reveal">
+                    <span class="eyebrow" data-en="Reports">Comptes rendus</span>
+                    <h2 class="title" data-en="All my documents, <em>in one place.</em>">Tous mes documents, <em>au même endroit.</em></h2>
+                </div>
+                <div class="docs-grid" id="docs-grid"></div>
+            </div>
+        </section>
+
+        <!--===== COURS =====-->
+        <section class="section">
+            <div class="wrap">
+                <a href="cours.html" class="course-band card reveal">
+                    <div>
+                        <span class="eyebrow" data-en="Courses &amp; revision">Cours &amp; révisions</span>
+                        <h2 class="course-band__title" data-en="My revision hub, <em>subject by subject.</em>">Mon hub de révision, <em>matière par matière.</em></h2>
+                        <p class="lede" data-en="Summary sheets, interactive revision pages and exam prep from my engineering courses.">Fiches, pages de révision interactives et préparation d’examens de mon cycle ingénieur.</p>
+                    </div>
+                    <span class="btn btn--solid"><span data-en="Open the hub">Ouvrir le hub</span> <span class="arr">→</span></span>
+                </a>
+            </div>
+        </section>
+
+        <!--===== CONTACT =====-->
+        <section class="contact" id="contact">
+            <div class="wrap">
+                <div class="contact__box card reveal">
+                    <span class="eyebrow" data-en="Contact">Contact</span>
+                    <h2 class="contact__title" data-en="An alternance, a project, a question? <em>Let’s talk.</em>">Une alternance, un projet, une question ? <em>Parlons-en.</em></h2>
+                    <p class="contact__lede" data-en="I reply quickly. Email is the best way to reach me.">Je réponds rapidement. L’email reste le meilleur moyen de me joindre.</p>
+                    <div class="contact__row">
+                        <a class="chan" href="mailto:r.alamelou@rt-iut.re">
+                            <span class="chan__ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+                            <span><small>Email</small><b>r.alamelou@rt-iut.re</b></span>
+                            <button type="button" class="copy" data-copy="r.alamelou@rt-iut.re" data-en="Copy">Copier</button>
+                        </a>
+                        <a class="chan" href="tel:+262693333232">
+                            <span class="chan__ico"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>
+                            <span><small data-en="Phone">Téléphone</small><b>0693 33 32 32</b></span>
+                        </a>
+                        <a class="chan" href="https://www.linkedin.com/in/rohan-alamelou-676767abc/" target="_blank" rel="noopener">
+                            <span class="chan__ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg></span>
+                            <span><small>LinkedIn</small><b>Rohan Alamelou</b></span>
+                        </a>
+                        <a class="chan" href="https://github.com/LayceLMK" target="_blank" rel="noopener">
+                            <span class="chan__ico"><svg viewBox="0 0 24 24"><path d="M9 19c-4 1.5-4-2-6-2.5m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></span>
+                            <span><small>GitHub</small><b>LayceLMK</b></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="wrap">
+            <span class="logo"><span class="logo__mark">RA</span><span>Rohan <i>Alamelou</i></span></span>
+            <span data-en="© 2026 Rohan Alamelou · Cybersecurity">© 2026 Rohan Alamelou · Cybersécurité</span>
         </div>
+    </footer>
 
-        <!--===== FOOTER =====-->
+    <!-- Panneau de détail d'un projet -->
+    <div class="drawer" id="drawer" aria-hidden="true">
+        <div class="drawer__veil" data-close></div>
+        <aside class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="d-title">
+            <div class="drawer__top"><span class="tag" id="d-context"></span><button class="drawer__close" type="button" data-close aria-label="Fermer">×</button></div>
+            <div class="drawer__scroll" id="drawer-content"></div>
+            <div class="d-nav"><button type="button" id="d-prev"></button><button type="button" id="d-next"></button></div>
+        </aside>
+    </div>
 
+    <!-- Lecteur PDF -->
+    <div class="modal" id="pdf-modal" aria-hidden="true">
+        <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="pdf-title">
+            <div class="modal__bar">
+                <h3 id="pdf-title">Document</h3>
+                <div class="modal__actions">
+                    <a id="pdf-open" href="#" target="_blank" rel="noopener" data-en="Open in a tab">Ouvrir dans un onglet</a>
+                    <a id="pdf-dl" href="#" download data-en="Download">Télécharger</a>
+                    <button class="modal__close" type="button" data-close aria-label="Fermer">×</button>
+                </div>
+            </div>
+            <iframe class="modal__frame" id="pdf-frame" title="Document"></iframe>
+        </div>
+    </div>
 
-        <footer class="footer">
+    <div class="toast" id="toast"></div>
 
-
-            <p class="footer__title">Rohan ALAMELOU</p>
-
-
-            <div class="footer__social"></div>
-
-
-            <p class="footer__copy">&#169; Rohan ALAMELOU. Tous droits réservés</p>
-
-
-        </footer>
-
-
-
-
-
-
-
-
-        <!--===== SCROLL REVEAL =====-->
-
-
-        <script src="https://unpkg.com/scrollreveal"></script>
-
-
-
-
-
-        <!--===== MAIN JS =====-->
-
-
-        <script src="assets/js/i18n.js"></script>
-
-
-        <script src="assets/js/main.js"></script>
-
-
-    </body>
-
-
+    <script src="assets/js/projects-data.js"></script>
+    <script src="assets/js/site.js"></script>
+    <script src="assets/js/home.js"></script>
+</body>
 </html>
-
-
-
-
