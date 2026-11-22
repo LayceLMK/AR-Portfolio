@@ -258,6 +258,24 @@ section{position:relative}
 .doc--soon .doc__ico{background:rgba(255,255,255,.05)}
 .doc--soon .doc__ico svg{stroke:var(--ink-faint)}
 
+/* ===== Veille & centres d'intérêt ===== */
+.beyond{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
+.watch{padding:38px 36px;display:flex;flex-direction:column;gap:16px;position:relative;overflow:hidden}
+.watch::before{content:"";position:absolute;inset:0;background:radial-gradient(500px 240px at 100% 0%,rgba(94,227,255,.12),transparent 70%);z-index:-1}
+.watch__title{font-size:1.5rem;font-weight:500;letter-spacing:-.02em;line-height:1.2}
+.watch__text{color:var(--ink-soft);font-weight:300}
+.watch__label{display:block;font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-top:6px}
+.watch__read{margin-top:auto;padding-top:18px;border-top:1px solid var(--line)}
+.watch__read p{margin-top:8px;color:var(--ink-soft);font-weight:300;font-size:.95rem}
+.watch__read b{color:var(--ink);font-weight:500}
+.hobbies{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.hobby{padding:26px 24px;display:flex;flex-direction:column;gap:10px;transition:transform .35s var(--ease),border-color .35s}
+.hobby:hover{transform:translateY(-4px);border-color:var(--line-strong)}
+.hobby__ico{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(140deg,rgba(61,116,255,.3),rgba(61,116,255,.06));border:1px solid rgba(122,162,255,.22)}
+.hobby__ico svg{width:22px;height:22px;stroke:var(--blue-soft);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.hobby__name{font-size:1.15rem;font-weight:500;letter-spacing:-.01em}
+.hobby p{color:var(--ink-soft);font-weight:300;font-size:.92rem;line-height:1.6}
+
 /* ===== Bandeau cours ===== */
 .course-band{display:flex;align-items:center;justify-content:space-between;gap:40px;padding:52px 52px;position:relative;overflow:hidden;transition:border-color .4s,transform .4s var(--ease)}
 .course-band::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 260px at 0% 0%,rgba(61,116,255,.22),transparent 70%),radial-gradient(500px 240px at 100% 100%,rgba(94,227,255,.12),transparent 70%);z-index:-1}
@@ -352,6 +370,7 @@ body.is-locked{overflow:hidden}
   .project--wide .project__media{aspect-ratio:16/8;border-right:0;border-bottom:1px solid var(--line)}
   .feature__side{flex-direction:row;flex-wrap:wrap;justify-content:space-between}
   .docs-grid{grid-template-columns:1fr}
+  .beyond{grid-template-columns:1fr}
 }
 @media (max-width:900px){
   .nav__toggle{display:flex}
@@ -376,6 +395,8 @@ body.is-locked{overflow:hidden}
   .seal{right:-22px;width:96px;height:96px}
   .seal b{font-size:1.6rem}
   .knowhow,.projects,.levels{grid-template-columns:1fr}
+  .hobbies{grid-template-columns:1fr}
+  .watch{padding:30px 24px}
   .project--wide{grid-column:auto}
   .project--wide .project__body{padding:26px}
   .stats{grid-template-columns:1fr 1fr}
