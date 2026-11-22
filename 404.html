@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Accès introuvable · Rohan Alamelou</title>
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#070b16">
+    <link rel="icon" type="image/svg+xml" href="/AR-Portfolio/assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/AR-Portfolio/assets/css/site.css">
+    <style>
+        .nf{min-height:100vh;display:grid;place-items:center;padding:40px 20px}
+        .nf__box{max-width:640px;width:100%;text-align:center}
+        .nf__code{font-size:clamp(6rem,20vw,10rem);font-weight:600;letter-spacing:-.06em;line-height:.9;background:linear-gradient(180deg,#fff,var(--blue-soft));-webkit-background-clip:text;background-clip:text;color:transparent}
+        .nf__title{font-weight:500;font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:-.02em;margin:18px 0 26px}
+        .nf__title em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--blue-soft)}
+        .nf .term{position:relative;left:auto;bottom:auto;width:100%;text-align:left;margin:0 auto 30px}
+        .nf__cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+    </style>
+</head>
+<body>
+    <div class="ambient" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span><div class="grid-bg"></div></div>
+    <main class="nf">
+        <div class="nf__box">
+            <div class="nf__code">404</div>
+            <h1 class="nf__title">Accès refusé… <em>cette page n’existe pas.</em></h1>
+            <div class="term" aria-hidden="true">
+                <div class="term__bar"><i></i><i></i><i></i><span>rohan@insa-cvl</span></div>
+                <pre class="term__body"><span class="p">$</span> curl -I <span id="nf-path">/page</span>
+<span class="o">HTTP/1.1 404 Not Found</span>
+<span class="p">$</span> grep -r "cette page" ./site
+<span class="o">aucun résultat — mais le reste est là ↓</span>
+<span class="p">$</span> <span class="cur"></span></pre>
+            </div>
+            <div class="nf__cta">
+                <a href="/AR-Portfolio/" class="btn btn--solid">Retour au portfolio <span class="arr">→</span></a>
+                <a href="/AR-Portfolio/cours.html" class="btn btn--ghost">Hub de révision</a>
+            </div>
+        </div>
+    </main>
+    <script>
+        var p = document.getElementById('nf-path')
+        if (p) p.textContent = location.pathname.replace('/AR-Portfolio', '') || '/'
+    </script>
+</body>
+</html>

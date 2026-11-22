@@ -14,6 +14,7 @@ window.Site = (() => {
         toggle.addEventListener('click', () => {
             const open = menu.classList.toggle('is-open')
             toggle.classList.toggle('is-open', open)
+            toggle.setAttribute('aria-expanded', open)
         })
         menu.querySelectorAll('.nav__link').forEach((l) => l.addEventListener('click', () => {
             menu.classList.remove('is-open')
@@ -65,7 +66,7 @@ window.Site = (() => {
             if (el.dataset.fr === undefined) el.dataset.fr = el.innerHTML
             el.innerHTML = lang === 'en' ? el.dataset.en : el.dataset.fr
         })
-        document.querySelectorAll('.lang button').forEach((b) => b.classList.toggle('is-on', b.dataset.lang === lang))
+        document.querySelectorAll('.lang button').forEach((b) => { b.classList.toggle('is-on', b.dataset.lang === lang); b.setAttribute('aria-pressed', b.dataset.lang === lang) })
         try { localStorage.setItem('ra-lang', lang) } catch (e) { /* ignore */ }
         if (!silent) document.dispatchEvent(new CustomEvent('langchange', { detail: lang }))
     }

@@ -5,16 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rohan Alamelou — Élève ingénieur en cybersécurité</title>
     <meta name="description" content="Portfolio de Rohan Alamelou, élève ingénieur en cybersécurité à l'INSA Centre Val de Loire (STI, label SecNumEdu). SOC, pentest, sécurité réseau, audit.">
-    <meta property="og:title" content="Rohan Alamelou — Cybersécurité">
-    <meta property="og:description" content="Élève ingénieur en cybersécurité à l'INSA Centre Val de Loire. Projets SIEM, pentest, audit AD, supervision.">
+    <meta property="og:title" content="Rohan Alamelou — Élève ingénieur en cybersécurité">
+    <meta property="og:description" content="Élève ingénieur en cybersécurité à l'INSA Centre Val de Loire, ouvert à l'alternance. SIEM, pentest, audit AD, recherche sur la détection MITRE ATT&amp;CK par IA locale.">
     <meta name="theme-color" content="#070b16">
+    <link rel="canonical" href="https://laycelmk.github.io/AR-Portfolio/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://laycelmk.github.io/AR-Portfolio/">
+    <meta property="og:site_name" content="Rohan Alamelou">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:image" content="https://laycelmk.github.io/AR-Portfolio/assets/img/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Rohan Alamelou — élève ingénieur en cybersécurité, INSA Centre Val de Loire">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Rohan Alamelou — Cybersécurité">
+    <meta name="twitter:description" content="Élève ingénieur en cybersécurité à l'INSA Centre Val de Loire. SIEM, pentest, audit AD, recherche MITRE ATT&CK.">
+    <meta name="twitter:image" content="https://laycelmk.github.io/AR-Portfolio/assets/img/og-image.jpg">
+    <meta name="author" content="Rohan Alamelou">
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Rohan Alamelou",
+      "jobTitle": "Élève ingénieur en cybersécurité",
+      "url": "https://laycelmk.github.io/AR-Portfolio/",
+      "image": "https://laycelmk.github.io/AR-Portfolio/assets/img/og-image.jpg",
+      "alumniOf": [
+        {
+          "@type": "CollegeOrUniversity",
+          "name": "IUT de La Réunion"
+        }
+      ],
+      "affiliation": {
+        "@type": "CollegeOrUniversity",
+        "name": "INSA Centre Val de Loire"
+      },
+      "knowsAbout": [
+        "Cybersécurité",
+        "SOC",
+        "SIEM",
+        "Wazuh",
+        "Pentest",
+        "Sécurité réseau",
+        "Audit Active Directory",
+        "MITRE ATT&CK",
+        "Linux auditd",
+        "LLM locaux"
+      ],
+      "knowsLanguage": [
+        "fr",
+        "en"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/rohan-alamelou-676767abc/",
+        "https://github.com/LayceLMK"
+      ]
+    }
+    </script>
     <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/site.css?v=202611230021">
+    <link rel="stylesheet" href="assets/css/site.css?v=202611230030">
 </head>
 <body>
+    <a class="skip" href="#profil" data-en="Skip to content">Aller au contenu</a>
     <!-- Fond animé -->
     <div class="ambient" aria-hidden="true">
         <span class="a"></span><span class="b"></span><span class="c"></span>
@@ -33,12 +88,12 @@
                 <a href="#projets" class="nav__link" data-en="Projects">Projets</a>
                 <a href="cours.html" class="nav__link" data-en="Courses">Cours</a>
                 <a href="#contact" class="nav__link" data-en="Contact">Contact</a>
-                <div class="lang" role="group" aria-label="Langue">
-                    <button type="button" data-lang="fr" class="is-on">FR</button>
-                    <button type="button" data-lang="en">EN</button>
+                <div class="lang" role="group" aria-label="Langue / Language">
+                    <button type="button" data-lang="fr" class="is-on" aria-label="Français" aria-pressed="true">FR</button>
+                    <button type="button" data-lang="en" aria-label="English" aria-pressed="false">EN</button>
                 </div>
             </div>
-            <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Menu"><span></span><span></span></button>
+            <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-menu"><span></span><span></span></button>
         </nav>
     </header>
 
@@ -143,8 +198,8 @@
                             Originaire de La Réunion, je me suis formé aux réseaux et télécoms (BUT R&amp;T, parcours cybersécurité) avant d’intégrer le cycle ingénieur de l’INSA Centre Val de Loire à Bourges, labellisé SecNumEdu par l’ANSSI.</p>
                         <p data-en="I design, deploy and secure technical architectures — from Docker to SIEM, through monitoring, log analysis and incident detection. Automation, monitoring, resilience and traceability are at the heart of how I work.">
                             Je conçois, déploie et sécurise des architectures techniques — du Docker au SIEM, en passant par la supervision, l’analyse de logs et la détection d’incidents. Automatisation, surveillance, résilience et traçabilité sont au cœur de ma démarche.</p>
-                        <p data-en="Three months of research at the University of the West of England, working entirely in English, confirmed my goal: to become a cybersecurity engineer with an international outlook.">
-                            Trois mois de recherche à l’University of the West of England, entièrement en anglais, ont confirmé mon objectif : devenir ingénieur en cybersécurité avec une dimension internationale.</p>
+                        <p data-en="Fourteen weeks of research at the University of the West of England — a local AI that maps attack logs to MITRE ATT&amp;CK, and a paper submitted to a scientific journal — confirmed my goal: to become a cybersecurity engineer with an international outlook.">
+                            Quatorze semaines de recherche à l’University of the West of England — une IA locale qui relie des logs d’attaque à MITRE ATT&amp;CK, et un article soumis à une revue scientifique — ont confirmé mon objectif : devenir ingénieur en cybersécurité avec une dimension internationale.</p>
                     </div>
                     <ul class="about__list reveal d2">
                         <li><span data-en="School">École</span><b>INSA Centre Val de Loire</b></li>
@@ -152,6 +207,7 @@
                         <li><span data-en="Label">Label</span><b>SecNumEdu · ANSSI</b></li>
                         <li><span data-en="Based in">Basé à</span><b data-en="Bourges · from Réunion Island">Bourges · originaire de La Réunion</b></li>
                         <li><span data-en="Languages">Langues</span><b data-en="French · English C1 (EF SET)">Français · Anglais C1 (EF SET)</b></li>
+                        <li><span data-en="Research">Recherche</span><b data-en="Paper under review · MDPI Electronics">Article en révision · MDPI Electronics</b></li>
                         <li><span data-en="Certifications">Certifications</span><b data-en="ANSSI MOOC (SecNumacadémie)">MOOC ANSSI (SecNumacadémie)</b></li>
                         <li><span data-en="Interests">Centres d’intérêt</span><b data-en="Technology · sport · video games">Technologie · sport · jeux vidéo</b></li>
                     </ul>
@@ -160,7 +216,7 @@
                 <div class="stats card reveal">
                     <div class="stat"><div class="stat__num" data-count="6">6</div><div class="stat__label" data-en="documented technical projects">projets techniques documentés</div></div>
                     <div class="stat"><div class="stat__num" data-count="2">2</div><div class="stat__label" data-en="internships, one abroad">stages, dont un à l’étranger</div></div>
-                    <div class="stat"><div class="stat__num" data-count="3">3</div><div class="stat__label" data-en="months of research in the UK">mois de recherche au Royaume-Uni</div></div>
+                    <div class="stat"><div class="stat__num" data-count="14">14</div><div class="stat__label" data-en="weeks of research in the UK">semaines de recherche au Royaume-Uni</div></div>
                     <div class="stat"><div class="stat__num">C1</div><div class="stat__label" data-en="professional English">anglais professionnel</div></div>
                 </div>
             </div>
@@ -186,6 +242,8 @@
                             <li data-en="VLAN design, addressing plans, OSPF/BGP routing">Conception VLAN, plan d’adressage, routage OSPF/BGP</li>
                             <li data-en="Observability: Grafana, Prometheus, Loki">Observabilité : Grafana, Prometheus, Loki</li>
                             <li data-en="Systems programming and sockets in C">Programmation système et sockets en C</li>
+                            <li data-en="Local LLMs applied to detection (Ollama, Qwen)">LLM locaux appliqués à la détection (Ollama, Qwen)</li>
+                            <li data-en="Linux auditd telemetry and ATT&amp;CK mapping">Télémétrie Linux auditd et mapping ATT&amp;CK</li>
                         </ol>
                     </div>
                     <div class="card skills__block reveal d2">
@@ -193,7 +251,7 @@
                         <p class="skills__sub" data-en="Grouped by area">Classés par domaine</p>
                         <div class="tools__group">
                             <div class="tools__cat" data-en="Security">Sécurité</div>
-                            <div class="tools"><span class="tool">Wazuh</span><span class="tool">OPNsense</span><span class="tool">pfSense</span><span class="tool">Stormshield</span><span class="tool">Kali Linux</span><span class="tool">Burp Suite</span><span class="tool">PingCastle</span><span class="tool">Falco</span></div>
+                            <div class="tools"><span class="tool">Wazuh</span><span class="tool">OPNsense</span><span class="tool">pfSense</span><span class="tool">Stormshield</span><span class="tool">Kali Linux</span><span class="tool">Burp Suite</span><span class="tool">PingCastle</span><span class="tool">Falco</span><span class="tool">auditd</span><span class="tool">Ollama</span></div>
                         </div>
                         <div class="tools__group">
                             <div class="tools__cat" data-en="Network">Réseau</div>
@@ -205,7 +263,7 @@
                         </div>
                         <div class="tools__group">
                             <div class="tools__cat" data-en="Languages">Langages</div>
-                            <div class="tools"><span class="tool">C</span><span class="tool">Java</span><span class="tool">Bash</span><span class="tool">SQL</span><span class="tool">Assembleur</span></div>
+                            <div class="tools"><span class="tool">C</span><span class="tool">Java</span><span class="tool">Bash</span><span class="tool">SQL</span><span class="tool">Python</span><span class="tool">LaTeX</span><span class="tool">Assembleur</span></div>
                         </div>
                     </div>
                 </div>
@@ -366,8 +424,8 @@
 
     <div class="toast" id="toast"></div>
 
-    <script src="assets/js/projects-data.js?v=202611230021"></script>
-    <script src="assets/js/site.js?v=202611230021"></script>
-    <script src="assets/js/home.js?v=202611230021"></script>
+    <script src="assets/js/projects-data.js?v=202611230030"></script>
+    <script src="assets/js/site.js?v=202611230030"></script>
+    <script src="assets/js/home.js?v=202611230030"></script>
 </body>
 </html>

@@ -59,6 +59,7 @@
                         <h3 class="feature__title">${t(x.title)}</h3>
                         <p class="feature__org">${t(x.org)}</p>
                         ${bullets}
+                        ${x.note ? `<p class="paper"><span class="paper__ico">${ICON_DOC}</span><span>${t(x.note)}</span></p>` : ''}
                     </div>
                     <div class="feature__side">${x.kpis.map((k) => `<div class="kpi"><div class="kpi__n">${k.n}</div><div class="kpi__l">${t(k.l)}</div></div>`).join('')}</div>
                 </article>`
@@ -83,7 +84,7 @@
             <button type="button" class="project card reveal d${(i % 3) + 1}${p.wide ? ' project--wide' : ''}" data-project="${p.id}">
                 <div class="project__media">
                     ${p.wide ? `<span class="tag tag--hot feat-label">${t(UI.featured)}</span>` : ''}
-                    <img src="${p.cover}" alt="" loading="lazy">
+                    <img src="${p.cover}" alt="${t(p.title).replace(/<[^>]+>/g, '')}" loading="lazy" width="800" height="533">
                     <span class="project__n">${String(i + 1).padStart(2, '0')} / ${String(PROJECTS.length).padStart(2, '0')}</span>
                 </div>
                 <div class="project__body">
