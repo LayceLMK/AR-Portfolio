@@ -34,6 +34,15 @@ window.COURS_DATA = {
             ressources: [
                 { titre: "Révisions Prog Système — cours, TD 1 à 8, Mini-GLIBC, man et QCM", url: "revisions/prog-systeme.html", type: "interactif", date: "2026-11-21" }
             ]
+        },
+        {
+            id: "archi",
+            nom: "Architecture & Assembleur",
+            icone: "bx-chip",
+            examen: "2026-11-27",
+            ressources: [
+                { titre: "Révisions Archi & Assembleur — UAL, décodage d'adresses, assembleur x86, annale et examen blanc", url: "revisions/archi-assembleur.html", type: "interactif", date: "2026-11-22" }
+            ]
         }
     ]
 }
